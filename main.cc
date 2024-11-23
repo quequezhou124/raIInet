@@ -72,6 +72,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
             } else {
                 std::cout << "You have already set " << set << ".\n";
             }
+        n++;
         } else if (set[0] == 'd' && set[1] >= '1' && set[1] <= '4') {
             strength = set[1] - '1';
             if (!dSet[strength]) {
