@@ -12,26 +12,22 @@ class Board {
   public:
     vector<std::unique_ptr<Unit>> units;
     
-    std::unique_ptr<Unit> find_unit (char name) {
-        for (auto it = units.begin(); it != units.end(); ++it) {
-            if ((*it)->getName() == name) {
-                std::unique_ptr<Unit> result = std::move(*it);
-                units.erase(it);
-                return result;
+    std::unique_ptr<Unit> find_unit(char name) {
+        for (auto& unit : units) {
+            if (unit->getName() == name) {
+                return std::unique_ptr<Unit>(unit.get());  // Create a new unique_ptr from raw pointer
             }
         }
-        return nullptr;
+        return nullptr; // Return nullptr if not found
     }
 
     std::unique_ptr<Unit> getUnit(int row, int col) {
-        for (auto it = units.begin(); it != units.end(); ++it) {
-            if ((*it)->getRow() == row && (*it)->getCol() == col) {
-                std::unique_ptr<Unit> result = std::move(*it);
-                units.erase(it);
-                return result;
+        for (auto& unit : units) {
+            if (unit->getRow() == row, unit->getCol() == col) {
+                return std::unique_ptr<Unit>(unit.get());  // Create a new unique_ptr from raw pointer
             }
         }
-        return nullptr;
+        return nullptr; // Return nullptr if not found
     }
 
     virtual char unitAt(int row, int col) = 0;
