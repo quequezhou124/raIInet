@@ -15,7 +15,7 @@ Player::Player():
     state{State::Undecided},
     downloadD{0},
     downloadV{0}
-    abilityNum{0}{}
+    abilityNum{0} {}
 
 State Player::getState() const {
     return state;
@@ -37,23 +37,23 @@ void Player::setdownloadV(int newdownloadV) {
     downloadV = newdownloadV;
 }
 
-int getabilityNum() const {
+int Player::getabilityNum() const {
     return abilityNum;
 }
 
-void setabilityNum(int newabilityNum){
+void Player::setabilityNum(int newabilityNum){
     abilityNum = newabilityNum;
 }
 
-bool isplayer1turn() const {
+bool Player::isplayer1turn() const {
     return player1;
 }
 
-void changeturn(bool isplayer1){
+void Player::changeturn(bool isplayer1){
     player1 = isplayer1;
 }
 
-bool move(Link * link, string dir) {
+bool Player::move(Link * link, std::string dir) {
     int newrow = link->getRow();
     int newcol = link->getCol();
     if (dir == "u") {
