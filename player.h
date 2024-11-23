@@ -36,7 +36,7 @@ class Player {
     void setabilityNum(int newabilityNum);
     bool isplayer1turn() const;
     void changeturn(bool isplayer1);
-    bool move(Link * link);
+    
 };
 
 #endif
