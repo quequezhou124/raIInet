@@ -41,7 +41,7 @@ void print_blank() {
               << "========\n";
 }
 
-void setupPlayer(Board* board, std::unique_ptr<Player> &player, int startRow, const std::string& playerName, char startChar) {
+void setupPlayer(Board* board, Player* player, int startRow, const std::string& playerName, char startChar) {
     std::cout << playerName << ", please set your links (" << startChar
               << "-" << static_cast<char>(startChar + 7)
               << "). Use format v1, d2, etc.\n";
@@ -80,7 +80,7 @@ void setupPlayer(Board* board, std::unique_ptr<Player> &player, int startRow, co
                                     ? (startRow == 0 ? 1 : 6)
                                     : startRow;
                 auto data = std::make_unique<Data>(targetRow, col, n, 'd', strength + 1, player);
-
+                player->links.push_back(std::move(data));
                 board->units.push_back(std::move(data));
                 std::cout << "Successfully set Data " << set << std::endl;
             } else {
@@ -119,11 +119,11 @@ int main() {
 
     print_blank();
     // Player 1 setup (a-h)
-    setupPlayer(board, player1, 0, "Player 1", 'a');
+    setupPlayer(board, player1.get(), 0, "Player 1", 'a');
 
     print_blank();
     // Player 2 setup (A-H)
-    setupPlayer(board, player2, 0, "Player 2", 'A');
+    setupPlayer(board, player2.get(), 0, "Player 2", 'A');
 
 
     return 0;
