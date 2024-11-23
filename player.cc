@@ -1,7 +1,7 @@
 #include "player.h"
 #include "link.h"
 //constructor
-Player::Player(std::vector<Link*> links, bool player1, State state, int downloadD, int downloadV, int abilityNum):
+Player::Player(std::vector<std::unique_ptr<Link>> links, bool player1, State state, int downloadD, int downloadV, int abilityNum):
     links{links},
     player1{player1},
     state{state},
@@ -48,7 +48,7 @@ void Player::changeturn(bool isplayer1){
     player1 = isplayer1;
 }
 
-bool Player::move(Link * link, std::string dir) {
+bool Player::move(std::unique_ptr<Link>& link, std::string dir) {
     int newrow = link->getRow();
     int newcol = link->getCol();
     if (dir == "u") {
