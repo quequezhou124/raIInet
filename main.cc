@@ -114,6 +114,7 @@ void moveit (Player * player, std::string playername, Board * b) {
             movel = board->find_unit(movelink[0]);
             if ((movelink.length() != 1) || (movel != nullptr) || (std::find(player->links.begin(), player->links.end(), movel) != player->links.end())) {
                 std::cout << "Invalid link. Choose another one.\n";
+                continue;
             } else {
                 getlink = true;
             }
@@ -123,6 +124,7 @@ void moveit (Player * player, std::string playername, Board * b) {
             std::cin >> dir;
             if ((dir.length() != 1) || ((dir != "u") && (dir != "d") && (dir != "l") && (dir != "r"))) {
                 std::cout << "Invalid direction. Choose another one.\n";
+                continue;
             } else {
                 getdir = true;
             }
@@ -134,6 +136,7 @@ void moveit (Player * player, std::string playername, Board * b) {
             std::cout << "Moving fasiled. Choose again.\n";
             getlink = false;
             getdir = false;
+            continue;
         }
     }
 }
