@@ -170,6 +170,8 @@ int main() {
     setupPlayer(board, player2.get(), 0, "Player 2", 'A');
 
     //Player1 move
+    moveit(player1.get(), "player1", board);
+    moveit(player2.get(), "player2", board);
     
     return 0;
 }
