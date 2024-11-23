@@ -26,14 +26,14 @@ public:
         std::cout << "Abilities: " << curplayer->getabilityNum() << endl;
         
         if (curplayer->isplayer1turn()) {
-            std::cout << "a: " << getinfo("a") << " ";
-            std::cout << "b: " << getinfo("b") << " ";
-            std::cout << "c: " << getinfo("c") << " ";
-            std::cout << "d: " << getinfo("d") << " " << endl;
-            std::cout << "e: " << getinfo("e") << " ";
-            std::cout << "f: " << getinfo("f") << " ";
-            std::cout << "g: " << getinfo("g") << " ";
-            std::cout << "h: " << getinfo("h") << " " << endl;
+            std::cout << "a: " << getName("a") << " ";
+            std::cout << "b: " << getName("b") << " ";
+            std::cout << "c: " << getName("c") << " ";
+            std::cout << "d: " << getName("d") << " " << endl;
+            std::cout << "e: " << getName("e") << " ";
+            std::cout << "f: " << getName("f") << " ";
+            std::cout << "g: " << getName("g") << " ";
+            std::cout << "h: " << getName("h") << " " << endl;
         } else {
             std::cout << "a: ? b: ? c: ? d: ?" << endl;
             std::cout << "e: ? f: ? g: ? h: ?" << endl;
@@ -57,14 +57,14 @@ public:
         
 
         if (!curplayer->isplayer1turn()) {
-            std::cout << "A: " << string getinfo("A") << " ";
-            std::cout << "B: " << string getinfo("B") << " ";
-            std::cout << "C: " << string getinfo("C") << " ";
-            std::cout << "D: " << string getinfo("D") << " " << endl;
-            std::cout << "E: " << string getinfo("E") << " ";
-            std::cout << "F: " << string getinfo("F") << " ";
-            std::cout << "G: " << string getinfo("G") << " ";
-            std::cout << "H: " << string getinfo("H") << " " << endl;
+            std::cout << "A: " << string getName("A") << " ";
+            std::cout << "B: " << string getName("B") << " ";
+            std::cout << "C: " << string getName("C") << " ";
+            std::cout << "D: " << string getName("D") << " " << endl;
+            std::cout << "E: " << string getName("E") << " ";
+            std::cout << "F: " << string getName("F") << " ";
+            std::cout << "G: " << string getName("G") << " ";
+            std::cout << "H: " << string getName("H") << " " << endl;
         } else {
             std::cout << "A: ? B: ? C: ? D: ?" << endl;
             std::cout << "E: ? F: ? G: ? H: ?" << endl;
