@@ -28,6 +28,17 @@ void print_rule() {
               << "Hidden information and clever use of abilities are key to success.\n";
 }
 
+void print_blank() {
+    std::cout << "========\n" 
+              << "abcSSfgh\n"
+              << "...de...\n"
+              << "........\n"
+              << "........\n"
+              << "........\n"
+              << "........\n"
+              << "...DE...\n"
+              << "ABCSSFGH\n";
+}
 void setupPlayer(Board* board, Player* player, int startRow, const std::string& playerName, char startChar) {
     std::cout << playerName << ", please set your links (" << startChar
               << "-" << static_cast<char>(startChar + 7)
@@ -98,17 +109,26 @@ int main() {
     std::string command;
     std::cin >> command;
 
-    if (command == "Y") {
-        print_rule();
+    bool rule = true;
+    while (rule) {
+        if (command == "Y") {
+            print_rule();
+        } else if (command != "N") {
+            std::cout << "Please reply Y or N.\n";
+        } else {
+            rule = false;
+        }
     }
 
     Board* board = new Blank;
     std::unique_ptr<Player> player1 = std::make_unique<Player>();
     std::unique_ptr<Player> player2 = std::make_unique<Player>();
 
+    print_blank();
     // Player 1 setup (a-h)
     setupPlayer(board, player1.get(), 0, "Player 1", 'a');
 
+    print_blank();
     // Player 2 setup (A-H)
     setupPlayer(board, player2.get(), 0, "Player 2", 'A');
 
