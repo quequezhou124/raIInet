@@ -1,5 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
+#include "link.h"
 #include <vector>
 #include <string.h>
 
@@ -23,7 +24,7 @@ class Player {
     Player(std::vector<Link*> links, bool player1 = true, State state = State::Undecided, int downloadD = 0, int downloadV = 0, int abilityNum = 0);
     Player();
     // methods
-    bool move(Link* link, string dir);
+    bool move(Link* link, std::string dir);
     bool useAbility();
     bool useAbility(int id);
     bool useAbility(int id, char link);

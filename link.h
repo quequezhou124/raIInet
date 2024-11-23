@@ -1,6 +1,7 @@
 #ifndef LINK_H
 #define LINK_H
 #include"unit.h"
+#include <string>
 
 class Link: public Unit {
     int strength;
@@ -15,6 +16,7 @@ class Link: public Unit {
     void setStrength(int strength, int row, int col) override;
     void setrow(int row) override;
     void setcol(int col) override;
+    
     virtual ~Link() = default;
 };
 

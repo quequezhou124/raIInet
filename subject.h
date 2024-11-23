@@ -13,6 +13,7 @@ class Subject {
   std::vector<Observer*>& getObservers() { return observers; }
 
  public:
+  Board* getBoard() {return theBoard;}
   Subject(Board* theBoard);
   void attach( Observer* o );
   void detach( Observer* o );
