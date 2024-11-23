@@ -112,7 +112,7 @@ void moveit (Player * player, std::string playername, Board * b) {
         while (!getlink) {
             std::cin >> movelink;
             movel = board->find_unit(movelink[0]);
-            if ((movelink.length() != 1) || (movel != nullptr) || (std::find(player->links.begin(), player->links.end(), movel) != player->links.end())) {
+            if ((movelink.length() != 1) || (movel == nullptr) || (std::find(player->links.begin(), player->links.end(), movel) != player->links.end())) {
                 std::cout << "Invalid link. Choose another one.\n";
                 continue;
             } else {
