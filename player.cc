@@ -53,7 +53,7 @@ void Player::changeturn(bool isplayer1){
     player1 = isplayer1;
 }
 
-bool Player::move(Link * link, std::string dir) {
+bool Player::move(Link * link, string dir) {
     int newrow = link->getRow();
     int newcol = link->getCol();
     if (dir == "u") {
