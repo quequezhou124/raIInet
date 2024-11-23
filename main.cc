@@ -66,8 +66,8 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                 int targetRow = ((n - startChar == 3) || (n - startChar == 4))
                                     ? (startRow == 0 ? 1 : 6)
                                     : startRow;
-                std::unique_ptr<Link> virusp = std::make_unique<Virus>(targetRow, col, strength + 1, n, false, false, false);
-                std::unique_ptr<Unit> virusb = std::make_unique<Virus>(targetRow, col, strength + 1, n, false, false, false);
+                auto virusp = std::make_unique<Virus>(targetRow, col, strength + 1, n, false, false, false);
+                auto virusb = std::make_unique<Virus>(targetRow, col, strength + 1, n, false, false, false);
                 player->links.push_back(std::move(virusp));
                 board->units.push_back(std::move(virusb));
                 std::cout << "Successfully set Virus " << set << std::endl;
@@ -99,6 +99,10 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
         col++;
     }
     std::cout << playerName << " has finished setting their links.\n";
+}
+
+bool operator==(const std::unique_ptr<Link> &lhs, const std::unique_ptr<Unit> &rhs) {
+    return lhs->getName() == rhs->getName();
 }
 
 void moveit (Player * player, std::string playername, Board * b) {
