@@ -12,6 +12,7 @@
 #include "decorator.h"
 #include "datadecorator.h"
 #include "virusdecorator.h"
+#include <vector>
 
 void print_rule() {
     std::cout << "RAIInet is a two-player strategy game played on an 8×8 grid.\n"
@@ -43,20 +44,22 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
 
         int strength = 0;
         if (set[0] == 'v' && set[1] >= '1' && set[1] <= '4') {
-            strength = set[1] - '1'; // 转换 '1'-'4' 为 0-3 索引
+            strength = set[1] - '1';
             if (!vSet[strength]) {
                 vSet[strength] = true;
                 if ((n - startChar == 3) || (n - startChar == 4)) {
                     if (startRow == 0) {
                         std::unique_ptr<Virus> virus = std::make_unique<Virus>(1, col, n, 'v', strength + 1, player);
+                        board->units.push_back(virus);
                     } else {
                         std::unique_ptr<Virus> virus = std::make_unique<Virus>(6, col, n, 'v', strength + 1, player);
+                        board->units.push_back(virus);
                     }
                 } else {
                     std::unique_ptr<Virus> virus = std::make_unique<Virus>(startRow, col, n, 'v', strength + 1, player);
+                    board->units.push_back(virus);
                 }
-                board->units.push_back(virus);
-                std::cout << "Successfully set Virus " << set << " at (" << startRow << ", " << col << ").\n";
+                std::cout << "Successfully set Virus " << set << endl;
             } else {
                 std::cout << "You have already set " << set << ".\n";
             }
@@ -74,7 +77,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                     std::unique_ptr<Data> data = std::make_unique<Data>(startRow, col, n, 'd', strength + 1, player);
                 }
                 board->units.push_back(data);
-                std::cout << "Successfully set Data " << set << " at (" << startRow << ", " << col << ").\n";
+                std::cout << "Successfully set Data " << set << endl;
             } else {
                 std::cout << "You have already set " << set << ".\n";
             }
