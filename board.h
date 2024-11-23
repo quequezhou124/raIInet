@@ -10,17 +10,17 @@ class Unit;
 
 class Board {
   public:
-    vector<Unit*> units;
+    vector<std::unique_ptr<Unit>> units;
     Unit* find_unit (char name) {
-        for (auto *unit : units) {
-            if (unit->getName() == name) return unit;
+        for (auto& unit : units) {
+            if (unit->getName() == name) return unit.get();
         }
         return nullptr;
     }
     Unit* getUnit(int row, int col) { 
-        for (Unit* unit : units) {
+        for (auto& unit : units) {
             if (unit->getRow() == row && unit->getCol() == col) {
-                return unit;
+                return unit.get();
             }
         }
         return nullptr; 
