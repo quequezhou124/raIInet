@@ -60,18 +60,13 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
             strength = set[1] - '1';
             if (!vSet[strength]) {
                 vSet[strength] = true;
-                if ((n - startChar == 3) || (n - startChar == 4)) {
-                    if (startRow == 0) {
-                        std::unique_ptr<Virus> virus = std::make_unique<Virus>(1, col, n, 'v', strength + 1, player);
-                        board->units.push_back(virus);
-                    } else {
-                        std::unique_ptr<Virus> virus = std::make_unique<Virus>(6, col, n, 'v', strength + 1, player);
-                        board->units.push_back(virus);
-                    }
-                } else {
-                    std::unique_ptr<Virus> virus = std::make_unique<Virus>(startRow, col, n, 'v', strength + 1, player);
-                    board->units.push_back(virus);
-                }
+
+                int targetRow = ((n - startChar == 3) || (n - startChar == 4))
+                                    ? (startRow == 0 ? 1 : 6)
+                                    : startRow;
+                auto virus = std::make_unique<Virus>(targetRow, col, n, 'v', strength + 1, player);
+
+                board->units.push_back(std::move(virus));
                 std::cout << "Successfully set Virus " << set << std::endl;
             } else {
                 std::cout << "You have already set " << set << ".\n";
@@ -80,16 +75,13 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
             strength = set[1] - '1';
             if (!dSet[strength]) {
                 dSet[strength] = true;
-                if ((n - startChar == 3) || (n - startChar == 4)) {
-                    if (startRow == 0) {
-                        std::unique_ptr<Data> data = std::make_unique<Data>(1, col, n, 'd', strength + 1, player);
-                    } else {
-                        std::unique_ptr<Data> data = std::make_unique<Data>(6, col, n, 'd', strength + 1, player);
-                    }
-                } else {
-                    std::unique_ptr<Data> data = std::make_unique<Data>(startRow, col, n, 'd', strength + 1, player);
-                }
-                board->units.push_back(data);
+
+                int targetRow = ((n - startChar == 3) || (n - startChar == 4))
+                                    ? (startRow == 0 ? 1 : 6)
+                                    : startRow;
+                auto data = std::make_unique<Data>(targetRow, col, n, 'd', strength + 1, player);
+
+                board->units.push_back(std::move(data));
                 std::cout << "Successfully set Data " << set << std::endl;
             } else {
                 std::cout << "You have already set " << set << ".\n";
