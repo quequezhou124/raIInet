@@ -106,6 +106,7 @@ int main() {
     while (rule) {
         if (command == "Y") {
             print_rule();
+            rule = false;
         } else if (command != "N") {
             std::cout << "Please reply Y or N.\n";
         } else {
