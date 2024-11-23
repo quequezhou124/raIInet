@@ -52,6 +52,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
     bool dSet[4] = {false, false, false, false};
 
     while (n <= startChar + 7) {
+        std::cout << "Set " << n << endl;
         std::string set;
         std::cin >> set;
 
@@ -86,11 +87,11 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
             } else {
                 std::cout << "You have already set " << set << ".\n";
             }
+        n++;
         } else {
             std::cout << "Invalid input. Please use format v1, d2, etc.\n";
             continue;
         }
-        n++;
         col++;
     }
     std::cout << playerName << " has finished setting their links.\n";
