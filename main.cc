@@ -119,12 +119,10 @@ int main() {
 
     print_blank();
     // Player 1 setup (a-h)
-    setupPlayer(board, player1.get(), 0, "Player 1", 'a');
+    setupPlayer(board, player1, 0, "Player 1", 'a');
 
     print_blank();
     // Player 2 setup (A-H)
-    setupPlayer(board, player2.get(), 0, "Player 2", 'A');
-
-
+    setupPlayer(board, player2, 0, "Player 2", 'A');
     return 0;
 }

@@ -15,13 +15,13 @@ enum class State {
 class Link;
 
 class Player {
-    std::vector<Link*> links;
     bool player1;
     State state;
     int downloadD;
     int downloadV;
     int abilityNum;
    public:
+    std::vector<Link*> links;
     //constructor
     Player(std::vector<Link*> links, bool player1 = true, State state = State::Undecided, int downloadD = 0, int downloadV = 0, int abilityNum = 0);
     Player();
@@ -41,7 +41,6 @@ class Player {
     void setabilityNum(int newabilityNum);
     bool isplayer1turn() const;
     void changeturn(bool isplayer1);
-    
 };
 
 #endif
