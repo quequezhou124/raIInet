@@ -50,21 +50,25 @@ void Player::changeturn(bool isplayer1){
 }
 
 bool Player::move(std::unique_ptr<Link>& link, const std::string& dir) {
-    int newrow = link->getRow();
-    int newcol = link->getCol();
-    if (dir == "u") {
-        newrow--;
-    } else if (dir == "d") {
-        newrow++;
-    } else if (dir == "l") {
-        newcol--;
-    } else if (dir == "r") {
-        newcol++;
-    } else {
+    if (auto link = dynamic_cast<Link*>(unit.get())){
+        int newrow = link->getRow();
+        int newcol = link->getCol();
+        if (dir == "u") {
+            newrow--;
+        } else if (dir == "d") {
+            newrow++;
+        } else if (dir == "l") {
+            newcol--;
+        } else if (dir == "r") {
+            newcol++;
+        } else {
+            return false;
+        }
+        link->setrow(newrow);
+        link->setcol(newcol);
+        return true;
+    } else{
         return false;
     }
-    link->setrow(newrow);
-    link->setcol(newcol);
-    return true;
 }
 
