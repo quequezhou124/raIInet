@@ -4,6 +4,8 @@
 #include <vector>
 #include <string.h>
 
+class Link;
+
 enum class State {
     Winner,
     Loser,

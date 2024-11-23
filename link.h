@@ -3,7 +3,7 @@
 #include"unit.h"
 #include"player.h"
 #include <string>
-
+class Player;
 class Link: public Unit {
     int strength;
     Player* owner;

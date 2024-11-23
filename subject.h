@@ -14,7 +14,7 @@ class Subject {
 
  public:
   Board* getBoard() {return theBoard;}
-  Subject(Board* theBoard);
+  explicit Subject(Board* theBoard);
   void attach( Observer* o );
   void detach( Observer* o );
   void notifyObservers();
