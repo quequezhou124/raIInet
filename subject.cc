@@ -4,7 +4,7 @@
 #include <vector>
 
 // constructor
-explicit Subject(Board* theBoard): theBoard{theBoard} {}
+explicit Subject::Subject(Board* theBoard): theBoard{theBoard} {}
 
 // attach( Observer* o ) add the input observer
 void Subject::attach( Observer* o ) {

@@ -1,3 +1,6 @@
+#ifndef DATA_DECORATOR_H
+#define DATA_DECORATOR_H
+
 #include "decorator.h"
 #include "data.h"
 
@@ -12,3 +15,5 @@ class DataDecorator: public Decorator {
         }
     }
 };
+
+#endif

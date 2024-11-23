@@ -1,3 +1,5 @@
+#ifndef BOARD_H
+#define BOARD_H
 #include "unit.h"
 #include <iostream>
 #include <vector>
@@ -20,3 +22,5 @@ class Board {
     virtual char unitAt(int row, int col) = 0;
     virtual ~Board() = default;
 };
+
+#endif

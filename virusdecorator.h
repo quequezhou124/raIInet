@@ -1,3 +1,5 @@
+#ifndef VIRUS_DECORATOR_H
+#define VIRUS_DECORATOR_H
 #include "decorator.h"
 #include "virus.h"
 class VirusDecorator: public Decorator {
@@ -11,3 +13,5 @@ class VirusDecorator: public Decorator {
         }
     }
 };
+
+#endif

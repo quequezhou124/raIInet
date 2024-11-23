@@ -1,3 +1,5 @@
+#ifndef UNIT_H
+#define UNIT_H
 #include"player.h"
 #include <iostream>
 
@@ -18,3 +20,5 @@ class Unit {
     virtual void setcol(int col) = 0;
     virtual ~Unit() = default;
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef DECORATOR_H
+#define DECORATOR_H
+
 #include "board.h"
 
 class Decorator: public Board {
@@ -10,3 +13,5 @@ class Decorator: public Board {
     }
     virtual ~Decorator() = default;
 };
+
+#endif

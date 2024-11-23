@@ -1,3 +1,5 @@
+#ifndef VIRUS_H
+#define VIRUS_H
 #include"link.h"
 
 class Virus: public Link {
@@ -5,3 +7,5 @@ class Virus: public Link {
   public:
     Virus (int row, int col, int strength, char name, Player* owner, bool displayed, bool doublespeed, bool locked);
 };
+
+#endif
