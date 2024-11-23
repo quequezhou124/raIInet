@@ -11,6 +11,7 @@ class Link;
 class TextObserver : public Observer {
     Subject *subject;
     Player *curplayer;
+    Player *otherplayer;
 public:
     // constructor
     TextObserver(Subject *subject):
@@ -21,18 +22,18 @@ public:
     // print the canvas
     void notify() override {
         std::cout << "Player 1: " << endl;
-        std::cout << "Downloaded: " << curplayer->getdownloadD <<"D, "<< curplayer->getdownloadV << "V" <<endl;
-        std::cout << "Abilities: " << curplayer->getabilityNum << endl;
+        std::cout << "Downloaded: " << curplayer->getdownloadD() <<"D, "<< curplayer->getdownload() << "V" <<endl;
+        std::cout << "Abilities: " << curplayer->getabilityNum() << endl;
         
         if (curplayer->isplayer1turn()) {
-            std::cout << "a: " << string getinfo("a") << " ";
-            std::cout << "b: " << string getinfo("b") << " ";
-            std::cout << "c: " << string getinfo("c") << " ";
-            std::cout << "d: " << string getinfo("d") << " " << endl;
-            std::cout << "e: " << string getinfo("e") << " ";
-            std::cout << "f: " << string getinfo("f") << " ";
-            std::cout << "g: " << string getinfo("g") << " ";
-            std::cout << "h: " << string getinfo("h") << " " << endl;
+            std::cout << "a: " << getinfo("a") << " ";
+            std::cout << "b: " << getinfo("b") << " ";
+            std::cout << "c: " << getinfo("c") << " ";
+            std::cout << "d: " << getinfo("d") << " " << endl;
+            std::cout << "e: " << getinfo("e") << " ";
+            std::cout << "f: " << getinfo("f") << " ";
+            std::cout << "g: " << getinfo("g") << " ";
+            std::cout << "h: " << getinfo("h") << " " << endl;
         } else {
             std::cout << "a: ? b: ? c: ? d: ?" << endl;
             std::cout << "e: ? f: ? g: ? h: ?" << endl;
@@ -50,6 +51,10 @@ public:
         for (int i = 0; i < 8; ++i) {
             std::cout << '=' << endl;
         }
+        std::cout << "Player 2: " << endl;
+        std::cout << "Downloaded: " << otherplayer->getdownloadD() <<"D, "<< otherplayer->getdownload() << "V" <<endl;
+        std::cout << "Abilities: " << otherplayer->getabilityNum() << endl;
+        
 
         if (!curplayer->isplayer1turn()) {
             std::cout << "A: " << string getinfo("A") << " ";
