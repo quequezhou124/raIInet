@@ -5,10 +5,6 @@
 
 class Player;
 class Link: public Unit {
-    int strength;
-    bool displayed;
-    bool doublespeed;
-    bool locked;
   protected:
     Link (int row, int col, int strength, char name, bool displayed, bool doublespeed, bool locked);
   public:

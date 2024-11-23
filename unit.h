@@ -8,8 +8,11 @@ class Unit {
     int col;
     int strength;
     char name;
+    bool displayed;
+    bool doublespeed;
+    bool locked;
   public:
-    Unit(int row, int col, int strength, char name);
+    Unit(int row, int col, int strength, char name, bool displayed = false, bool doublespeed = false, bool locked = false);
     char getName() const { return name; }
     int getRow() const { return row; }
     int getCol() const { return col; }

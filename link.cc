@@ -1,7 +1,7 @@
 #include "link.h"
 
 Link::Link(int row, int col, int strength, char name, bool displayed, bool doublespeed, bool locked) :
-    Unit{row, col, strength, name}, displayed{displayed}, doublespeed{doublespeed}, locked{locked} {}
+    Unit{row, col, strength, name, displayed, doublespeed, locked} {}
 
 int Link::getStrength() { return strength; }
 

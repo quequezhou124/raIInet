@@ -66,9 +66,10 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                 int targetRow = ((n - startChar == 3) || (n - startChar == 4))
                                     ? (startRow == 0 ? 1 : 6)
                                     : startRow;
-                auto virus = std::make_unique<Virus>(targetRow, col, strength + 1, n, false, false, false);
-                player->links.push_back(std::move(virus));
-                board->units.push_back(std::move(virus));
+                std::unique_ptr<Link> virusp = std::make_unique<Virus>(targetRow, col, strength + 1, n, false, false, false);
+                std::unique_ptr<Unit> virusb = std::make_unique<Virus>(targetRow, col, strength + 1, n, false, false, false);
+                player->links.push_back(std::move(virusp));
+                board->units.push_back(std::move(virusb));
                 std::cout << "Successfully set Virus " << set << std::endl;
                 n++;
             } else {
@@ -82,9 +83,10 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                 int targetRow = ((n - startChar == 3) || (n - startChar == 4))
                                     ? (startRow == 0 ? 1 : 6)
                                     : startRow;
-                auto data = std::make_unique<Data>(targetRow, col, strength + 1, n, false, false, false);
-                player->links.push_back(std::move(data));
-                board->units.push_back(std::move(data));
+                auto datap = std::make_unique<Data>(targetRow, col, strength + 1, n, false, false, false);
+                auto datab = std::make_unique<Data>(targetRow, col, strength + 1, n, false, false, false);
+                player->links.push_back(std::move(datap));
+                board->units.push_back(std::move(datab));
                 std::cout << "Successfully set Data " << set << std::endl;
                 n++;
             } else {
@@ -145,10 +147,10 @@ int main() {
     std::cout << "Welcome to the game: RAIInet\n";
     std::cout << "Do you need the rulebook for RAIInet? Reply Y or N.\n";
     std::string command;
-    std::cin >> command;
 
     bool rule = true;
     while (rule) {
+        std::cin >> command;
         if (command == "Y") {
             print_rule();
             rule = false;
