@@ -37,7 +37,15 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
             strength = set[1] - '1'; // 转换 '1'-'4' 为 0-3 索引
             if (!vSet[strength]) {
                 vSet[strength] = true;
-                std::unique_ptr<Virus> virus = std::make_unique<Virus>(startRow, col, n, 'v', strength + 1, player);
+                if ((n - startChar == 3) || (n - startChar == 4)) {
+                    if (startRow == 0) {
+                        std::unique_ptr<Virus> virus = std::make_unique<Virus>(1, col, n, 'v', strength + 1, player);
+                    } else {
+                        std::unique_ptr<Virus> virus = std::make_unique<Virus>(6, col, n, 'v', strength + 1, player);
+                    }
+                } else {
+                    std::unique_ptr<Virus> virus = std::make_unique<Virus>(startRow, col, n, 'v', strength + 1, player);
+                }
                 board->unitAt(startRow, col)->setUnit(virus.release());
                 std::cout << "Successfully set Virus " << set << " at (" << startRow << ", " << col << ").\n";
             } else {
@@ -47,7 +55,15 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
             strength = set[1] - '1';
             if (!dSet[strength]) {
                 dSet[strength] = true;
-                std::unique_ptr<Data> data = std::make_unique<Data>(startRow, col, n, 'd', strength + 1, player);
+                if ((n - startChar == 3) || (n - startChar == 4)) {
+                    if (startRow == 0) {
+                        std::unique_ptr<Data> data = std::make_unique<Data>(1, col, n, 'd', strength + 1, player);
+                    } else {
+                        std::unique_ptr<Data> data = std::make_unique<Data>(6, col, n, 'd', strength + 1, player);
+                    }
+                } else {
+                    std::unique_ptr<Data> data = std::make_unique<Data>(startRow, col, n, 'd', strength + 1, player);
+                }
                 board->unitAt(startRow, col)->setUnit(data.release());
                 std::cout << "Successfully set Data " << set << " at (" << startRow << ", " << col << ").\n";
             } else {
@@ -82,8 +98,8 @@ int main() {
     setupPlayer(board, player1.get(), 0, "Player 1", 'a');
 
     // Player 2 setup (A-H)
-    setupPlayer(board, player2.get(), 7, "Player 2", 'A');
-    
+    setupPlayer(board, player2.get(), 0, "Player 2", 'A');
+
 
     return 0;
 }
