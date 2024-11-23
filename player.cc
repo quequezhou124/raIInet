@@ -1,10 +1,19 @@
 #include "player.h"
 //constructor
-Player::Player(std::vector<Link*> links, bool player1=true, State state, int download):
-    links{links},
+Player::Player(std::vector<Link*> links, bool player1=true, State state, int downloadD, int downloadV):
+    links{links},,
     player1{player1},
     state{state},
-    download{download}{}
+    downloadD{downloadD},
+    downloadV{downloadV}{}
+
+Player::Player():
+    links{}, 
+    player1{true},
+    state{State::Undecided},
+    downloadD{0},
+    downloadV{0}
+    abilityNum{0}{}
 
 State Player::getState() const {
     return state;
