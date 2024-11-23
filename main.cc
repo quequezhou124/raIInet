@@ -37,7 +37,8 @@ void print_blank() {
               << "........\n"
               << "........\n"
               << "...DE...\n"
-              << "ABCSSFGH\n";
+              << "ABCSSFGH\n"
+              << "========\n";
 }
 void setupPlayer(Board* board, Player* player, int startRow, const std::string& playerName, char startChar) {
     std::cout << playerName << ", please set your links (" << startChar
