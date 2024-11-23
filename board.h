@@ -11,6 +11,12 @@ class Unit;
 class Board {
   public:
     vector<Unit*> units;
+    Unit* find_unit (char name) {
+        for (auto *unit : units) {
+            if (unit->getName() == name) return unit;
+        }
+        return nullptr;
+    }
     Unit* getUnit(int row, int col) { 
         for (Unit* unit : units) {
             if (unit->getRow() == row && unit->getCol() == col) {
