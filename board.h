@@ -11,20 +11,29 @@ class Unit;
 class Board {
   public:
     vector<std::unique_ptr<Unit>> units;
-    Unit* find_unit (char name) {
-        for (auto& unit : units) {
-            if (unit->getName() == name) return unit.get();
+    
+    std::unique_ptr<Unit> find_unit (char name) {
+        for (auto it = units.begin(); it != units.end(); ++it) {
+            if ((*it)->getName() == name) {
+                std::unique_ptr<Unit> result = std::move(*it);
+                units.erase(it);
+                return result;
+            }
         }
         return nullptr;
     }
-    Unit* getUnit(int row, int col) { 
-        for (auto& unit : units) {
-            if (unit->getRow() == row && unit->getCol() == col) {
-                return unit.get();
+
+    std::unique_ptr<Unit> getUnit(int row, int col) {
+        for (auto it = units.begin(); it != units.end(); ++it) {
+            if ((*it)->getRow() == row && (*it)->getCol() == col) {
+                std::unique_ptr<Unit> result = std::move(*it);
+                units.erase(it);
+                return result;
             }
         }
-        return nullptr; 
+        return nullptr;
     }
+
     virtual char unitAt(int row, int col) = 0;
     virtual ~Board() = default;
 };
