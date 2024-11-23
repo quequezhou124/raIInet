@@ -59,7 +59,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                     std::unique_ptr<Virus> virus = std::make_unique<Virus>(startRow, col, n, 'v', strength + 1, player);
                     board->units.push_back(virus);
                 }
-                std::cout << "Successfully set Virus " << set << endl;
+                std::cout << "Successfully set Virus " << set << std::endl;
             } else {
                 std::cout << "You have already set " << set << ".\n";
             }
@@ -77,7 +77,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                     std::unique_ptr<Data> data = std::make_unique<Data>(startRow, col, n, 'd', strength + 1, player);
                 }
                 board->units.push_back(data);
-                std::cout << "Successfully set Data " << set << endl;
+                std::cout << "Successfully set Data " << set << std::endl;
             } else {
                 std::cout << "You have already set " << set << ".\n";
             }
