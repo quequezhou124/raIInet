@@ -1,13 +1,14 @@
 #include "player.h"
 #include "link.h"
+#include <utility>
 //constructor
-Player::Player(std::vector<std::unique_ptr<Link>> links, bool player1, State state, int downloadD, int downloadV, int abilityNum):
-    links{links},
-    player1{player1},
-    state{state},
-    downloadD{downloadD},
-    downloadV{downloadV},
-    abilityNum{abilityNum} {}
+Player::Player(std::vector<std::unique_ptr<Link>>&& links, bool player1, State state, int downloadD, int downloadV, int abilityNum)
+    : links{std::move(links)},
+      player1{player1},
+      state{state},
+      downloadD{downloadD},
+      downloadV{downloadV},
+      abilityNum{abilityNum} {}
 
 Player::Player():
     links{}, player1{true}, state{State::Undecided}, downloadD{0}, downloadV{0}, abilityNum{0} {}
@@ -48,7 +49,7 @@ void Player::changeturn(bool isplayer1){
     player1 = isplayer1;
 }
 
-bool Player::move(std::unique_ptr<Link>& link, std::string dir) {
+bool Player::move(std::unique_ptr<Link>& link, const std::string& dir) {
     int newrow = link->getRow();
     int newcol = link->getCol();
     if (dir == "u") {
