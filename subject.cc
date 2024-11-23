@@ -30,7 +30,7 @@ void Subject::notifyObservers() {
 }
 
 // cleanupObservers() clean all the observer
-void Studio::cleanupObservers() {
+void Subject::cleanupObservers() {
     auto& observers = getObservers();
     for (auto observer : observers) { // delete every observer
         delete observer; 
@@ -39,12 +39,12 @@ void Studio::cleanupObservers() {
 }
 
 // getState(int row, int col) return the char at current position
-char Studio::getState(int row, int col) const {
+char Subject::getState(int row, int col) const {
     return theBoard->unitAt(row, col);
 }
 
 // destructor
-Studio::~Studio() { 
+Subject::~Subject() { 
     cleanupObservers(); 
     delete theBoard;
 }
