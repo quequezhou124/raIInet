@@ -13,7 +13,7 @@ class Subject {
   std::vector<Observer*>& getObservers() { return observers; }
 
  public:
-  explicit Board* getBoard() {return theBoard;}
+  Board* getBoard() {return theBoard;}
   explicit Subject(Board* theBoard);
   void attach( Observer* o );
   void detach( Observer* o );
