@@ -1,11 +1,13 @@
 #include "player.h"
+#include "link.h"
 //constructor
-Player::Player(std::vector<Link*> links, bool player1=true, State state, int downloadD, int downloadV):
-    links{links},,
+Player::Player(std::vector<Link*> links, bool player1=true, State state, int downloadD, int downloadV, int abilityNum):
+    links{links},
     player1{player1},
     state{state},
     downloadD{downloadD},
-    downloadV{downloadV}{}
+    downloadV{downloadV},
+    abilityNum{}
 
 Player::Player():
     links{}, 
@@ -22,10 +24,10 @@ void Player::setState(State newState) {
     state = newState;
 }
 
-int Player::getdownloadD(){
+int Player::getdownloadD() const {
     return downloadD;
 }
-int Player::getdownloadV(){
+int Player::getdownloadV() const {
     return downloadV;
 }
 void Player::setdownloadD(int newdownloadD) {
