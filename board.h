@@ -1,3 +1,4 @@
+#include "unit.h"
 #include <iostream>
 #include <vector>
 
@@ -6,7 +7,16 @@ using namespace std;
 class Unit;
 
 class Board {
-    vector<Unit> units;
+    vector<Unit*> units;
   public:
-    virtual Unit unitAt() = 0;
+    Unit* getUnit(int row, int col) { 
+        for (Unit* unit : units) {
+            if (unit->getRow() == row && unit->getCol() == col) {
+                return unit;
+            }
+        }
+        return nullptr; 
+    }
+    virtual char unitAt(int row, int col) = 0;
+    virtual ~Board() = default;
 };

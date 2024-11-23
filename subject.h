@@ -1,12 +1,13 @@
 #ifndef SUBJECT_H
 #define SUBJECT_H
+#include "board.h"
 #include <vector>
 
 class Observer; // forward declaration
 class Board;
 
 class Subject {
-  Board *theBoard;
+  Board* theBoard;
   std::vector<Observer*> observers;
  protected:
   std::vector<Observer*>& getObservers() { return observers; }
