@@ -1,6 +1,5 @@
 #ifndef UNIT_H
 #define UNIT_H
-#include"player.h"
 #include <iostream>
 
 class Unit {
