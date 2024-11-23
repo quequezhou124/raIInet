@@ -41,7 +41,7 @@ void print_blank() {
               << "========\n";
 }
 
-void setupPlayer(Board* board, Player* player, int startRow, const std::string& playerName, char startChar) {
+void setupPlayer(Board* board, std::unique_ptr<Player> &player, int startRow, const std::string& playerName, char startChar) {
     std::cout << playerName << ", please set your links (" << startChar
               << "-" << static_cast<char>(startChar + 7)
               << "). Use format v1, d2, etc.\n";
@@ -65,7 +65,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                                     ? (startRow == 0 ? 1 : 6)
                                     : startRow;
                 auto virus = std::make_unique<Virus>(targetRow, col, n, 'v', strength + 1, player);
-
+                player->links.push_back(std::move(virus));
                 board->units.push_back(std::move(virus));
                 std::cout << "Successfully set Virus " << set << std::endl;
             } else {
@@ -119,11 +119,11 @@ int main() {
 
     print_blank();
     // Player 1 setup (a-h)
-    setupPlayer(board, player1.get(), 0, "Player 1", 'a');
+    setupPlayer(board, player1, 0, "Player 1", 'a');
 
     print_blank();
     // Player 2 setup (A-H)
-    setupPlayer(board, player2.get(), 0, "Player 2", 'A');
+    setupPlayer(board, player2, 0, "Player 2", 'A');
 
 
     return 0;
