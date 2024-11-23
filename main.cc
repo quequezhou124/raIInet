@@ -40,6 +40,7 @@ void print_blank() {
               << "ABCSSFGH\n"
               << "========\n";
 }
+
 void setupPlayer(Board* board, Player* player, int startRow, const std::string& playerName, char startChar) {
     std::cout << playerName << ", please set your links (" << startChar
               << "-" << static_cast<char>(startChar + 7)
@@ -100,7 +101,6 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
         n++;
         col++;
     }
-
     std::cout << playerName << " has finished setting their links.\n";
 }
 
