@@ -22,7 +22,7 @@ public:
     // print the canvas
     void notify() override {
         std::cout << "Player 1: " << endl;
-        std::cout << "Downloaded: " << curplayer->getdownloadD() <<"D, "<< curplayer->getdownload() << "V" <<endl;
+        std::cout << "Downloaded: " << curplayer->getdownloadD() <<"D, "<< curplayer->getdownloadV() << "V" <<endl;
         std::cout << "Abilities: " << curplayer->getabilityNum() << endl;
         
         if (curplayer->isplayer1turn()) {
@@ -52,7 +52,7 @@ public:
             std::cout << '=' << endl;
         }
         std::cout << "Player 2: " << endl;
-        std::cout << "Downloaded: " << otherplayer->getdownloadD() <<"D, "<< otherplayer->getdownload() << "V" <<endl;
+        std::cout << "Downloaded: " << otherplayer->getdownloadD() <<"D, "<< otherplayer->getdownloadV() << "V" <<endl;
         std::cout << "Abilities: " << otherplayer->getabilityNum() << endl;
         
 
