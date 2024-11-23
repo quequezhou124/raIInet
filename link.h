@@ -11,5 +11,7 @@ class Link: public Unit {
   public:
     int getStrength() override {};
     void setStrength(int strength, int row, int col) override {};
+    void setrow(int row) override {};
+    void setcol(int col) override {};
     virtual ~Link() = default;
 };

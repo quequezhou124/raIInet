@@ -6,3 +6,7 @@ Link::Link(int row, int col, int strength, char name, Player* owner, bool displa
 int Link::getStrength() { return strength; }
 
 void Link::setStrength(int strength, int row, int col) { this->strength = strength; }
+
+void Link::setrow(int row) { this->row = row; }
+
+void Link::setcol(int col) { this->col = col; }
