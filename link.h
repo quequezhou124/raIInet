@@ -1,6 +1,7 @@
 #ifndef LINK_H
 #define LINK_H
 #include"unit.h"
+#include"player.h"
 #include <string>
 
 class Link: public Unit {
@@ -12,7 +13,7 @@ class Link: public Unit {
   protected:
     Link (int row, int col, int strength, char name, Player* owner, bool displayed, bool doublespeed, bool locked);
   public:
-    int getStrength() override ;
+    int getStrength() override;
     void setStrength(int strength, int row, int col) override;
     void setrow(int row) override;
     void setcol(int col) override;
