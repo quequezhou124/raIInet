@@ -7,15 +7,10 @@ Player::Player(std::vector<Link*> links, bool player1=true, State state, int dow
     state{state},
     downloadD{downloadD},
     downloadV{downloadV},
-    abilityNum{}
+    abilityNum{abilityNum} {}
 
 Player::Player():
-    links{}, 
-    player1{true},
-    state{State::Undecided},
-    downloadD{0},
-    downloadV{0}
-    abilityNum{0} {}
+    links{}, player1{true}, state{State::Undecided}, downloadD{0}, downloadV{0}, abilityNum{0} {}
 
 State Player::getState() const {
     return state;
