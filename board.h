@@ -7,8 +7,8 @@ using namespace std;
 class Unit;
 
 class Board {
-    vector<Unit*> units;
   public:
+    vector<Unit*> units;
     Unit* getUnit(int row, int col) { 
         for (Unit* unit : units) {
             if (unit->getRow() == row && unit->getCol() == col) {
