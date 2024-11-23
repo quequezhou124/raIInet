@@ -69,10 +69,10 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                 player->links.push_back(std::move(virus));
                 board->units.push_back(std::move(virus));
                 std::cout << "Successfully set Virus " << set << std::endl;
+                n++;
             } else {
                 std::cout << "You have already set " << set << ".\n";
             }
-        n++;
         } else if (set[0] == 'd' && set[1] >= '1' && set[1] <= '4') {
             strength = set[1] - '1';
             if (!dSet[strength]) {
@@ -85,10 +85,10 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                 player->links.push_back(std::move(data));
                 board->units.push_back(std::move(data));
                 std::cout << "Successfully set Data " << set << std::endl;
+                n++;
             } else {
                 std::cout << "You have already set " << set << ".\n";
             }
-        n++;
         } else {
             std::cout << "Invalid input. Please use format v1, d2, etc.\n";
             continue;
