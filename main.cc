@@ -64,7 +64,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                 int targetRow = ((n - startChar == 3) || (n - startChar == 4))
                                     ? (startRow == 0 ? 1 : 6)
                                     : startRow;
-                auto virus = std::make_unique<Virus>(targetRow, col, n, 'v', strength + 1, player);
+                auto virus = std::make_unique<Virus>(targetRow, col, strength + 1, n, false, false, false);
                 player->links.push_back(std::move(virus));
                 board->units.push_back(std::move(virus));
                 std::cout << "Successfully set Virus " << set << std::endl;
@@ -79,7 +79,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                 int targetRow = ((n - startChar == 3) || (n - startChar == 4))
                                     ? (startRow == 0 ? 1 : 6)
                                     : startRow;
-                auto data = std::make_unique<Data>(targetRow, col, n, 'd', strength + 1, player);
+                auto data = std::make_unique<Data>(targetRow, col, strength + 1, n, false, false, false);
                 player->links.push_back(std::move(data));
                 board->units.push_back(std::move(data));
                 std::cout << "Successfully set Data " << set << std::endl;

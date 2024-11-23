@@ -17,6 +17,7 @@ class Link: public Unit {
     void setrow(int row) override;
     void setcol(int col) override;
     
+    virtual std::string getType () = 0;
     virtual ~Link() = default;
 };
 

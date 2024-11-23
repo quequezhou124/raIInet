@@ -11,7 +11,7 @@ class Decorator: public Board {
     char unitAt(int row, int col) override {
         return theBoard->unitAt(row, col);
     }
-    virtual ~Decorator() = default;
+    virtual ~Decorator() { delete theBoard; }
 };
 
 #endif
