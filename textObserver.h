@@ -26,14 +26,14 @@ public:
         std::cout << "Abilities: " << curplayer->getabilityNum() << endl;
         
         if (curplayer->isplayer1turn()) {
-            std::cout << "a: " << getName("a") << " ";
-            std::cout << "b: " << getName("b") << " ";
-            std::cout << "c: " << getName("c") << " ";
-            std::cout << "d: " << getName("d") << " " << endl;
-            std::cout << "e: " << getName("e") << " ";
-            std::cout << "f: " << getName("f") << " ";
-            std::cout << "g: " << getName("g") << " ";
-            std::cout << "h: " << getName("h") << " " << endl;
+            std::cout << "a: " << subject->theBoard->find_unit("a")->getType() << subject->theBoard->find_unit("a")->getStrength() << " ";
+            std::cout << "b: " << subject->theBoard->find_unit("b")->getType() << subject->theBoard->find_unit("b")->getStrength() << " ";
+            std::cout << "c: " << subject->theBoard->find_unit("c")->getType() << subject->theBoard->find_unit("c")->getStrength() << " ";
+            std::cout << "d: " << subject->theBoard->find_unit("d")->getType() << subject->theBoard->find_unit("d")->getStrength() << " " << endl;
+            std::cout << "e: " << subject->theBoard->find_unit("e")->getType() << subject->theBoard->find_unit("e")->getStrength() << " ";
+            std::cout << "f: " << subject->theBoard->find_unit("f")->getType() << subject->theBoard->find_unit("f")->getStrength()<< " ";
+            std::cout << "g: " << subject->theBoard->find_unit("g")->getType() << subject->theBoard->find_unit("g")->getStrength() << " ";
+            std::cout << "h: " << subject->theBoard->find_unit("h")->getType() << subject->theBoard->find_unit("h")->getStrength() << " " << endl;
         } else {
             std::cout << "a: ? b: ? c: ? d: ?" << endl;
             std::cout << "e: ? f: ? g: ? h: ?" << endl;
@@ -57,14 +57,14 @@ public:
         
 
         if (!curplayer->isplayer1turn()) {
-            std::cout << "A: " << string getName("A") << " ";
-            std::cout << "B: " << string getName("B") << " ";
-            std::cout << "C: " << string getName("C") << " ";
-            std::cout << "D: " << string getName("D") << " " << endl;
-            std::cout << "E: " << string getName("E") << " ";
-            std::cout << "F: " << string getName("F") << " ";
-            std::cout << "G: " << string getName("G") << " ";
-            std::cout << "H: " << string getName("H") << " " << endl;
+            std::cout << "A: " << subject->theBoard->find_unit("A")->getType() << subject->theBoard->find_unit("A")->getStrength() << " ";
+            std::cout << "B: " << subject->theBoard->find_unit("B")->getType() << subject->theBoard->find_unit("B")->getStrength() << " ";
+            std::cout << "C: " << subject->theBoard->find_unit("C")->getType() << subject->theBoard->find_unit("C")->getStrength() << " ";
+            std::cout << "D: " << subject->theBoard->find_unit("D")->getType() << subject->theBoard->find_unit("D")->getStrength() << " " << endl;
+            std::cout << "E: " << subject->theBoard->find_unit("E")->getType() << subject->theBoard->find_unit("E")->getStrength() << " ";
+            std::cout << "F: " << subject->theBoard->find_unit("F")->getType() << subject->theBoard->find_unit("F")->getStrength()<< " ";
+            std::cout << "G: " << subject->theBoard->find_unit("G")->getType() << subject->theBoard->find_unit("G")->getStrength() << " ";
+            std::cout << "H: " << subject->theBoard->find_unit("H")->getType() << subject->theBoard->find_unit("H")->getStrength() << " " << endl;
         } else {
             std::cout << "A: ? B: ? C: ? D: ?" << endl;
             std::cout << "E: ? F: ? G: ? H: ?" << endl;
