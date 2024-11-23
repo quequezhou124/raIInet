@@ -29,12 +29,35 @@ void Player::setdownloadV(int newdownloadV) {
 int getabilityNum() const {
     return abilityNum;
 }
+
 void setabilityNum(int newabilityNum){
     abilityNum = newabilityNum;
 }
+
 bool isplayer1turn() const {
     return player1;
 }
+
 void changeturn(bool isplayer1){
     player1 = isplayer1;
 }
+
+bool move(Link * link, string dir) {
+    int newrow = link->getRow();
+    int newcol = link->getCol();
+    if (dir == "u") {
+        newrow--;
+    } else if (dir == "d") {
+        newrow++;
+    } else if (dir == "l") {
+        newcol--;
+    } else if (dir == "r") {
+        newcol++;
+    } else {
+        return false;
+    }
+    link->setrow(newrow);
+    link->setcol(newcol);
+    return true;
+}
+
