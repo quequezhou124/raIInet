@@ -6,7 +6,7 @@ class Data: public Link {
     int strength;
   public:
     std::string getType () override { return "D"; }
-    Data (int row, int col, int strength, char name, Player* owner, bool displayed, bool doublespeed, bool locked);
+    Data (int row, int col, int strength, char name, bool displayed, bool doublespeed, bool locked);
 };
 
 #endif
