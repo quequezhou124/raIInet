@@ -1,5 +1,6 @@
 #include <iostream>
 #include <memory>
+#include <algorithm>
 #include "board.h"
 #include "blank.h"
 #include "subject.h"
@@ -98,6 +99,45 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
     std::cout << playerName << " has finished setting their links.\n";
 }
 
+void moveit (Player * player, std::string playername, Board * b) {
+    Board * board = b;
+    bool moving = true;
+    while (moving) {
+        bool getlink = false;
+        bool getdir = false;
+        std::string movelink;
+        std::string dir;
+        std::cout << playername << " please choose the link you move. Use format a, b, etc.\n";
+        std::unique_ptr<Unit> movel;
+        while (!getlink) {
+            std::cin >> movelink;
+            movel = board->find_unit(movelink[0]);
+            if ((movelink.length() != 1) || (movel != nullptr) || (std::find(player->links.begin(), player->links.end(), movel) != player->links.end())) {
+                std::cout << "Invalid link. Choose another one.\n";
+            } else {
+                getlink = true;
+            }
+        }
+        std::cout << "Please choose the direction you move. Use format u, d, l, r.\n";
+        while (!getdir) {
+            std::cin >> dir;
+            if ((dir.length() != 1) || ((dir != "u") && (dir != "d") && (dir != "l") && (dir != "r"))) {
+                std::cout << "Invalid direction. Choose another one.\n";
+            } else {
+                getdir = true;
+            }
+        }
+        if (player->move(movel, dir)) {
+            std::cout << "Successful move.\n";
+            moving = false;
+        } else {
+            std::cout << "Moving fasiled. Choose again.\n";
+            getlink = false;
+            getdir = false;
+        }
+    }
+}
+
 int main() {
     std::cout << "Welcome to the game: RAIInet\n";
     std::cout << "Do you need the rulebook for RAIInet? Reply Y or N.\n";
@@ -111,6 +151,7 @@ int main() {
             rule = false;
         } else if (command != "N") {
             std::cout << "Please reply Y or N.\n";
+            continue;
         } else {
             rule = false;
         }
@@ -128,6 +169,7 @@ int main() {
     // Player 2 setup (A-H)
     setupPlayer(board, player2.get(), 0, "Player 2", 'A');
 
-
+    //Player1 move
+    
     return 0;
 }
