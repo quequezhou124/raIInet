@@ -177,6 +177,10 @@ int main() {
     print_blank();
     // Player 2 setup (A-H)
     setupPlayer(board, player2.get(), 0, "Player 2", 'A');
+    Subject s{board};
+    TextObserver * Observer = new TextObserver{&s, player1.get(), player2.get()};
+    s.notifyObservers();
+    delete Observer;
 
     //Player1 move
     moveit(player1.get(), "player1", board);
