@@ -8,6 +8,7 @@
 using namespace std;
 
 class Unit;
+class Player;
 
 class Board {
   public:

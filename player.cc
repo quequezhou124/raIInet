@@ -1,6 +1,8 @@
 #include "player.h"
 #include "link.h"
+#include "serverports.h"
 #include <utility>
+
 //constructor
 Player::Player(std::vector<Link*> links, bool player1, State state, int downloadD, int downloadV, int abilityNum)
     : links{links},
@@ -49,7 +51,7 @@ void Player::changeturn(bool isplayer1){
     player1 = isplayer1;
 }
 
-bool Player::move(Unit * unit, const std::string& dir) {
+bool Player::move(Board * board, Unit * unit, const std::string& dir) {
     if (auto link = dynamic_cast<Link*>(unit)){
         int newrow = link->getRow();
         int newcol = link->getCol();
@@ -64,6 +66,10 @@ bool Player::move(Unit * unit, const std::string& dir) {
         } else {
             return false;
         }
+        Unit * newunit = board->getUnit(newrow, newcol);
+        if (( newunit != nullptr
+        && std::find(links.begin(), links.end(), newunit) != links.end())
+        || dynamic_cast<Serverports*>(newunit)) {return false;}
         return link->setrow(newrow) && link->setcol(newcol);
 
     } else{
