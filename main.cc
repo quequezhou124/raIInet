@@ -96,17 +96,22 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
 }
 
 void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
+    std::cout << "666\n";
     if (l1->getStrength() >= l2->getStrength()) {
+        std::cout << "777\n";
         if (dynamic_cast<Data*>(l2)) {
+            std::cout << "999\n";
             p1->setdownloadD(p1->getdownloadD() + 1);
             std::cout << "You download a data.\n"<<p1->getdownloadD()<< std::endl;
             l2->setDownloaded(true);
         } else if (dynamic_cast<Virus*>(l2)) {
+            std::cout << "000\n";
             p1->setdownloadV(p1->getdownloadV()+1);
             std::cout << "You download a virus.\n"<<p1->getdownloadV()<< std::endl;
             l2->setDownloaded(true);
         }
     } else {
+        std::cout << "888\n";
         if (dynamic_cast<Data*>(l1)) {
             p2->setdownloadD(p2->getdownloadD() + 1);
             std::cout << "Your data is downloaded by opponent.\n"<<p2->getdownloadD()<< std::endl;
@@ -122,6 +127,7 @@ void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
 bool check_battle(Board* board, Unit* l1, Player* player1, Player* player2) {
     Player* owner;
     Player* other;
+    std::cout << "111\n";
     if (std::find(player1->links.begin(), player1->links.end(), l1) == player1->links.end()) {
         owner = player1;
         other = player2;
@@ -129,9 +135,13 @@ bool check_battle(Board* board, Unit* l1, Player* player1, Player* player2) {
         owner = player2;
         other = player1;
     }
+    std::cout << "222\n";
     Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1, owner);
-    if ((dynamic_cast<Data*>(l2)) || (dynamic_cast<Virus*>(l2))) {
+    std::cout << "333\n";
+    if ((l2->getType() == "D") || (l2->getType() == "V")) {
+        std::cout << "444\n";
         battle(l1, l2, owner, other, board);
+        std::cout << "555\n";
         return true;
     }
     return false;
@@ -211,9 +221,12 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
 
         if (player->move(board, movel, dir)) {
             std::cout << "Successful move.\n";
+            std::cout << "aaa\n";
             if (! check_battle(board, movel, player1, player2)) {
                 //check_s(board, movel, player1, player2, player);
+                std::cout << "bbb\n";
             }
+            std::cout << "ccc\n";
             moving = false;
         } else {
             std::cout << "Moving failed. Choose again.\n";
