@@ -14,8 +14,8 @@ class TextObserver : public Observer {
     Player *otherplayer;
 public:
     // constructor
-    TextObserver(Subject *subject):
-        subject{subject} {
+    TextObserver(Subject *subject, Player *curplayer, Player *otherplayer):
+        subject{subject}, curplayer{curplayer}, otherplayer{otherplayer} {
             // once created it attach it
             subject->attach(this);
         }

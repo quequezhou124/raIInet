@@ -64,9 +64,8 @@ bool Player::move(std::unique_ptr<Unit>& unit, const std::string& dir) {
         } else {
             return false;
         }
-        link->setrow(newrow);
-        link->setcol(newcol);
-        return true;
+        return link->setrow(newrow) && link->setcol(newcol);
+
     } else{
         return false;
     }
