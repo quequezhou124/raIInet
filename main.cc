@@ -149,7 +149,7 @@ void moveit (Player * player, std::string playername, Board * b) {
             std::cout << "Successful move.\n";
             moving = false;
         } else {
-            std::cout << "Moving fasiled. Choose again.\n";
+            std::cout << "Moving failed. Choose again.\n";
             getlink = false;
             getdir = false;
             continue;
