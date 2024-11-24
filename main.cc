@@ -11,8 +11,6 @@
 #include "data.h"
 #include "virus.h"
 #include "decorator.h"
-#include "datadecorator.h"
-#include "virusdecorator.h"
 
 void print_rule() {
     std::cout << "RAIInet is a two-player strategy game played on an 8×8 grid.\n"

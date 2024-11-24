@@ -9,8 +9,11 @@ class Decorator: public Board {
   public:
     Decorator(Board* board) : theBoard(board) {}
     char unitAt(int row, int col) override {
-        return theBoard->unitAt(row, col);
+      Unit *unit = theBoard->getUnit(row, col);
+      char unitat = unit->getName();
+      return unitat;
     }
+    
     virtual ~Decorator() { delete theBoard; }
 };
 

@@ -11,8 +11,6 @@
 #include "data.h"
 #include "virus.h"
 #include "decorator.h"
-#include "datadecorator.h"
-#include "virusdecorator.h"
 #include <vector>
 
 void print_rule() {

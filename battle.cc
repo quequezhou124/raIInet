@@ -11,8 +11,6 @@
 #include "data.h"
 #include "virus.h"
 #include "decorator.h"
-#include "datadecorator.h"
-#include "virusdecorator.h"
 #include <vector>
 
 bool battle (Link *l1, Link *l2, Player *p1,Player *p2, Board *board) {
@@ -23,6 +21,6 @@ bool battle (Link *l1, Link *l2, Player *p1,Player *p2, Board *board) {
             p1->setdownloadV(p1->getdownloadV()+1);
         }
 
-        
+
     }
 } 
