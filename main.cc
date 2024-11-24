@@ -196,7 +196,7 @@ int main() {
 
     print_blank();
     // Player 2 setup (A-H)
-    setupPlayer(board, player2, 0, "Player 2", 'A');
+    setupPlayer(board, player2, 7, "Player 2", 'A');
     subject->notifyObservers();
     bool win = false;
     while (!win) {
