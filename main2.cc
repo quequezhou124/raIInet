@@ -1,6 +1,6 @@
 #include <iostream>
-#include <memory>
 #include <algorithm>
+#include <vector>
 #include "board.h"
 #include "blank.h"
 #include "subject.h"
@@ -11,7 +11,6 @@
 #include "data.h"
 #include "virus.h"
 #include "decorator.h"
-#include <vector>
 
 void print_rule() {
     std::cout << "RAIInet is a two-player strategy game played on an 8×8 grid.\n"
@@ -28,7 +27,7 @@ void print_rule() {
 }
 
 void print_blank() {
-    std::cout << "========\n" 
+    std::cout << "========\n"
               << "abcSSfgh\n"
               << "...de...\n"
               << "........\n"
@@ -51,7 +50,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
     bool dSet[4] = {false, false, false, false};
 
     while (n <= startChar + 7) {
-        std::cout << "Set " << n << endl;
+        std::cout << "Set " << n << std::endl;
         std::string set;
         std::cin >> set;
 
@@ -64,10 +63,9 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                 int targetRow = ((n - startChar == 3) || (n - startChar == 4))
                                     ? (startRow == 0 ? 1 : 6)
                                     : startRow;
-                auto virusp = std::make_unique<Virus>(targetRow, col, strength + 1, n, false, false, false);
-                auto virusb = std::make_unique<Virus>(targetRow, col, strength + 1, n, false, false, false);
-                player->links.push_back(std::move(virusp));
-                board->units.push_back(std::move(virusb));
+                Virus* virus = new Virus(targetRow, col, strength + 1, n, false, false, false);
+                player->links.push_back(virus);
+                board->units.push_back(virus);
                 std::cout << "Successfully set Virus " << set << std::endl;
                 n++;
             } else {
@@ -81,10 +79,9 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                 int targetRow = ((n - startChar == 3) || (n - startChar == 4))
                                     ? (startRow == 0 ? 1 : 6)
                                     : startRow;
-                auto datap = std::make_unique<Data>(targetRow, col, strength + 1, n, false, false, false);
-                auto datab = std::make_unique<Data>(targetRow, col, strength + 1, n, false, false, false);
-                player->links.push_back(std::move(datap));
-                board->units.push_back(std::move(datab));
+                Data* data = new Data(targetRow, col, strength + 1, n, false, false, false);
+                player->links.push_back(data);
+                board->units.push_back(data);
                 std::cout << "Successfully set Data " << set << std::endl;
                 n++;
             } else {
@@ -99,50 +96,52 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
     std::cout << playerName << " has finished setting their links.\n";
 }
 
-bool operator==(const std::unique_ptr<Link> &lhs, const std::unique_ptr<Unit> &rhs) {
-    return lhs->getName() == rhs->getName();
-}
-
-void moveit (Player * player, std::string playername, Board * b) {
-    Board * board = b;
+void moveit(Player* player, const std::string& playername, Board* board) {
     bool moving = true;
+
     while (moving) {
         bool getlink = false;
         bool getdir = false;
         std::string movelink;
         std::string dir;
+        Unit* movel = nullptr;
+
         std::cout << playername << " please choose the link you move. Use format a, A, b, B, etc.\n";
-        std::unique_ptr<Unit> movel;
         while (!getlink) {
             std::cin >> movelink;
+
             if (movelink.length() != 1 || !isalpha(movelink[0])) {
                 std::cout << "Invalid link format. Use a single character (e.g., a, A).\n";
                 continue;
             }
-            // 查找单元
-            movel = board->find_unit(movelink[0]); // 假设 find_unit 返回 std::unique_ptr<Unit>
+
+            movel = board->find_unit(movelink[0]);
             if (!movel) {
                 std::cout << "Link not found on board. Choose another one.\n";
                 continue;
             }
+
             // 检查链接是否属于玩家
-            Unit* rawUnit = movel.get(); // 获取底层原始指针
             if (std::find(player->links.begin(), player->links.end(), movel) == player->links.end()) {
                 std::cout << "The link does not belong to you. Choose another one.\n";
                 continue;
             }
+
             getlink = true;
         }
+
         std::cout << "Please choose the direction you move. Use format u, d, l, r.\n";
         while (!getdir) {
             std::cin >> dir;
+
             if ((dir.length() != 1) || ((dir != "u") && (dir != "d") && (dir != "l") && (dir != "r"))) {
                 std::cout << "Invalid direction. Choose another one.\n";
                 continue;
-            } else {
-                getdir = true;
             }
+
+            getdir = true;
         }
+
         if (player->move(movel, dir)) {
             std::cout << "Successful move.\n";
             moving = false;
@@ -155,13 +154,45 @@ void moveit (Player * player, std::string playername, Board * b) {
     }
 }
 
-bool check_win (Player * player1, Player * player2) {
-    if ((player1->getdownloadD() == 4) ||  (player2->getdownloadV() == 4)){
+bool check_win(Player* player1, Player* player2) {
+    if ((player1->getdownloadD() == 4) || (player2->getdownloadV() == 4)) {
         std::cout << "Player1 wins.\n";
         return true;
     } else if ((player1->getdownloadV() == 4) || (player2->getdownloadD() == 4)) {
         std::cout << "Player2 wins.\n";
         return true;
+    }
+    return false;
+}
+
+void battle (Link *l1, Link *l2, Player *p1,Player *p2, Board *board) {
+    if (l1->getStrength() >= l2->getStrength()) {
+        if (dynamic_cast<Data*>(l2)) {
+            p1->setdownloadD(p1->getdownloadD()+1);
+            std::cout << "You download a data.\n";
+            delete l2;
+        } else if (dynamic_cast<Virus*>(l2)) {
+            p1->setdownloadV(p1->getdownloadV()+1);
+            std::cout << "You download a virus.\n";
+            delete l2;
+        }
+    } else {
+        if (dynamic_cast<Data*>(l1)) {
+            p2->setdownloadD(p2->getdownloadD()+1);
+            std::cout << "Your data is downloaded by opponent.\n";
+            delete l1;
+        } else if (dynamic_cast<Virus*>(l1)) {
+            p2->setdownloadV(p2->getdownloadV()+1);
+            std::cout << "Your virus is downloaded by opponent.\n";
+            delete l1;
+        } 
+    }
+} 
+
+void check_battle(Board* board, Link* l1, Player* player1, Player* player2) {
+    Link* l2 = board->getAnotherUnit(l1);
+    if (l2) {
+        battle(l1, l2, player1, player2, board);
     }
 }
 
@@ -185,26 +216,40 @@ int main() {
     }
 
     Board* board = new Blank;
-    std::unique_ptr<Player> player1 = std::make_unique<Player>();
-    std::unique_ptr<Player> player2 = std::make_unique<Player>();
+    Subject* subject = new Subject(board);
+    Player* player1 = new Player();
+    Player* player2 = new Player();
+    TextObserver* observer = new TextObserver(subject, player1, player2);
 
     print_blank();
     // Player 1 setup (a-h)
-    setupPlayer(board, player1.get(), 0, "Player 1", 'a');
+    setupPlayer(board, player1, 0, "Player 1", 'a');
 
     print_blank();
     // Player 2 setup (A-H)
-    setupPlayer(board, player2.get(), 0, "Player 2", 'A');
-    
-    bool win = false; 
+    setupPlayer(board, player2, 7, "Player 2", 'A');
+    subject->notifyObservers();
+    bool win = false;
     while (!win) {
-        //Player1 move
-        moveit(player1.get(), "player1", board);
-        win = check_win(player1.get(), player2.get());
-        //Player2 move
-        moveit(player2.get(), "player2", board);
-        win = check_win(player1.get(), player2.get());
+        // Player1 move
+        moveit(player1, "Player1", board);
+        win = check_win(player1, player2);
+
+        if (win) break;
+
+        // Player2 move
+        moveit(player2, "Player2", board);
+        win = check_win(player1, player2);
     }
-    
-    return 0;
+
+    // Cleanup
+    for (auto unit : board->units) {
+        delete unit;
+    }
+    delete board;
+    delete player1;
+    delete observer;  // Detach and delete observer
+    delete player1;
+    delete player2;
+    delete subject; 
 }
