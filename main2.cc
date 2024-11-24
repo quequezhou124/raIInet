@@ -156,7 +156,7 @@ void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* o
             } else if (dynamic_cast<Virus*>(l1)) {
                 int n = player1->getdownloadV();
                 player1->setdownloadV(n++);
-                std::cout << "Playera has downloaded your Virus.\n";
+                std::cout << "Player2 has downloaded your Virus.\n";
             }
         }
         delete l1;
