@@ -185,8 +185,10 @@ int main() {
     }
 
     Board* board = new Blank;
+    Subject* subject = new Subject(board);
     Player* player1 = new Player();
     Player* player2 = new Player();
+    TextObserver* observer = new TextObserver(subject, player1, player2);
 
     print_blank();
     // Player 1 setup (a-h)
@@ -195,7 +197,7 @@ int main() {
     print_blank();
     // Player 2 setup (A-H)
     setupPlayer(board, player2, 0, "Player 2", 'A');
-
+    subject->notifyObservers();
     bool win = false;
     while (!win) {
         // Player1 move
@@ -215,4 +217,8 @@ int main() {
     }
     delete board;
     delete player1;
+    delete observer;  // Detach and delete observer
+    delete player1;
+    delete player2;
+    delete subject; 
 }

@@ -40,17 +40,19 @@ public:
         }
         
         for (int i = 0; i < 8; ++i) {
-            std::cout << '=' << endl;
+            std::cout << '=';
         }
+        std::cout << endl;
         for (int i = 0; i < 8; ++i) {
-            for (int j = 0; j <= 8; ++j) {
+            for (int j = 0; j < 8; ++j) {
                 std::cout << subject->getState(i, j);
             }
             std::cout << endl;
         }
         for (int i = 0; i < 8; ++i) {
-            std::cout << '=' << endl;
+            std::cout << '=';
         }
+        std::cout << endl;
         std::cout << "Player 2: " << endl;
         std::cout << "Downloaded: " << otherplayer->getdownloadD() <<"D, "<< otherplayer->getdownloadV() << "V" <<endl;
         std::cout << "Abilities: " << otherplayer->getabilityNum() << endl;
