@@ -5,8 +5,8 @@
 class VirusDecorator: public Decorator {
     char unitAt(int row, int col) override {
         char temp = theBoard->unitAt(row, col);
-        std::unique_ptr<Unit> unit = getUnit(row, col);
-        if (dynamic_cast<Virus*>(unit.get())) {
+        Unit* unit = getUnit(row, col);
+        if (dynamic_cast<Virus*>(unit)) {
             return unit->getName();
         } else {
             return '.';

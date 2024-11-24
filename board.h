@@ -10,21 +10,21 @@ class Unit;
 
 class Board {
   public:
-    vector<std::unique_ptr<Unit>> units;
+    vector<Unit*> units;
     
-    std::unique_ptr<Unit> find_unit(char name) {
+    Unit* find_unit(char name) {
         for (auto& unit : units) {
             if (unit->getName() == name) {
-                return std::unique_ptr<Unit>(unit.get());  // Create a new unique_ptr from raw pointer
+                return unit;
             }
         }
         return nullptr; // Return nullptr if not found
     }
 
-    std::unique_ptr<Unit> getUnit(int row, int col) {
+    Unit* getUnit(int row, int col) {
         for (auto& unit : units) {
-            if (unit->getRow() == row, unit->getCol() == col) {
-                return std::unique_ptr<Unit>(unit.get());  // Create a new unique_ptr from raw pointer
+            if (unit->getRow() == row && unit->getCol() == col) {
+                return unit;
             }
         }
         return nullptr; // Return nullptr if not found
