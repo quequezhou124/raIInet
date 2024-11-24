@@ -80,7 +80,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                 Data* data = new Data(targetRow, col, strength + 1, n, false, false, false, false);
                 player->links.push_back(data);
                 board->units.push_back(data);
-                std::cout << "Successfully set Data " << set << std::endl;
+                std::cout << "Successfully set Data " << set << ".\n";
                 n++;
             } else {
                 std::cout << "You have already set " << set << ".\n";
@@ -97,7 +97,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
 void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
     if (l1->getStrength() >= l2->getStrength()) {
         if (dynamic_cast<Data*>(l2)) {
-            p1->setdownloadD(p1->getdownloadD()+1);
+            p1->setdownloadD(p1->getdownloadD() + 1);
             std::cout << "You download a data.\n";
             l2->setDownloaded(true);
         } else if (dynamic_cast<Virus*>(l2)) {
@@ -107,11 +107,11 @@ void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
         }
     } else {
         if (dynamic_cast<Data*>(l1)) {
-            p2->setdownloadD(p2->getdownloadD()+1);
+            p2->setdownloadD(p2->getdownloadD() + 1);
             std::cout << "Your data is downloaded by opponent.\n";
             l1->setDownloaded(true);
         } else if (dynamic_cast<Virus*>(l1)) {
-            p2->setdownloadV(p2->getdownloadV()+1);
+            p2->setdownloadV(p2->getdownloadV() + 1);
             std::cout << "Your virus is downloaded by opponent.\n";
             l1->setDownloaded(true);
         } 
@@ -119,7 +119,6 @@ void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
 } 
 
 bool check_battle(Board* board, Unit* l1, Player* player1, Player* player2) {
-    Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1);
     Player* owner;
     Player* other;
     if (std::find(player1->links.begin(), player1->links.end(), l1) == player1->links.end()) {
@@ -129,6 +128,7 @@ bool check_battle(Board* board, Unit* l1, Player* player1, Player* player2) {
         owner = player2;
         other = player2;
     }
+    Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1, owner);
     if ((dynamic_cast<Data*>(l2)) || (dynamic_cast<Virus*>(l2))) {
         battle(l1, l2, owner, other, board);
         return true;
@@ -136,8 +136,8 @@ bool check_battle(Board* board, Unit* l1, Player* player1, Player* player2) {
     return false;
 }
 
-void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* owner) {
-    if (dynamic_cast<Serverport*>(board->getAnotherUnit (l1->getRow(), l1->getCol(), l1))) {
+/*void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* owner) {
+    if (dynamic_cast<Serverport*>(board->getAnotherUnit (l1->getRow(), l1->getCol(), l1, owner))) {
         if (player1 == owner) {
             if (dynamic_cast<Data*>(l1)) {
                 int n = player2->getdownloadD();
@@ -161,7 +161,7 @@ void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* o
         }
         delete l1;
     }
-}
+}*/
 
 void moveit(Player* player, const std::string& playername, Board* board, Player* player1, Player* player2) {
     bool moving = true;
@@ -211,7 +211,7 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
         if (player->move(movel, dir)) {
             std::cout << "Successful move.\n";
             if (! check_battle(board, movel, player1, player2)) {
-                check_s(board, movel, player1, player2, player);
+                //check_s(board, movel, player1, player2, player);
             }
             moving = false;
         } else {
