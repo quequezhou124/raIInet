@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <vector>
 #include "board.h"
-#include "blank.h"
 #include "subject.h"
 #include "player.h"
 #include "textObserver.h"
@@ -10,7 +9,6 @@
 #include "link.h"
 #include "data.h"
 #include "virus.h"
-#include "decorator.h"
 
 void print_rule() {
     std::cout << "RAIInet is a two-player strategy game played on an 8×8 grid.\n"
@@ -219,7 +217,7 @@ int main() {
     // Initial setup
 
     // Initial setup
-    Board* board = new Blank;
+    Board* board = new Board;
     Subject subject{board};
     Player* player1 = new Player();
     Player* player2 = new Player();
@@ -237,14 +235,13 @@ int main() {
     std::cout << "Units count before decoration: " << subject.getBoard()->units.size() << std::endl;
 
     // Set new decorated board
-    subject.setBoard(new Decorator{board}); // Use setBoard to properly assign the new decorated board
+    subject.setBoard(new Board{board->units}); // Use setBoard to properly assign the new decorated board
 
     // Debugging to show the units count after decoration
     std::cout << "Units count after decoration: " << subject.getBoard()->units.size() << std::endl;
 
     // Proceed with game
     std::cout << subject.getBoard()->unitAt(0, 0) << std::endl;
-    std::cout << "hiiiii" << std::endl;
     subject.notifyObservers();
 
 
