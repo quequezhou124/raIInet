@@ -50,7 +50,7 @@ void Player::changeturn(bool isplayer1){
 }
 
 bool Player::move(Unit * unit, const std::string& dir) {
-    if (auto link = dynamic_cast<Link*>(unit.get())){
+    if (auto link = dynamic_cast<Link*>(unit)){
         int newrow = link->getRow();
         int newcol = link->getCol();
         if (dir == "u") {
