@@ -2,7 +2,6 @@
 #include <memory>
 #include <algorithm>
 #include "board.h"
-#include "blank.h"
 #include "subject.h"
 #include "player.h"
 #include "textObserver.h"
@@ -10,7 +9,6 @@
 #include "link.h"
 #include "data.h"
 #include "virus.h"
-#include "decorator.h"
 #include <vector>
 
 int battle (Link *l1, Link *l2, Player *p1,Player *p2, Board *board) {

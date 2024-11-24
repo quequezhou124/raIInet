@@ -249,6 +249,7 @@ int main() {
     while (!win) {
         // Player1 move
         moveit(player1, "Player1", subject.getBoard(), player1, player2);
+        subject.notifyObservers();
         win = check_win(player1, player2);
 
         if (win) break;
