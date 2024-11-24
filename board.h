@@ -30,6 +30,15 @@ class Board {
         return nullptr; // Return nullptr if not found
     }
 
+    Unit* getAnotherUnit(int row, int col, Unit* link) {
+        for (auto& unit : units) {
+            if (unit->getRow() == row && unit->getCol() == col && link != unit) {
+                return unit;
+            }
+        }
+        return nullptr; // Return nullptr if not found
+    }
+
     virtual char unitAt(int row, int col) = 0;
     virtual ~Board() = default;
 };
