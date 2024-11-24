@@ -28,3 +28,18 @@ d2
 d3
 d4
 
+
+
+
+
+
+
+
+
+
+
+
+git pull
+git add .
+git commit -m "main.cc"
+git push
