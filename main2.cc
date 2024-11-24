@@ -165,7 +165,7 @@ bool check_win(Player* player1, Player* player2) {
     return false;
 }
 
-void battle (Link *l1, Link *l2, Player *p1,Player *p2, Board *board) {
+void battle (Link *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
     if (l1->getStrength() >= l2->getStrength()) {
         if (dynamic_cast<Data*>(l2)) {
             p1->setdownloadD(p1->getdownloadD()+1);
@@ -190,7 +190,7 @@ void battle (Link *l1, Link *l2, Player *p1,Player *p2, Board *board) {
 } 
 
 void check_battle(Board* board, Link* l1, Player* player1, Player* player2) {
-    Link* l2 = board->getAnotherUnit(l1);
+    Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1);
     if (l2) {
         battle(l1, l2, player1, player2, board);
     }
