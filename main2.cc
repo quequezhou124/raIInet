@@ -113,27 +113,17 @@ void moveit (Player * player, std::string playername, Board * b) {
         bool getdir = false;
         std::string movelink;
         std::string dir;
-        std::cout << playername << " please choose the link you move. Use format a, A, b, B, etc.\n";
+        std::cout << playername << " please choose the link you move. Use format a, b, etc.\n";
         std::unique_ptr<Unit> movel;
         while (!getlink) {
             std::cin >> movelink;
-            if (movelink.length() != 1 || !isalpha(movelink[0])) {
-                std::cout << "Invalid link format. Use a single character (e.g., a, A).\n";
+            movel = board->find_unit(movelink[0]);
+            if ((movelink.length() != 1) || (movel == nullptr) || (std::find(player->links.begin(), player->links.end(), movel) == player->links.end())) {
+                std::cout << "Invalid link. Choose another one.\n";
                 continue;
+            } else {
+                getlink = true;
             }
-            // 查找单元
-            movel = board->find_unit(movelink[0]); // 假设 find_unit 返回 std::unique_ptr<Unit>
-            if (!movel) {
-                std::cout << "Link not found on board. Choose another one.\n";
-                continue;
-            }
-            // 检查链接是否属于玩家
-            Unit* rawUnit = movel.get(); // 获取底层原始指针
-            if (std::find(player->links.begin(), player->links.end(), movel) == player->links.end()) {
-                std::cout << "The link does not belong to you. Choose another one.\n";
-                continue;
-            }
-            getlink = true;
         }
         std::cout << "Please choose the direction you move. Use format u, d, l, r.\n";
         while (!getdir) {
@@ -149,11 +139,21 @@ void moveit (Player * player, std::string playername, Board * b) {
             std::cout << "Successful move.\n";
             moving = false;
         } else {
-            std::cout << "Moving failed. Choose again.\n";
+            std::cout << "Moving fasiled. Choose again.\n";
             getlink = false;
             getdir = false;
             continue;
         }
+    }
+}
+
+bool check_win (Player * player1, Player * player2) {
+    if ((player1->getdownloadD() == 4) ||  (player2->getdownloadV() == 4)){
+        std::cout << "Player1 wins.\n";
+        return true;
+    } else if ((player1->getdownloadV() == 4) || (player2->getdownloadD() == 4)) {
+        std::cout << "Player2 wins.\n";
+        return true;
     }
 }
 
@@ -187,11 +187,23 @@ int main() {
     print_blank();
     // Player 2 setup (A-H)
     setupPlayer(board, player2.get(), 0, "Player 2", 'A');
-    
 
-    //Player1 move
-    moveit(player1.get(), "player1", board);
-    moveit(player2.get(), "player2", board);
+    bool finish = false;
+    while (finish) {
+        //Player1 move
+        notify();
+        moveit(player1.get(), "player1", board);
+
+        //Anyone wins
+        finish = check_win(player1.get(), player2.get());
+
+        //Player2 move
+        notify();
+        moveit(player2.get(), "player2", board);
+
+        //Anyone wins
+        finish = check_win(player1.get(), player2.get());
+    }
     
     return 0;
 }
