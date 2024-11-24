@@ -216,20 +216,35 @@ int main() {
         }
     }
 
+    // Initial setup
     Board* board = new Blank;
-    Subject* subject = new Subject(board);
+    Subject subject{board};
     Player* player1 = new Player();
     Player* player2 = new Player();
-    TextObserver* observer = new TextObserver(subject, player1, player2);
+    TextObserver* observer = new TextObserver(&subject, player1, player2);
 
-    print_blank();
     // Player 1 setup (a-h)
+    print_blank();
     setupPlayer(board, player1, 0, "Player 1", 'a');
 
-    print_blank();
     // Player 2 setup (A-H)
+    print_blank();
     setupPlayer(board, player2, 7, "Player 2", 'A');
-    subject->notifyObservers();
+
+    // Debugging to show the units count before decoration
+    std::cout << "Units count before decoration: " << subject.getBoard()->units.size() << std::endl;
+
+    // Set new decorated board
+    subject.setBoard(new Decorator{board}); // Use setBoard to properly assign the new decorated board
+
+    // Debugging to show the units count after decoration
+    std::cout << "Units count after decoration: " << subject.getBoard()->units.size() << std::endl;
+
+    // Proceed with game
+    std::cout << subject.getBoard()->unitAt(0, 0) << std::endl;
+    std::cout << "hiiiii" << std::endl;
+    subject.notifyObservers();
+
     bool win = false;
     while (!win) {
         // Player1 move
