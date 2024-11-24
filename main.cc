@@ -138,7 +138,6 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
         std::cout << playername << " please choose the link you move. Use format a, A, b, B, etc.\n";
         while (!getlink) {
             std::cin >> movelink;
-
             if (movelink.length() != 1 || !isalpha(movelink[0])) {
                 std::cout << "Invalid link format. Use a single character (e.g., a, A).\n";
                 continue;
@@ -243,23 +242,24 @@ int main() {
     // Proceed with game
     std::cout << subject.getBoard()->unitAt(0, 0) << std::endl;
     subject.notifyObservers();
+    std::cout << subject.getBoard()->units.size() << std::endl;
 
 
     bool win = false;
     while (!win) {
         // Player1 move
-        moveit(player1, "Player1", board, player1, player2);
+        moveit(player1, "Player1", subject.getBoard(), player1, player2);
         win = check_win(player1, player2);
 
         if (win) break;
 
         // Player2 move
-        moveit(player2, "Player2", board, player1, player2);
+        moveit(player2, "Player2", subject.getBoard(), player1, player2);
         win = check_win(player1, player2);
     }
 
     // Cleanup
-    for (auto unit : board->units) {
+    for (auto unit : subject.getBoard()->units) {
         delete unit;
     }
     delete board;
