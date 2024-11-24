@@ -117,13 +117,23 @@ void moveit (Player * player, std::string playername, Board * b) {
         std::unique_ptr<Unit> movel;
         while (!getlink) {
             std::cin >> movelink;
-            movel = board->find_unit(movelink[0]);
-            if ((movelink.length() != 1) || (movel == nullptr) || (std::find(player->links.begin(), player->links.end(), movel) == player->links.end())) {
-                std::cout << "Invalid link. Choose another one.\n";
+            if (movelink.length() != 1 || !isalpha(movelink[0])) {
+                std::cout << "Invalid link format. Use a single character (e.g., a, A).\n";
                 continue;
-            } else {
-                getlink = true;
             }
+            // 查找单元
+            movel = board->find_unit(movelink[0]); // 假设 find_unit 返回 std::unique_ptr<Unit>
+            if (!movel) {
+                std::cout << "Link not found on board. Choose another one.\n";
+                continue;
+            }
+            // 检查链接是否属于玩家
+            Unit* rawUnit = movel.get(); // 获取底层原始指针
+            if (std::find(player->links.begin(), player->links.end(), movel) == player->links.end()) {
+                std::cout << "The link does not belong to you. Choose another one.\n";
+                continue;
+            }
+            getlink = true;
         }
         std::cout << "Please choose the direction you move. Use format u, d, l, r.\n";
         while (!getdir) {
