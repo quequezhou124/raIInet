@@ -113,7 +113,7 @@ void moveit (Player * player, std::string playername, Board * b) {
         bool getdir = false;
         std::string movelink;
         std::string dir;
-        std::cout << playername << " please choose the link you move. Use format a, A, b, B, etc.\n";
+        std::cout << playername << " please choose the link you move. Use format a, b, etc.\n";
         std::unique_ptr<Unit> movel;
         while (!getlink) {
             std::cin >> movelink;
@@ -147,6 +147,16 @@ void moveit (Player * player, std::string playername, Board * b) {
     }
 }
 
+bool check_win (Player * player1, Player * player2) {
+    if ((player1->getdownloadD() == 4) ||  (player2->getdownloadV() == 4)){
+        std::cout << "Player1 wins.\n";
+        return true;
+    } else if ((player1->getdownloadV() == 4) || (player2->getdownloadD() == 4)) {
+        std::cout << "Player2 wins.\n";
+        return true;
+    }
+}
+
 int main() {
     std::cout << "Welcome to the game: RAIInet\n";
     std::cout << "Do you need the rulebook for RAIInet? Reply Y or N.\n";
@@ -177,10 +187,23 @@ int main() {
     print_blank();
     // Player 2 setup (A-H)
     setupPlayer(board, player2.get(), 0, "Player 2", 'A');
- 
-    //Player1 move
-    moveit(player1.get(), "player1", board);
-    moveit(player2.get(), "player2", board);
+
+    bool finish = false;
+    while (finish) {
+        //Player1 move
+        notify();
+        moveit(player1.get(), "player1", board);
+
+        //Anyone wins
+        finish = check_win(player1.get(), player2.get());
+
+        //Player2 move
+        notify();
+        moveit(player2.get(), "player2", board);
+
+        //Anyone wins
+        finish = check_win(player1.get(), player2.get());
+    }
     
     return 0;
 }
