@@ -9,6 +9,7 @@
 #include "link.h"
 #include "data.h"
 #include "virus.h"
+#include "serverports.h"
 
 void print_rule() {
     std::cout << "RAIInet is a two-player strategy game played on an 8×8 grid.\n"
