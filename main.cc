@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <vector>
 #include "board.h"
-#include "blank.h"
 #include "subject.h"
 #include "player.h"
 #include "textObserver.h"
@@ -10,7 +9,6 @@
 #include "link.h"
 #include "data.h"
 #include "virus.h"
-#include "decorator.h"
 
 void print_rule() {
     std::cout << "RAIInet is a two-player strategy game played on an 8×8 grid.\n"
@@ -140,7 +138,6 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
         std::cout << playername << " please choose the link you move. Use format a, A, b, B, etc.\n";
         while (!getlink) {
             std::cin >> movelink;
-
             if (movelink.length() != 1 || !isalpha(movelink[0])) {
                 std::cout << "Invalid link format. Use a single character (e.g., a, A).\n";
                 continue;
@@ -219,7 +216,7 @@ int main() {
     // Initial setup
 
     // Initial setup
-    Board* board = new Blank;
+    Board* board = new Board;
     Subject subject{board};
     Player* player1 = new Player();
     Player* player2 = new Player();
@@ -237,32 +234,32 @@ int main() {
     std::cout << "Units count before decoration: " << subject.getBoard()->units.size() << std::endl;
 
     // Set new decorated board
-    subject.setBoard(new Decorator{board}); // Use setBoard to properly assign the new decorated board
+    subject.setBoard(new Board{board->units}); // Use setBoard to properly assign the new decorated board
 
     // Debugging to show the units count after decoration
     std::cout << "Units count after decoration: " << subject.getBoard()->units.size() << std::endl;
 
     // Proceed with game
     std::cout << subject.getBoard()->unitAt(0, 0) << std::endl;
-    std::cout << "hiiiii" << std::endl;
     subject.notifyObservers();
+    std::cout << subject.getBoard()->units.size() << std::endl;
 
 
     bool win = false;
     while (!win) {
         // Player1 move
-        moveit(player1, "Player1", board, player1, player2);
+        moveit(player1, "Player1", subject.getBoard(), player1, player2);
         win = check_win(player1, player2);
 
         if (win) break;
 
         // Player2 move
-        moveit(player2, "Player2", board, player1, player2);
+        moveit(player2, "Player2", subject.getBoard(), player1, player2);
         win = check_win(player1, player2);
     }
 
     // Cleanup
-    for (auto unit : board->units) {
+    for (auto unit : subject.getBoard()->units) {
         delete unit;
     }
     delete board;

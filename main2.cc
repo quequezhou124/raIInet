@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <vector>
 #include "board.h"
-#include "blank.h"
 #include "subject.h"
 #include "player.h"
 #include "textObserver.h"
@@ -10,7 +9,6 @@
 #include "link.h"
 #include "data.h"
 #include "virus.h"
-#include "decorator.h"
 
 void print_rule() {
     std::cout << "RAIInet is a two-player strategy game played on an 8×8 grid.\n"
@@ -256,7 +254,7 @@ int main() {
         }
     }
 
-    Board* board = new Blank;
+    Board* board = new Board;
     Subject* subject = new Subject(board);
     Player* player1 = new Player();
     Player* player2 = new Player();

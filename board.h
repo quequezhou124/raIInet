@@ -11,7 +11,9 @@ class Unit;
 class Board {
   public:
     vector<Unit*> units;
-    
+
+    Board (vector<Unit*> units) : units{units} {}
+    Board () : units{} {}
     Unit* find_unit(char name) {
         for (auto& unit : units) {
             if (unit->getName() == name) {
@@ -39,8 +41,16 @@ class Board {
         return nullptr; // Return nullptr if not found
     }
 
-    virtual char unitAt(int row, int col) = 0;
-    virtual ~Board() = default;
+    char unitAt(int row, int col) {
+        Unit* unit = getUnit(row, col);
+        if (unit) {
+            return unit->getName();
+        } else {
+            return '.';  // Or any other character for empty cells
+        }
+    }
+
+    ~Board() = default;
 };
 
 #endif
