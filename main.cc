@@ -118,17 +118,48 @@ void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
     }
 } 
 
-void check_battle(Board* board, Unit* l1, Player* player, Player* player1, Player* player2) {
-    if (player == player1) {
-        Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1, player1);
-        if (l2) {
-            battle(l1, l2, player1, player2, board);
+bool check_battle(Board* board, Unit* l1, Player* player1, Player* player2) {
+    Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1);
+    Player* owner;
+    Player* other;
+    if (std::find(player1->links.begin(), player1->links.end(), l1) == player1->links.end()) {
+        owner = player1;
+        other = player2;
+    } else {
+        owner = player2;
+        other = player2;
+    }
+    if ((dynamic_cast<Data*>(l2)) || (dynamic_cast<Virus*>(l2))) {
+        battle(l1, l2, owner, other, board);
+        return true;
+    }
+    return false;
+}
+
+void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* owner) {
+    if (dynamic_cast<Serverport*>(board->getAnotherUnit (l1->getRow(), l1->getCol(), l1))) {
+        if (player1 == owner) {
+            if (dynamic_cast<Data*>(l1)) {
+                int n = player2->getdownloadD();
+                player2->setdownloadD(n++);
+                std::cout << "Player2 has downloaded your Data.\n";
+            } else if (dynamic_cast<Virus*>(l1)) {
+                int n = player2->getdownloadV();
+                player2->setdownloadV(n++);
+                std::cout << "Player2 has downloaded your Virus.\n";
+            }
+        } else if (player2 == owner) {
+            if (dynamic_cast<Data*>(l1)) {
+                int n = player1->getdownloadD();
+                player1->setdownloadD(n++);
+                std::cout << "Player1 has downloaded your Data.\n";
+            } else if (dynamic_cast<Virus*>(l1)) {
+                int n = player1->getdownloadV();
+                player1->setdownloadV(n++);
+                std::cout << "Player1 has downloaded your Virus.\n";
+            }
         }
-    } else if (player == player2) {
-        Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1, player2);
-        if (l2) {
-            battle(l1, l2, player1, player2, board);
-        }
+        delete l1;
     }
 }
 
@@ -179,8 +210,9 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
 
         if (player->move(movel, dir)) {
             std::cout << "Successful move.\n";
-            check_battle(board, movel, player, player1, player2);
-            std::cout << board->unitAt(0,0)<< "chhhhhek"<<endl;
+            if (! check_battle(board, movel, player1, player2)) {
+                check_s(board, movel, player1, player2, player);
+            }
             moving = false;
         } else {
             std::cout << "Moving failed. Choose again.\n";

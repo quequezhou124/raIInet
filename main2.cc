@@ -61,7 +61,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                 int targetRow = ((n - startChar == 3) || (n - startChar == 4))
                                     ? (startRow == 0 ? 1 : 6)
                                     : startRow;
-                Virus* virus = new Virus(targetRow, col, strength + 1, n, false, false, false);
+                Virus* virus = new Virus(targetRow, col, strength + 1, n, false, false, false, false);
                 player->links.push_back(virus);
                 board->units.push_back(virus);
                 std::cout << "Successfully set Virus " << set << std::endl;
@@ -77,7 +77,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                 int targetRow = ((n - startChar == 3) || (n - startChar == 4))
                                     ? (startRow == 0 ? 1 : 6)
                                     : startRow;
-                Data* data = new Data(targetRow, col, strength + 1, n, false, false, false);
+                Data* data = new Data(targetRow, col, strength + 1, n, false, false, false, false);
                 player->links.push_back(data);
                 board->units.push_back(data);
                 std::cout << "Successfully set Data " << set << std::endl;
@@ -99,21 +99,21 @@ void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
         if (dynamic_cast<Data*>(l2)) {
             p1->setdownloadD(p1->getdownloadD()+1);
             std::cout << "You download a data.\n";
-            delete l2;
+            l2->setDownloaded(true);
         } else if (dynamic_cast<Virus*>(l2)) {
             p1->setdownloadV(p1->getdownloadV()+1);
             std::cout << "You download a virus.\n";
-            delete l2;
+            l2->setDownloaded(true);
         }
     } else {
         if (dynamic_cast<Data*>(l1)) {
             p2->setdownloadD(p2->getdownloadD()+1);
             std::cout << "Your data is downloaded by opponent.\n";
-            delete l1;
+            l1->setDownloaded(true);
         } else if (dynamic_cast<Virus*>(l1)) {
             p2->setdownloadV(p2->getdownloadV()+1);
             std::cout << "Your virus is downloaded by opponent.\n";
-            delete l1;
+            l1->setDownloaded(true);
         } 
     }
 } 
@@ -176,7 +176,6 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
         std::cout << playername << " please choose the link you move. Use format a, A, b, B, etc.\n";
         while (!getlink) {
             std::cin >> movelink;
-
             if (movelink.length() != 1 || !isalpha(movelink[0])) {
                 std::cout << "Invalid link format. Use a single character (e.g., a, A).\n";
                 continue;
@@ -254,41 +253,55 @@ int main() {
         }
     }
 
+    // Initial setup
+
+    // Initial setup
     Board* board = new Board;
-    Subject* subject = new Subject(board);
+    Subject subject{board};
     Player* player1 = new Player();
     Player* player2 = new Player();
-    TextObserver* observer = new TextObserver(subject, player1, player2);
+    TextObserver* observer = new TextObserver(&subject, player1, player2);
 
-    print_blank();
     // Player 1 setup (a-h)
+    print_blank();
     setupPlayer(board, player1, 0, "Player 1", 'a');
 
-    print_blank();
     // Player 2 setup (A-H)
+    print_blank();
     setupPlayer(board, player2, 7, "Player 2", 'A');
-    subject->notifyObservers();
+
+    // Set new decorated board
+    subject.setBoard(new Board{board->units}); // Use setBoard to properly assign the new decorated board
+    // Proceed with game
+    std::cout << subject.getBoard()->unitAt(0, 0) << std::endl;
+    subject.notifyObservers();
+    std::cout << subject.getBoard()->units.size() << std::endl;
+
+
     bool win = false;
     while (!win) {
         // Player1 move
-        moveit(player1, "Player1", board, player1, player2);
+        moveit(player1, "Player1", subject.getBoard(), player1, player2);
+        for (auto& unit : subject.getBoard()->units) {
+        }
+        subject.notifyObservers();
         win = check_win(player1, player2);
-
+        
         if (win) break;
 
         // Player2 move
-        moveit(player2, "Player2", board, player1, player2);
+        moveit(player2, "Player2", subject.getBoard(), player1, player2);
+        subject.notifyObservers();
         win = check_win(player1, player2);
+        
     }
 
     // Cleanup
-    for (auto unit : board->units) {
+    for (auto unit : subject.getBoard()->units) {
         delete unit;
     }
     delete board;
-    delete player1;
     delete observer;  // Detach and delete observer
     delete player1;
     delete player2;
-    delete subject; 
 }
