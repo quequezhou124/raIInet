@@ -66,8 +66,8 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                                     ? (startRow == 0 ? 1 : 6)
                                     : startRow;
                 Virus* virus = new Virus(targetRow, col, strength + 1, n, false, false, false);
-                player->links.push_back(virus); // 存储原始指针
-                board->units.push_back(virus);  // 存储原始指针
+                player->links.push_back(virus);
+                board->units.push_back(virus);
                 std::cout << "Successfully set Virus " << set << std::endl;
                 n++;
             } else {
@@ -82,8 +82,8 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                                     ? (startRow == 0 ? 1 : 6)
                                     : startRow;
                 Data* data = new Data(targetRow, col, strength + 1, n, false, false, false);
-                player->links.push_back(data); // 存储原始指针
-                board->units.push_back(data);  // 存储原始指针
+                player->links.push_back(data);
+                board->units.push_back(data);
                 std::cout << "Successfully set Data " << set << std::endl;
                 n++;
             } else {
@@ -106,7 +106,7 @@ void moveit(Player* player, const std::string& playername, Board* board) {
         bool getdir = false;
         std::string movelink;
         std::string dir;
-        Unit* movel = nullptr; // 原始指针
+        Unit* movel = nullptr;
 
         std::cout << playername << " please choose the link you move. Use format a, A, b, B, etc.\n";
         while (!getlink) {
@@ -117,7 +117,7 @@ void moveit(Player* player, const std::string& playername, Board* board) {
                 continue;
             }
 
-            movel = board->find_unit(movelink[0]); // 假设 find_unit 返回原始指针
+            movel = board->find_unit(movelink[0]);
             if (!movel) {
                 std::cout << "Link not found on board. Choose another one.\n";
                 continue;
@@ -213,7 +213,7 @@ int main() {
 
     // Cleanup
     for (auto unit : board->units) {
-        delete unit; // 手动释放 board 中的所有 Unit
+        delete unit;
     }
     delete board;
     delete player1;
