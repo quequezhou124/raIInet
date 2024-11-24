@@ -8,6 +8,7 @@ class DataDecorator: public Decorator {
     char unitAt(int row, int col) override {
         char temp = theBoard->unitAt(row, col);
         Unit* unit = getUnit(row, col);
+        std::cout <<"1111"<< getUnit(row, col)->getName()<< endl;
         if (dynamic_cast<Data*>(unit)) {
             return unit->getName();
         } else {
