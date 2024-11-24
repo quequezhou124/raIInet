@@ -21,12 +21,12 @@ class Player {
     int downloadV;
     int abilityNum;
    public:
-    std::vector<std::unique_ptr<Link>> links;
+    Link * links;
     //constructor
-    Player(std::vector<std::unique_ptr<Link>>&& links, bool player1 = true, State state = State::Undecided, int downloadD = 0, int downloadV = 0, int abilityNum = 0);
+    Player(Link* links, bool player1 = true, State state = State::Undecided, int downloadD = 0, int downloadV = 0, int abilityNum = 0);
     Player();
     // methods
-    bool move(std::unique_ptr<Unit>& unit, const std::string& dir);
+    bool move(Unit * unit, const std::string& dir);
     bool useAbility();
     bool useAbility(int id);
     bool useAbility(int id, char link);
