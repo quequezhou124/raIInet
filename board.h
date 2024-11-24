@@ -17,7 +17,7 @@ class Board {
     Board () : units{} {}
     Unit* find_unit(char name) {
         for (auto& unit : units) {
-            if (unit->getName() == name) {
+            if (unit->getName() == name && unit->getDownloaded()==false) {
                 return unit;
             }
         }

@@ -1,8 +1,8 @@
 #include "link.h"
 
 const int side = 8;
-Link::Link(int row, int col, int strength, char name, bool displayed, bool doublespeed, bool locked) :
-    Unit{row, col, strength, name, displayed, doublespeed, locked} {}
+Link::Link(int row, int col, int strength, char name, bool displayed, bool doublespeed, bool locked, bool downloaded) :
+    Unit{row, col, strength, name, displayed, doublespeed, locked, downloaded} {}
 
 int Link::getStrength() { return strength; }
 

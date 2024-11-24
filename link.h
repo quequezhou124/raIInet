@@ -6,7 +6,7 @@
 class Player;
 class Link: public Unit {
   protected:
-    Link (int row, int col, int strength, char name, bool displayed, bool doublespeed, bool locked);
+    Link (int row, int col, int strength, char name, bool displayed, bool doublespeed, bool locked, bool downloaded);
   public:
     int getStrength() override;
     void setStrength(int strength, int row, int col) override;

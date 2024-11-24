@@ -11,8 +11,9 @@ class Unit {
     bool displayed;
     bool doublespeed;
     bool locked;
+    bool downloaded;
   public:
-    Unit(int row, int col, int strength, char name, bool displayed = false, bool doublespeed = false, bool locked = false);
+    Unit(int row, int col, int strength, char name, bool displayed = false, bool doublespeed = false, bool locked = false, bool downloaded = false);
     char getName() const { return name; }
     int getRow() const { return row; }
     int getCol() const { return col; }
@@ -22,6 +23,8 @@ class Unit {
     virtual bool setrow(int row) = 0;
     virtual bool setcol(int col) = 0;
     virtual ~Unit() = default;
+    bool getDownloaded() const {return downloaded;}
+    void setDownloaded(bool newd) {downloaded = newd;}
 };
 
 #endif
