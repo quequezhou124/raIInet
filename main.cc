@@ -118,10 +118,17 @@ void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
     }
 } 
 
-void check_battle(Board* board, Unit* l1, Player* player1, Player* player2) {
-    Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1);
-    if (l2) {
-        battle(l1, l2, player1, player2, board);
+void check_battle(Board* board, Unit* l1, Player* player, Player* player1, Player* player2) {
+    if (player == player1) {
+        Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1, player1);
+        if (l2) {
+            battle(l1, l2, player1, player2, board);
+        }
+    } else if (player == player2) {
+        Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1, player2);
+        if (l2) {
+            battle(l1, l2, player1, player2, board);
+        }
     }
 }
 
@@ -172,7 +179,7 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
 
         if (player->move(movel, dir)) {
             std::cout << "Successful move.\n";
-            check_battle(board, movel, player1, player2);
+            check_battle(board, movel, player, player1, player2);
             moving = false;
         } else {
             std::cout << "Moving failed. Choose again.\n";
@@ -256,6 +263,7 @@ int main() {
 
         // Player2 move
         moveit(player2, "Player2", subject.getBoard(), player1, player2);
+        subject.notifyObservers();
         win = check_win(player1, player2);
     }
 

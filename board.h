@@ -1,6 +1,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include "unit.h"
+#include "player.h"
 #include <iostream>
 #include <vector>
 
@@ -32,9 +33,9 @@ class Board {
         return nullptr; // Return nullptr if not found
     }
 
-    Unit* getAnotherUnit(int row, int col, Unit* link) {
+    Unit* getAnotherUnit(int row, int col, Unit* link, Player* player) {
         for (auto& unit : units) {
-            if (unit->getRow() == row && unit->getCol() == col && link != unit) {
+            if (unit->getRow() == row && unit->getCol() == col && link != unit && std::find(player->links.begin(), player->links.end(), unit) == player->links.end()) {
                 return unit;
             }
         }
