@@ -2,7 +2,7 @@
 #include "link.h"
 #include <utility>
 //constructor
-Player::Player(Link * links, bool player1, State state, int downloadD, int downloadV, int abilityNum)
+Player::Player(std::vector<Link*> links, bool player1, State state, int downloadD, int downloadV, int abilityNum)
     : links{links},
       player1{player1},
       state{state},

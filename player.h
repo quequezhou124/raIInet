@@ -2,7 +2,7 @@
 #define PLAYER_H
 #include "link.h"
 #include <vector>
-#include <string.h>
+#include <string>
 
 class Link;
 
@@ -21,9 +21,9 @@ class Player {
     int downloadV;
     int abilityNum;
    public:
-    Link * links;
+    std::vector<Link*> links;
     //constructor
-    Player(Link* links, bool player1 = true, State state = State::Undecided, int downloadD = 0, int downloadV = 0, int abilityNum = 0);
+    Player(std::vector<Link*> links, bool player1 = true, State state = State::Undecided, int downloadD = 0, int downloadV = 0, int abilityNum = 0);
     Player();
     // methods
     bool move(Unit * unit, const std::string& dir);
