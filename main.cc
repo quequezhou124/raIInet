@@ -98,7 +98,7 @@ void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
     if (l1->getStrength() >= l2->getStrength()) {
         if (dynamic_cast<Data*>(l2)) {
             p1->setdownloadD(p1->getdownloadD() + 1);
-            std::cout << "You download a data.\n";
+            std::cout << "You download a data.\n"<<p1->getdownloadD()<< std::endl;
             l2->setDownloaded(true);
         } else if (dynamic_cast<Virus*>(l2)) {
             p1->setdownloadV(p1->getdownloadV()+1);
@@ -126,7 +126,7 @@ bool check_battle(Board* board, Unit* l1, Player* player1, Player* player2) {
         other = player2;
     } else {
         owner = player2;
-        other = player2;
+        other = player1;
     }
     Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1, owner);
     if ((dynamic_cast<Data*>(l2)) || (dynamic_cast<Virus*>(l2))) {
