@@ -2,8 +2,8 @@
 #include "link.h"
 #include <utility>
 //constructor
-Player::Player(std::vector<std::unique_ptr<Link>>&& links, bool player1, State state, int downloadD, int downloadV, int abilityNum)
-    : links{std::move(links)},
+Player::Player(Link * links, bool player1, State state, int downloadD, int downloadV, int abilityNum)
+    : links{links},
       player1{player1},
       state{state},
       downloadD{downloadD},
@@ -49,7 +49,7 @@ void Player::changeturn(bool isplayer1){
     player1 = isplayer1;
 }
 
-bool Player::move(std::unique_ptr<Unit>& unit, const std::string& dir) {
+bool Player::move(Unit * unit, const std::string& dir) {
     if (auto link = dynamic_cast<Link*>(unit.get())){
         int newrow = link->getRow();
         int newcol = link->getCol();
