@@ -96,7 +96,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
     std::cout << playerName << " has finished setting their links.\n";
 }
 
-void moveit(Player* player, const std::string& playername, Board* board) {
+void moveit(Player* player, const std::string& playername, Board* board, Player* player1, Player* player2) {
     bool moving = true;
 
     while (moving) {
@@ -145,6 +145,7 @@ void moveit(Player* player, const std::string& playername, Board* board) {
         if (player->move(movel, dir)) {
             std::cout << "Successful move.\n";
             moving = false;
+            check_battle(board, movel, player1, player2);
         } else {
             std::cout << "Moving failed. Choose again.\n";
             getlink = false;
@@ -165,7 +166,7 @@ bool check_win(Player* player1, Player* player2) {
     return false;
 }
 
-void battle (Link *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
+void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
     if (l1->getStrength() >= l2->getStrength()) {
         if (dynamic_cast<Data*>(l2)) {
             p1->setdownloadD(p1->getdownloadD()+1);
@@ -189,7 +190,7 @@ void battle (Link *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
     }
 } 
 
-void check_battle(Board* board, Link* l1, Player* player1, Player* player2) {
+void check_battle(Board* board, Unit* l1, Player* player1, Player* player2) {
     Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1);
     if (l2) {
         battle(l1, l2, player1, player2, board);
@@ -232,13 +233,13 @@ int main() {
     bool win = false;
     while (!win) {
         // Player1 move
-        moveit(player1, "Player1", board);
+        moveit(player1, "Player1", board, player1, player2);
         win = check_win(player1, player2);
 
         if (win) break;
 
         // Player2 move
-        moveit(player2, "Player2", board);
+        moveit(player2, "Player2", board, player1, player2);
         win = check_win(player1, player2);
     }
 
