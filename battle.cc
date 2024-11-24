@@ -21,6 +21,6 @@ bool battle (Link *l1, Link *l2, Player *p1,Player *p2, Board *board) {
             p1->setdownloadV(p1->getdownloadV()+1);
         }
 
-
+        
     }
 } 
