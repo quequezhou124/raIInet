@@ -102,17 +102,17 @@ void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
             l2->setDownloaded(true);
         } else if (dynamic_cast<Virus*>(l2)) {
             p1->setdownloadV(p1->getdownloadV()+1);
-            std::cout << "You download a virus.\n";
+            std::cout << "You download a virus.\n"<<p1->getdownloadV()<< std::endl;
             l2->setDownloaded(true);
         }
     } else {
         if (dynamic_cast<Data*>(l1)) {
             p2->setdownloadD(p2->getdownloadD() + 1);
-            std::cout << "Your data is downloaded by opponent.\n";
+            std::cout << "Your data is downloaded by opponent.\n"<<p2->getdownloadD()<< std::endl;
             l1->setDownloaded(true);
         } else if (dynamic_cast<Virus*>(l1)) {
             p2->setdownloadV(p2->getdownloadV() + 1);
-            std::cout << "Your virus is downloaded by opponent.\n";
+            std::cout << "Your virus is downloaded by opponent.\n"<<p2->getdownloadV()<< std::endl;
             l1->setDownloaded(true);
         } 
     }
@@ -208,7 +208,7 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
             getdir = true;
         }
 
-        if (player->move(movel, dir)) {
+        if (player->move(board, movel, dir)) {
             std::cout << "Successful move.\n";
             if (! check_battle(board, movel, player1, player2)) {
                 //check_s(board, movel, player1, player2, player);
