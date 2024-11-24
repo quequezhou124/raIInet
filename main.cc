@@ -217,6 +217,8 @@ int main() {
     }
 
     // Initial setup
+
+    // Initial setup
     Board* board = new Blank;
     Subject subject{board};
     Player* player1 = new Player();
@@ -245,6 +247,7 @@ int main() {
     std::cout << "hiiiii" << std::endl;
     subject.notifyObservers();
 
+
     bool win = false;
     while (!win) {
         // Player1 move
@@ -263,9 +266,7 @@ int main() {
         delete unit;
     }
     delete board;
-    delete player1;
     delete observer;  // Detach and delete observer
     delete player1;
     delete player2;
-    delete subject; 
 }

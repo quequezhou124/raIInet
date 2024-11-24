@@ -13,6 +13,7 @@ class Subject {
   std::vector<Observer*>& getObservers() { return observers; }
 
  public:
+
   Board* getBoard() {return theBoard;}
   explicit Subject(Board* theBoard);
   void attach( Observer* o );
@@ -21,6 +22,13 @@ class Subject {
   char getState( int row, int col ) const;
   void cleanupObservers(); 
   ~Subject();
+  void setBoard(Board* newBoard) {
+    if (theBoard) {
+        delete theBoard;  // Delete the old board to avoid a memory leak
+    }
+    theBoard = newBoard;
+  }
+
 };
 
 #endif
