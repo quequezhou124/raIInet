@@ -9,7 +9,7 @@ int Link::getStrength() { return strength; }
 void Link::setStrength(int strength, int row, int col) { this->strength = strength; }
 
 bool Link::setrow(int row) { 
-    if (row < 0 || row > 7) {
+    if (row >= 0 || row <= 7) {
         this->row = row;
         return true;
     } else {
@@ -18,7 +18,7 @@ bool Link::setrow(int row) {
 }
 
 bool Link::setcol(int col) {
-    if (col < 0 || col > 7) {
+    if (col >= 0 || col <= 7) {
         this->col = col;
         return true;
     } else {
