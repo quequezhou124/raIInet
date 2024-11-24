@@ -113,17 +113,27 @@ void moveit (Player * player, std::string playername, Board * b) {
         bool getdir = false;
         std::string movelink;
         std::string dir;
-        std::cout << playername << " please choose the link you move. Use format a, b, etc.\n";
+        std::cout << playername << " please choose the link you move. Use format a, A, b, B, etc.\n";
         std::unique_ptr<Unit> movel;
         while (!getlink) {
             std::cin >> movelink;
-            movel = board->find_unit(movelink[0]);
-            if ((movelink.length() != 1) || (movel == nullptr) || (std::find(player->links.begin(), player->links.end(), movel) == player->links.end())) {
-                std::cout << "Invalid link. Choose another one.\n";
+            if (movelink.length() != 1 || !isalpha(movelink[0])) {
+                std::cout << "Invalid link format. Use a single character (e.g., a, A).\n";
                 continue;
-            } else {
-                getlink = true;
             }
+            // 查找单元
+            movel = board->find_unit(movelink[0]); // 假设 find_unit 返回 std::unique_ptr<Unit>
+            if (!movel) {
+                std::cout << "Link not found on board. Choose another one.\n";
+                continue;
+            }
+            // 检查链接是否属于玩家
+            Unit* rawUnit = movel.get(); // 获取底层原始指针
+            if (std::find(player->links.begin(), player->links.end(), movel) == player->links.end()) {
+                std::cout << "The link does not belong to you. Choose another one.\n";
+                continue;
+            }
+            getlink = true;
         }
         std::cout << "Please choose the direction you move. Use format u, d, l, r.\n";
         while (!getdir) {
@@ -139,7 +149,7 @@ void moveit (Player * player, std::string playername, Board * b) {
             std::cout << "Successful move.\n";
             moving = false;
         } else {
-            std::cout << "Moving fasiled. Choose again.\n";
+            std::cout << "Moving failed. Choose again.\n";
             getlink = false;
             getdir = false;
             continue;
@@ -187,22 +197,15 @@ int main() {
     print_blank();
     // Player 2 setup (A-H)
     setupPlayer(board, player2.get(), 0, "Player 2", 'A');
-
-    bool finish = false;
-    while (finish) {
+    
+    bool win = false; 
+    while (!win) {
         //Player1 move
-        notify();
         moveit(player1.get(), "player1", board);
-
-        //Anyone wins
-        finish = check_win(player1.get(), player2.get());
-
+        win = check_win(player1.get(), player2.get());
         //Player2 move
-        notify();
         moveit(player2.get(), "player2", board);
-
-        //Anyone wins
-        finish = check_win(player1.get(), player2.get());
+        win = check_win(player1.get(), player2.get());
     }
     
     return 0;
