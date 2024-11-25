@@ -10,22 +10,22 @@ class Link;
 
 class TextObserver : public Observer {
     Subject *subject;
-    Player *curplayer;
-    Player *otherplayer;
+    Player *player1;
+    Player *player2;
 public:
     // constructor
-    TextObserver(Subject *subject, Player *curplayer, Player *otherplayer):
-        subject{subject}, curplayer{curplayer}, otherplayer{otherplayer} {
+    TextObserver(Subject *subject, Player *player1, Player *player2):
+        subject{subject}, player1{player1}, player2{player2} {
             // once created it attach it
             subject->attach(this);
         }
     // print the canvas
     void notify() override {
         std::cout << "Player 1: " << endl;
-        std::cout << "Downloaded: " << curplayer->getdownloadD() <<"D, "<< curplayer->getdownloadV() << "V" <<endl;
-        std::cout << "Abilities: " << curplayer->getabilityNum() << endl;
+        std::cout << "Downloaded: " << player1->getdownloadD() <<"D, "<< player1->getdownloadV() << "V" <<endl;
+        std::cout << "Abilities: " << player1->getabilityNum() << endl;
         
-        if (curplayer->isplayer1turn()) {
+        if (player1->isplayer1turn()) {
             std::cout << "a: " << subject->getBoard()->find_unit('a')->getType() << subject->getBoard()->find_unit('a')->getStrength() << " ";
             std::cout << "b: " << subject->getBoard()->find_unit('b')->getType() << subject->getBoard()->find_unit('b')->getStrength() << " ";
             std::cout << "c: " << subject->getBoard()->find_unit('c')->getType() << subject->getBoard()->find_unit('c')->getStrength() << " ";
@@ -54,11 +54,11 @@ public:
         }
         std::cout << endl;
         std::cout << "Player 2: " << endl;
-        std::cout << "Downloaded: " << otherplayer->getdownloadD() <<"D, "<< otherplayer->getdownloadV() << "V" <<endl;
-        std::cout << "Abilities: " << otherplayer->getabilityNum() << endl;
+        std::cout << "Downloaded: " << player2->getdownloadD() <<"D, "<< player2->getdownloadV() << "V" <<endl;
+        std::cout << "Abilities: " << player2->getabilityNum() << endl;
         
 
-        if (!curplayer->isplayer1turn()) {
+        if (!player1->isplayer1turn()) {
             std::cout << "A: " << subject->getBoard()->find_unit('A')->getType() << subject->getBoard()->find_unit('A')->getStrength() << " ";
             std::cout << "B: " << subject->getBoard()->find_unit('B')->getType() << subject->getBoard()->find_unit('B')->getStrength() << " ";
             std::cout << "C: " << subject->getBoard()->find_unit('C')->getType() << subject->getBoard()->find_unit('C')->getStrength() << " ";

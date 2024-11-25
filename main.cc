@@ -292,18 +292,21 @@ int main() {
     subject.setBoard(new Board{board->units}); // Use setBoard to properly assign the new decorated board
 
     bool win = false;
+    subject.notifyObservers();
     while (!win) {
         // Player1 move
-        
+        player1->changeturn(true);
+        player2->changeturn(true);
         subject.notifyObservers();
         moveit(player1, "Player1", subject.getBoard(), player1, player2);
         for (auto& unit : subject.getBoard()->units) {
         }
         win = check_win(player1, player2);
-        
         if (win) break;
 
         // Player2 move
+        player1->changeturn(false);
+        player2->changeturn(false);
         subject.notifyObservers();
         moveit(player2, "Player2", subject.getBoard(), player1, player2);
         win = check_win(player1, player2);
