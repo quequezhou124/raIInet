@@ -119,27 +119,6 @@ void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
     }
 } 
 
-void check_battle_s(Board* board, Unit* l1, Player* player1, Player* player2) {
-    Player* owner;
-    Player* other;
-    if (std::find(player1->links.begin(), player1->links.end(), l1) == player1->links.end()) {
-        owner = player1;
-        other = player2;
-    } else {
-        owner = player2;
-        other = player1;
-    }
-    Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1, owner);
-    if (!l2) {
-        return;
-    }
-    if (dynamic_cast<Data*>(l2) || dynamic_cast<Virus*>(l2)) {
-        battle(l1, l2, owner, other, board);
-        return;
-    }
-    check_s(board, l1, player1, player2, owner);
-}
-
 void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* owner) {
     if (dynamic_cast<Serverports*>(board->getAnotherUnit (l1->getRow(), l1->getCol(), l1, owner))) {
         if (player1 == owner) {
@@ -165,6 +144,27 @@ void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* o
         }
         l1->setDownloaded(true);
     }
+}
+
+void check_battle_s(Board* board, Unit* l1, Player* player1, Player* player2) {
+    Player* owner;
+    Player* other;
+    if (std::find(player1->links.begin(), player1->links.end(), l1) == player1->links.end()) {
+        owner = player1;
+        other = player2;
+    } else {
+        owner = player2;
+        other = player1;
+    }
+    Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1, owner);
+    if (!l2) {
+        return;
+    }
+    if (dynamic_cast<Data*>(l2) || dynamic_cast<Virus*>(l2)) {
+        battle(l1, l2, owner, other, board);
+        return;
+    }
+    check_s(board, l1, player1, player2, owner);
 }
 
 void moveit(Player* player, const std::string& playername, Board* board, Player* player1, Player* player2) {
@@ -251,7 +251,12 @@ void setability(Player * player) {
     int a;
     int n = 0;
     while (n < 5) {
-        std:: cin >> a;
+        if (!(std::cin >> a)) { // 检查输入是否有效
+            std::cout << "Invalid input, please enter a number between 1 and 8.\n";
+            std::cin.clear();   // 清除错误状态
+            std::cin.ignore(); // 丢弃当前行的输入
+            continue;
+        }
         if (a > 8 || a < 0) {
             std::cout << "Invalid number, choose another one.\n";
             continue;
