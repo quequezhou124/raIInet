@@ -96,22 +96,17 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
 }
 
 void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
-    std::cout << "666\n";
     if (l1->getStrength() >= l2->getStrength()) {
-        std::cout << "777\n";
         if (dynamic_cast<Data*>(l2)) {
-            std::cout << "999\n";
             p1->setdownloadD(p1->getdownloadD() + 1);
-            std::cout << "You download a data.\n"<<p1->getdownloadD()<< std::endl;
+            std::cout << "You download a data.\n";
             l2->setDownloaded(true);
         } else if (dynamic_cast<Virus*>(l2)) {
-            std::cout << "000\n";
             p1->setdownloadV(p1->getdownloadV()+1);
-            std::cout << "You download a virus.\n"<<p1->getdownloadV()<< std::endl;
+            std::cout << "You download a virus.\n";
             l2->setDownloaded(true);
         }
     } else {
-        std::cout << "888\n";
         if (dynamic_cast<Data*>(l1)) {
             p2->setdownloadD(p2->getdownloadD() + 1);
             std::cout << "Your data is downloaded by opponent.\n";
@@ -124,7 +119,7 @@ void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
     }
 } 
 
-bool check_battle(Board* board, Unit* l1, Player* player1, Player* player2) {
+void check_battle_s(Board* board, Unit* l1, Player* player1, Player* player2) {
     Player* owner;
     Player* other;
     if (std::find(player1->links.begin(), player1->links.end(), l1) == player1->links.end()) {
@@ -136,33 +131,33 @@ bool check_battle(Board* board, Unit* l1, Player* player1, Player* player2) {
     }
     Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1, owner);
     if (!l2) {
-        return false;
+        return;
     }
-    if ((l2->getType() == "D") || (l2->getType() == "V")) {
+    if (dynamic_cast<Data*>(l2) || dynamic_cast<Virus*>(l2)) {
         battle(l1, l2, owner, other, board);
-        return true;
+        return;
     }
-    return false;
+    check_s(board, l1, player1, player2, owner);
 }
 
 void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* owner) {
-    if ((board->getAnotherUnit (l1->getRow(), l1->getCol(), l1, owner))->getType() == "S") {
+    if (dynamic_cast<Serverports*>(board->getAnotherUnit (l1->getRow(), l1->getCol(), l1, owner))) {
         if (player1 == owner) {
-            if (l1->getType() == "D") {
+            if (dynamic_cast<Data*>(l1)) {
                 int n = player2->getdownloadD();
                 player2->setdownloadD(n++);
                 std::cout << "Player2 has downloaded your Data.\n";
-            } else if (l1->getType() == "V") {
+            } else if (dynamic_cast<Virus*>(l1)) {
                 int n = player2->getdownloadV();
                 player2->setdownloadV(n++);
                 std::cout << "Player2 has downloaded your Virus.\n";
             }
         } else if (player2 == owner) {
-            if (l1->getType() == "D") {
+            if (dynamic_cast<Data*>(l1)) {
                 int n = player1->getdownloadD();
                 player1->setdownloadD(n++);
                 std::cout << "Player1 has downloaded your Data.\n";
-            } else if (l1->getType() == "V") {
+            } else if (dynamic_cast<Virus*>(l1)) {
                 int n = player1->getdownloadV();
                 player1->setdownloadV(n++);
                 std::cout << "Player1 has downloaded your Virus.\n";
@@ -219,12 +214,7 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
 
         if (player->move(board, movel, dir)) {
             std::cout << "Successful move.\n";
-            std::cout << "aaa\n";
-            if (! check_battle(board, movel, player1, player2)) {
-                //check_s(board, movel, player1, player2, player);
-                std::cout << "bbb\n";
-            }
-            std::cout << "ccc\n";
+            check_battle_s(board, movel, player1, player2);
             moving = false;
         } else {
             std::cout << "Moving failed. Choose again.\n";
@@ -244,6 +234,45 @@ bool check_win(Player* player1, Player* player2) {
         return true;
     }
     return false;
+}
+
+void setability(Player * player) {
+    std::cout << "Please select your abilities. You can pick 5 abilities, up to two for each. "
+              << "Below are the optional abilities (please respond with the number, separated by a carriage return):\n"
+              << "1. Link Boost: Allows a link to move one additional square per turn, enabling it to jump over obstacles.\n"
+              << "2. Firewall: \n"
+              << "3. Download: Instantly downloads an opponent's targeted link without requiring it to be revealed.\n"
+              << "4. Polarize: Converts a targeted data link to a virus or a virus to data, maintaining the same strength.\n"
+              << "5. Scan: Reveals the type and strength of any targeted link on the field, excluding the player's own links.\n"
+              << "6. Negate: Cancels the opponent's current ability usage.\n"
+              << "7. Combat Lock: Prevents a specific link from being downloaded by any method other than combat.\n"
+              << "8. Enhance: Increases the strength of a specific link by 1.\n";
+    bool abilityset[8][2]= {{false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}};
+    int a;
+    int n = 0;
+    while (n < 5) {
+        std:: cin >> a;
+        if (a > 8 || a < 0) {
+            std::cout << "Invalid number, choose another one.\n";
+            continue;
+        } else {
+            a--;
+            if (abilityset[a][1]) {
+                std::cout << "You have choosed this ability twice. Choose another one.\n";
+                continue;
+            } else if (abilityset[a][0]) {
+                player->setabilityNum(a);
+                abilityset[a][1] = true;
+                std::cout << "Successfully choose.\n";
+                n++;
+            } else {
+                player->setabilityNum(a);
+                abilityset[a][0] = true;
+                std::cout << "Successfully choose.\n";
+                n++;
+            }
+        }
+    }
 }
 
 int main() {
@@ -277,10 +306,12 @@ int main() {
     // Player 1 setup (a-h)
     print_blank();
     setupPlayer(board, player1, 0, "Player 1", 'a');
+    setability(player1);
 
     // Player 2 setup (A-H)
     print_blank();
     setupPlayer(board, player2, 7, "Player 2", 'A');
+    setability(player2);
 
     // Set new decorated board
     subject.setBoard(new Board{board->units}); // Use setBoard to properly assign the new decorated board

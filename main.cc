@@ -236,6 +236,45 @@ bool check_win(Player* player1, Player* player2) {
     return false;
 }
 
+void setability(Player * player) {
+    std::cout << "Please select your abilities. You can pick 5 abilities, up to two for each. "
+              << "Below are the optional abilities (please respond with the number, separated by a carriage return):\n"
+              << "1. Link Boost: Allows a link to move one additional square per turn, enabling it to jump over obstacles.\n"
+              << "2. Firewall: \n"
+              << "3. Download: Instantly downloads an opponent's targeted link without requiring it to be revealed.\n"
+              << "4. Polarize: Converts a targeted data link to a virus or a virus to data, maintaining the same strength.\n"
+              << "5. Scan: Reveals the type and strength of any targeted link on the field, excluding the player's own links.\n"
+              << "6. Negate: Cancels the opponent's current ability usage.\n"
+              << "7. Combat Lock: Prevents a specific link from being downloaded by any method other than combat.\n"
+              << "8. Enhance: Increases the strength of a specific link by 1.\n";
+    bool abilityset[8][2]= {{false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}};
+    int a;
+    int n = 0;
+    while (n < 5) {
+        std:: cin >> a;
+        if (a > 8 || a < 0) {
+            std::cout << "Invalid number, choose another one.\n";
+            continue;
+        } else {
+            a--;
+            if (abilityset[a][1]) {
+                std::cout << "You have choosed this ability twice. Choose another one.\n";
+                continue;
+            } else if (abilityset[a][0]) {
+                player->setabilityNum(a);
+                abilityset[a][1] = true;
+                std::cout << "Successfully choose.\n";
+                n++;
+            } else {
+                player->setabilityNum(a);
+                abilityset[a][0] = true;
+                std::cout << "Successfully choose.\n";
+                n++;
+            }
+        }
+    }
+}
+
 int main() {
     std::cout << "Welcome to the game: RAIInet\n";
     std::cout << "Do you need the rulebook for RAIInet? Reply Y or N.\n";
@@ -267,10 +306,12 @@ int main() {
     // Player 1 setup (a-h)
     print_blank();
     setupPlayer(board, player1, 0, "Player 1", 'a');
+    setability(player1);
 
     // Player 2 setup (A-H)
     print_blank();
     setupPlayer(board, player2, 7, "Player 2", 'A');
+    setability(player2);
 
     // Set new decorated board
     subject.setBoard(new Board{board->units}); // Use setBoard to properly assign the new decorated board
