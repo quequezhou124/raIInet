@@ -138,6 +138,10 @@ bool check_battle(Board* board, Unit* l1, Player* player1, Player* player2) {
     std::cout << "222\n";
     Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1, owner);
     std::cout << "333\n";
+    if (!l2) {
+        std::cout << "！！！\n";
+        return false;
+    }
     if ((l2->getType() == "D") || (l2->getType() == "V")) {
         std::cout << "444\n";
         battle(l1, l2, owner, other, board);
@@ -286,26 +290,22 @@ int main() {
 
     // Set new decorated board
     subject.setBoard(new Board{board->units}); // Use setBoard to properly assign the new decorated board
-    // Proceed with game
-    std::cout << subject.getBoard()->unitAt(0, 0) << std::endl;
-    subject.notifyObservers();
-    std::cout << subject.getBoard()->units.size() << std::endl;
-
 
     bool win = false;
     while (!win) {
         // Player1 move
+        
+        subject.notifyObservers();
         moveit(player1, "Player1", subject.getBoard(), player1, player2);
         for (auto& unit : subject.getBoard()->units) {
         }
-        subject.notifyObservers();
         win = check_win(player1, player2);
         
         if (win) break;
 
         // Player2 move
-        moveit(player2, "Player2", subject.getBoard(), player1, player2);
         subject.notifyObservers();
+        moveit(player2, "Player2", subject.getBoard(), player1, player2);
         win = check_win(player1, player2);
         
     }
