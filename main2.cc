@@ -645,8 +645,10 @@ int main() {
 
     bool win = false;
     while (!win) {
+        // Player1 use ability
+        subject.notifyObservers();
+        UseAbility(board, player1, player2);
         // Player1 move
-        
         subject.notifyObservers();
         moveit(player1, "Player1", subject.getBoard(), player1, player2);
         win = check_win(player1, player2);
@@ -654,6 +656,9 @@ int main() {
         if (win) break;
         player1->changeturn(false);
 
+        // Player1 use ability
+        subject.notifyObservers();
+        UseAbility(board, player2, player1);
         // Player2 move
         subject.notifyObservers();
         moveit(player2, "Player2", subject.getBoard(), player1, player2);
