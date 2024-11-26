@@ -4,7 +4,7 @@
 #include "player.h"
 #include <vector>
 
-class enhanceAbility{
+class downloadAbility{
   public:
     bool useAbility(Player *player,Player *other, char linkname, Board *board, bool negate) {
       if (negate) {

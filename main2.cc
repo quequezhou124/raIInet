@@ -11,6 +11,7 @@
 #include "virus.h"
 #include "serverports.h"
 #include "linkboostAbility.h"
+#include "downloadAbility.h"
 
 void print_rule() {
     std::cout << "RAIInet is a two-player strategy game played on an 8×8 grid.\n"
@@ -267,12 +268,12 @@ void setability(Player * player) {
                 std::cout << "You have choosed this ability twice. Choose another one.\n";
                 continue;
             } else if (abilityset[a][0]) {
-                player->addAbilityNum(a);
+                player->addAbility(a);
                 abilityset[a][1] = true;
                 std::cout << "Successfully choose.\n";
                 n++;
             } else {
-                player->addAbilityNum(a);
+                player->addAbility(a);
                 abilityset[a][0] = true;
                 std::cout << "Successfully choose.\n";
                 n++;
@@ -438,6 +439,35 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                 }
                 if (a == 3) {
                     std:cout << "If you want to use Download, please reply the link you want to download, like a, A.\n";
+                    char link;
+                    if (!(std::cin >> link)){
+                        std::cout << "Invalid input, please enter a link, like a, A.\n";
+                        std::cin.clear();   // 清除错误状态
+                        std::cin.ignore(); // 丢弃当前行的输入
+                        continue;
+                    } else {
+                        Unit* l = board->find_unit(link);
+                        if (!l) {
+                            std::cout << "Link is not found. Choose another one.\n";
+                            continue;
+                        } else {
+                            std::string operate = "Use Download on " + l->getName();
+                            bool useNegate = check_negate(other, operate);
+                            downloadAbility func{};
+                            if (func.useAbility(owner, link, board, useNegate)) {
+                                std::cout << "Used successfully.\n";
+                                if (useNegate) {
+                                    other->deleteAbility(8);
+                                }
+                                owner->deleteAbility(1);
+                                decide = true;
+                                return;
+                            } else {
+                                std::cout << "Failed useing, try again.\n";
+                                continue;
+                            }
+                        }
+                    }
                 }
                 if (a == 4) {
                     std:cout << "If you want to use Polarize, please reply the link, like a, A.\n";
