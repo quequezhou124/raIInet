@@ -191,6 +191,11 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
                 continue;
             }
 
+            if (movel->getDownloaded()) {
+                std::cout << "Link is already downloaded. Choose another one.\n";
+                continue;
+            }
+
             // 检查链接是否属于玩家
             if (std::find(player->links.begin(), player->links.end(), movel) == player->links.end()) {
                 std::cout << "The link does not belong to you. Choose another one.\n";
