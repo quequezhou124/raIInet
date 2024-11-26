@@ -17,6 +17,9 @@ class Unit {
     char getName() const { return name; }
     int getRow() const { return row; }
     int getCol() const { return col; }
+    bool getDisplayed() const{return displayed;}
+    bool getDoublespeed() const{return doublespeed;}
+    bool getLocked() const{return locked;}
     void opendoublespeed() {
       doublespeed=true;
       return;

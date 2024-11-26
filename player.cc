@@ -69,11 +69,46 @@ bool Player::move(Board * board, Unit * unit, const std::string& dir) {
         Unit * newunit = board->getUnit(newrow, newcol);
         if (( newunit != nullptr
         && std::find(links.begin(), links.end(), newunit) != links.end())
-        || dynamic_cast<Serverports*>(newunit)) {return false;}
+        || (!player1 && newrow == 0 && newcol == 3)
+        || (!player1 && newrow == 0 && newcol == 4)
+        || (player1 && newrow == 7 && newcol == 3)
+        || (player1 && newrow == 7 && newcol == 4)) {return false;}
         return link->setrow(newrow) && link->setcol(newcol);
 
-    } else{
+    } else {
         return false;
     }
 }
 
+bool Player::addAbility(int i){
+    for(int i = 0; i < 5; i++) {
+        if (abilityBag[i] == 0) {
+            abilityBag[i] = i;
+            return true;
+        } else {
+            continue;
+        }
+    }
+    std::cout<< "you have already set 5 abilities!";
+    return false;
+}
+
+void Player::printAbility() {
+    for(int i = 0; i < 5; i++) {
+        if (abilityBag[i] == 0) {
+            return;
+        } else {
+             std::cout<< abilityBag[i]<< " ";
+        }
+    }
+    std::cout << endl;
+}
+
+bool Player::findAbility(int k){
+    for(int i = 0; i < 5; i++) {
+        if (abilityBag[i] == k) {
+            return true;
+        }
+    }
+    return false;
+}

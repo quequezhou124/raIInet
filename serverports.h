@@ -5,9 +5,8 @@
 
 class Player;
 class Serverports: public Unit {
-  protected:
-    Serverports (int row, int col, int strength, char name = 'S', bool displayed = false, bool doublespeed = false, bool locked = false, bool downloaded = false);
   public:
+    Serverports (int row, int col, int strength, char name = 'S', bool displayed = false, bool doublespeed = false, bool locked = false, bool downloaded = false);
     int getStrength() override;
     void setStrength(int strength, int row, int col) override;
     bool setrow(int row) override;

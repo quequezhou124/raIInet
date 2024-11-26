@@ -92,6 +92,17 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
         }
         col++;
     }
+    if (startRow == 0) {
+        Serverports* serverports1 = new Serverports {0, 3, 0, 'S', false, false, false, false} ;
+        Serverports* serverports2 = new Serverports {0, 4, 0, 'S', false, false, false, false} ;
+        board->units.push_back(serverports1);
+        board->units.push_back(serverports2);
+    } else if (startRow == 7) {
+        Serverports* serverports1 = new Serverports {7, 3, 0, 'S', false, false, false, false} ; 
+        Serverports* serverports2 = new Serverports {7, 4, 0, 'S', false, false, false, false} ;
+        board->units.push_back(serverports1);
+        board->units.push_back(serverports2);
+    }
     std::cout << playerName << " has finished setting their links.\n";
 }
 
@@ -188,6 +199,11 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
             movel = board->find_unit(movelink[0]);
             if (!movel) {
                 std::cout << "Link not found on board. Choose another one.\n";
+                continue;
+            }
+
+            if (movel->getDownloaded()) {
+                std::cout << "Link is already downloaded. Choose another one.\n";
                 continue;
             }
 

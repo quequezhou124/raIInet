@@ -1,9 +1,10 @@
 #include "player.h"
 #include "board.h"
+#include "serverports.h"
 
     Unit* Board::find_unit(char name) {
         for (auto& unit : units) {
-            if (unit->getName() == name && unit->getDownloaded()==false) {
+            if (unit->getName() == name) {
                 return unit;
             }
         }
@@ -12,7 +13,7 @@
 
     Unit* Board::getUnit(int row, int col) {
         for (auto& unit : units) {
-            if (unit->getRow() == row && unit->getCol() == col) {
+            if (unit->getRow() == row && unit->getCol() == col && !unit->getDownloaded()) {
                 return unit;
             }
         }
@@ -30,7 +31,8 @@
 
     char Board::unitAt(int row, int col) {
         Unit* unit = getUnit(row, col);
-        if (unit) {
+        if (unit && unit->getType() == "S") return 'S';
+        if (unit && !unit->getDownloaded()) {
             return unit->getName();
         } else {
             return '.';  // Or any other character for empty cells
