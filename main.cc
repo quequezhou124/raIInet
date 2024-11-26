@@ -295,12 +295,12 @@ void setability(Player * player) {
                 std::cout << "You have choosed this ability twice. Choose another one.\n";
                 continue;
             } else if (abilityset[a][0]) {
-                player->addAbility(a);
+                player->addAbility(a+1);
                 abilityset[a][1] = true;
                 std::cout << "Successfully choose.\n";
                 n++;
             } else {
-                player->addAbility(a);
+                player->addAbility(a+1);
                 abilityset[a][0] = true;
                 std::cout << "Successfully choose.\n";
                 n++;

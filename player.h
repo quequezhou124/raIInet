@@ -30,7 +30,7 @@ class Player {
     Player();
     // methods
     bool findAbility(int k);
-    bool addAbility(int i);
+    bool addAbility(int k);
     bool move(Board * borad, Unit * unit, const std::string& dir);
     void printAbility();
     bool deleteAbility(int k);
