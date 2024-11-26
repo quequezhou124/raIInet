@@ -32,6 +32,7 @@ class Unit {
     virtual ~Unit() = default;
     bool getDownloaded() const {return downloaded;}
     void setDownloaded(bool newd) {downloaded = newd;}
+    void setLocked(bool newd) {locked = newd;}
 };
 
 #endif
