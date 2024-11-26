@@ -63,6 +63,32 @@ a
 d
 C
 r
+A
+u
+c
+d 
+A
+u
+b 
+d
+A 
+u
+b
+d 
+A 
+u
+c 
+d
+A
+r
+b
+d
+A
+r
+b
+d 
+A
+r
 
 
 
