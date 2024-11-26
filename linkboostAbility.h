@@ -9,7 +9,7 @@ class linkboostAbility{
     bool useAbility(Player *player, char linkname, Board *board, bool negate) {
       if (negate) {
         std::cout << "your opponent has used negate" << endl;
-        return false;
+        return true;
       }
       if (board->find_unit(linkname)) {
         if (std::find(player->links.begin(), player->links.end(), board->find_unit(linkname))!=player->links.end()) {
