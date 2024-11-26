@@ -349,9 +349,13 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                 }
             }
             while (!use) {
-                std::cout << "If you want to use another ability, reply 1.\n"
-                << "If you want to stop using any ability, reply 2.\n";
-                if (a == 1) {
+                std::cout << "If you want to use another ability, reply -1.\n"
+                << "If you want to stop using any ability, reply -2.\n";
+                if (a == -2) {
+                    return;
+                } else if (a == -1) {
+                    continue;
+                } else if (a == 1) {
                     std:cout << "If you want to use Link Boost, please reply the link you want to boost, like a, A.\n";
                     char link;
                     if (!(std::cin >> link)){
@@ -396,7 +400,25 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                             std::cin.ignore(); // 丢弃当前行的输入
                             continue;
                         } else if ((r < 0) || (r > 7)) {
-                            
+                            std::cout << "Invalid number, it should between 0-7. Try again.\n";
+                            continue;
+                        } else {
+                            std::cout << "Get row.\n";
+                            r = true;
+                        }
+                    }
+                    while (!c) {
+                        if (!(std::cin >> c)){
+                            std::cout << "Invalid input, please enter a number.\n";
+                            std::cin.clear();   // 清除错误状态
+                            std::cin.ignore(); // 丢弃当前行的输入
+                            continue;
+                        } else if ((c < 0) || (c > 7)) {
+                            std::cout << "Invalid number, it should between 0-7. Try again.\n";
+                            continue;
+                        } else {
+                            std::cout << "Get col.\n";
+                            c = true;
                         }
                     }
                 }
