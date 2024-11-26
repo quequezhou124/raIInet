@@ -119,27 +119,6 @@ void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
     }
 } 
 
-void check_battle_s(Board* board, Unit* l1, Player* player1, Player* player2) {
-    Player* owner;
-    Player* other;
-    if (std::find(player1->links.begin(), player1->links.end(), l1) == player1->links.end()) {
-        owner = player1;
-        other = player2;
-    } else {
-        owner = player2;
-        other = player1;
-    }
-    Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1, owner);
-    if (!l2) {
-        return;
-    }
-    if (dynamic_cast<Data*>(l2) || dynamic_cast<Virus*>(l2)) {
-        battle(l1, l2, owner, other, board);
-        return;
-    }
-    check_s(board, l1, player1, player2, owner);
-}
-
 void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* owner) {
     if (dynamic_cast<Serverports*>(board->getAnotherUnit (l1->getRow(), l1->getCol(), l1, owner))) {
         if (player1 == owner) {
@@ -165,6 +144,27 @@ void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* o
         }
         l1->setDownloaded(true);
     }
+}
+
+void check_battle_s(Board* board, Unit* l1, Player* player1, Player* player2) {
+    Player* owner;
+    Player* other;
+    if (std::find(player1->links.begin(), player1->links.end(), l1) == player1->links.end()) {
+        owner = player1;
+        other = player2;
+    } else {
+        owner = player2;
+        other = player1;
+    }
+    Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1, owner);
+    if (!l2) {
+        return;
+    }
+    if (dynamic_cast<Data*>(l2) || dynamic_cast<Virus*>(l2)) {
+        battle(l1, l2, owner, other, board);
+        return;
+    }
+    check_s(board, l1, player1, player2, owner);
 }
 
 void moveit(Player* player, const std::string& playername, Board* board, Player* player1, Player* player2) {
@@ -244,14 +244,19 @@ void setability(Player * player) {
               << "3. Download: Instantly downloads an opponent's targeted link without requiring it to be revealed.\n"
               << "4. Polarize: Converts a targeted data link to a virus or a virus to data, maintaining the same strength.\n"
               << "5. Scan: Reveals the type and strength of any targeted link on the field, excluding the player's own links.\n"
-              << "6. Negate: Cancels the opponent's current ability usage.\n"
+              << "6. Enhance: Increases the strength of a specific link by 1.\n"
               << "7. Combat Lock: Prevents a specific link from being downloaded by any method other than combat.\n"
-              << "8. Enhance: Increases the strength of a specific link by 1.\n";
+              << "8. Negate: Cancels the opponent's current ability usage.\n";
     bool abilityset[8][2]= {{false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}};
     int a;
     int n = 0;
     while (n < 5) {
-        std:: cin >> a;
+        if (!(std::cin >> a)) { // 检查输入是否有效
+            std::cout << "Invalid input, please enter a number between 1 and 8.\n";
+            std::cin.clear();   // 清除错误状态
+            std::cin.ignore(); // 丢弃当前行的输入
+            continue;
+        }
         if (a > 8 || a < 0) {
             std::cout << "Invalid number, choose another one.\n";
             continue;
@@ -261,15 +266,100 @@ void setability(Player * player) {
                 std::cout << "You have choosed this ability twice. Choose another one.\n";
                 continue;
             } else if (abilityset[a][0]) {
-                player->setabilityNum(a);
+                player->addAbilityNum(a);
                 abilityset[a][1] = true;
                 std::cout << "Successfully choose.\n";
                 n++;
             } else {
-                player->setabilityNum(a);
+                player->addAbilityNum(a);
                 abilityset[a][0] = true;
                 std::cout << "Successfully choose.\n";
                 n++;
+            }
+        }
+    }
+    player->setabilityNum(5);
+}
+
+void UseAbility(Board* board, Player* owner, Player* other) {
+    if (owner->getabilityNum() < 1) {
+        std::cout << "You have used all your abilities.\n";
+        return;
+    }
+    std::cout << "Do you want to use your ability? Reply Y or N.\n"
+    << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Conbat Lock 8.Negate\n"
+    << "The following is what abilities you have:"
+    << owner->printAbility();
+    std::string s;
+    bool decide = false;
+    int a;
+    while (!decide) {
+        std::cin >> s;
+        if (s == "N") {
+            return;
+        } else if (s != "Y") {
+            std::cout << "Invalid input. Please reply Y/N.\n";
+            continue;
+        } else {
+            std::cout << "Please reply the number of the ability you want to use.\nReply 0 if you do not want to use any ability.\n";
+            bool find = false;
+            bool use = false;
+            while (!find) {
+                if (!(std::cin >> a)){
+                    std::cout << "Invalid input, please enter a number between 1 and 8.\n";
+                    std::cin.clear();   // 清除错误状态
+                    std::cin.ignore(); // 丢弃当前行的输入
+                    continue;
+                } else if ((a < 0) || (a > 7)) {
+                    std::cout << "Invalid input, please enter a number of the ability you have.\n";
+                } else if (a == 0) {
+                    return;
+                } else if (a == 8) {
+                    std::cout << "You can not use it right now, please choose another one.\n";
+                    continue;
+                } else if (!(owner->findAbility())) {
+                    std::cout << "You do not have the ability, please choose another one.\n";
+                    continue;
+                } else {
+                    find = true;
+                }
+            }
+            while (!use) {
+                std::cout << "If you want to use another ability, reply 1.\n"
+                << "If you want to stop using any ability, reply 2.\n";
+                if (a == 1) {
+                    std:cout << "If you want to use Link Boost, please reply the link you want to boost, like a, A.\n";
+                    char link;
+                    if (!(std::cin >> link)){
+                        std::cout << "Invalid input, please enter a link, like a, A.\n";
+                        std::cin.clear();   // 清除错误状态
+                        std::cin.ignore(); // 丢弃当前行的输入
+                        continue;
+                    } else {
+                        Unit* l = board->find_unit(link);
+                        if (!l) {
+                            std::cout << 
+                        }
+                    }
+                }
+                if (a == 2) {
+                    std:cout << "If you want to use Fire Wall, please reply the location you want to use, like (Row, Col). (Left and up is smaller.)\n";
+                }
+                if (a == 3) {
+                    std:cout << "If you want to use Download, please reply the link you want to download, like a, A.\n";
+                }
+                if (a == 4) {
+                    std:cout << "If you want to use Polarize, please reply the link, like a, A.\n";
+                }
+                if (a == 5) {
+                    std:cout << "If you want to use Scan, please reply the link you want to scan, like a, A.\n";
+                }
+                if (a == 6) {
+                    std:cout << "If you want to use Enhance, please reply the link you want to enhance, like a, A.\n";
+                }
+                if (a == 7) {
+                    std:cout << "If you want to use CombatLock, please reply the link you want to look, like a, A.\n";
+                }
             }
         }
     }
@@ -293,9 +383,6 @@ int main() {
             rule = false;
         }
     }
-
-    // Initial setup
-
     // Initial setup
     Board* board = new Board;
     Subject subject{board};
@@ -322,16 +409,16 @@ int main() {
         
         subject.notifyObservers();
         moveit(player1, "Player1", subject.getBoard(), player1, player2);
-        for (auto& unit : subject.getBoard()->units) {
-        }
         win = check_win(player1, player2);
         
         if (win) break;
+        player1->changeturn(false);
 
         // Player2 move
         subject.notifyObservers();
         moveit(player2, "Player2", subject.getBoard(), player1, player2);
         win = check_win(player1, player2);
+        player1->changeturn(true);
         
     }
 
