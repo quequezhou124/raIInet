@@ -289,18 +289,19 @@ void setability(Player * player) {
                 std::cout << "You have choosed this ability twice. Choose another one.\n";
                 continue;
             } else if (abilityset[a][0]) {
-                player->setabilityNum(a);
+                player->addAbilityNum(a);
                 abilityset[a][1] = true;
                 std::cout << "Successfully choose.\n";
                 n++;
             } else {
-                player->setabilityNum(a);
+                player->addAbilityNum(a);
                 abilityset[a][0] = true;
                 std::cout << "Successfully choose.\n";
                 n++;
             }
         }
     }
+    player->setabilityNum(5);
 }
 
 int main() {
@@ -321,9 +322,6 @@ int main() {
             rule = false;
         }
     }
-
-    // Initial setup
-
     // Initial setup
     Board* board = new Board;
     Subject subject{board};

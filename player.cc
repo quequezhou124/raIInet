@@ -73,6 +73,27 @@ bool Player::move(Board * board, Unit * unit, const std::string& dir) {
         || (!player1 && newrow == 0 && newcol == 4)
         || (player1 && newrow == 7 && newcol == 3)
         || (player1 && newrow == 7 && newcol == 4)) {return false;}
+        if (player1 == false) {
+            if(newrow >= 8) {
+                unit->setDownloaded(true);
+                if (unit->getType()== "V") {
+                    downloadV++;
+                } else if(unit->getType()== "D") {
+                    downloadD++;
+                }
+                return true;
+            }
+        } else {
+            if(newrow < 0) {
+                unit->setDownloaded(true);
+                if (unit->getType()== "V") {
+                    downloadV++;
+                } else if(unit->getType()== "D") {
+                    downloadD++;
+                }
+                return true;
+            }
+        }
         return link->setrow(newrow) && link->setcol(newcol);
 
     } else {
