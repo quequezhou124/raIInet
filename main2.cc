@@ -12,6 +12,9 @@
 #include "serverports.h"
 #include "linkboostAbility.h"
 #include "downloadAbility.h"
+#include "polarizeAbility.h"
+#include "scanAbility.h"
+#include "enhanceAbility.h"
 
 void print_rule() {
     std::cout << "RAIInet is a two-player strategy game played on an 8×8 grid.\n"
@@ -454,12 +457,12 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                             std::string operate = "Use Download on " + l->getName();
                             bool useNegate = check_negate(other, operate);
                             downloadAbility func{};
-                            if (func.useAbility(owner, link, board, useNegate)) {
+                            if (func.useAbility(owner, other, link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
                                 if (useNegate) {
                                     other->deleteAbility(8);
                                 }
-                                owner->deleteAbility(1);
+                                owner->deleteAbility(3);
                                 decide = true;
                                 return;
                             } else {
@@ -471,15 +474,131 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                 }
                 if (a == 4) {
                     std:cout << "If you want to use Polarize, please reply the link, like a, A.\n";
+                    char link;
+                    if (!(std::cin >> link)){
+                        std::cout << "Invalid input, please enter a link, like a, A.\n";
+                        std::cin.clear();   // 清除错误状态
+                        std::cin.ignore(); // 丢弃当前行的输入
+                        continue;
+                    } else {
+                        Unit* l = board->find_unit(link);
+                        if (!l) {
+                            std::cout << "Link is not found. Choose another one.\n";
+                            continue;
+                        } else {
+                            std::string operate = "Use Polarize on " + l->getName();
+                            bool useNegate = check_negate(other, operate);
+                            polarizeAbility func{};
+                            if (func.useAbility(owner, other, link, board, useNegate)) {
+                                std::cout << "Used successfully.\n";
+                                if (useNegate) {
+                                    other->deleteAbility(8);
+                                }
+                                owner->deleteAbility(4);
+                                decide = true;
+                                return;
+                            } else {
+                                std::cout << "Failed useing, try again.\n";
+                                continue;
+                            }
+                        }
+                    }
                 }
                 if (a == 5) {
                     std:cout << "If you want to use Scan, please reply the link you want to scan, like a, A.\n";
+                    char link;
+                    if (!(std::cin >> link)){
+                        std::cout << "Invalid input, please enter a link, like a, A.\n";
+                        std::cin.clear();   // 清除错误状态
+                        std::cin.ignore(); // 丢弃当前行的输入
+                        continue;
+                    } else {
+                        Unit* l = board->find_unit(link);
+                        if (!l) {
+                            std::cout << "Link is not found. Choose another one.\n";
+                            continue;
+                        } else {
+                            std::string operate = "Use Scan on " + l->getName();
+                            bool useNegate = check_negate(other, operate);
+                            scanAbility func{};
+                            if (func.useAbility(owner, other, link, board, useNegate)) {
+                                std::cout << "Used successfully.\n";
+                                if (useNegate) {
+                                    other->deleteAbility(8);
+                                }
+                                owner->deleteAbility(5);
+                                decide = true;
+                                return;
+                            } else {
+                                std::cout << "Failed useing, try again.\n";
+                                continue;
+                            }
+                        }
+                    }
                 }
                 if (a == 6) {
                     std:cout << "If you want to use Enhance, please reply the link you want to enhance, like a, A.\n";
+                    char link;
+                    if (!(std::cin >> link)){
+                        std::cout << "Invalid input, please enter a link, like a, A.\n";
+                        std::cin.clear();   // 清除错误状态
+                        std::cin.ignore(); // 丢弃当前行的输入
+                        continue;
+                    } else {
+                        Unit* l = board->find_unit(link);
+                        if (!l) {
+                            std::cout << "Link is not found. Choose another one.\n";
+                            continue;
+                        } else {
+                            std::string operate = "Use Ehance on " + l->getName();
+                            bool useNegate = check_negate(other, operate);
+                            enhanceAbility func{};
+                            if (func.useAbility(owner, link, board, useNegate)) {
+                                std::cout << "Used successfully.\n";
+                                if (useNegate) {
+                                    other->deleteAbility(8);
+                                }
+                                owner->deleteAbility(6);
+                                decide = true;
+                                return;
+                            } else {
+                                std::cout << "Failed useing, try again.\n";
+                                continue;
+                            }
+                        }
+                    }
                 }
                 if (a == 7) {
                     std:cout << "If you want to use CombatLock, please reply the link you want to look, like a, A.\n";
+                    char link;
+                    if (!(std::cin >> link)){
+                        std::cout << "Invalid input, please enter a link, like a, A.\n";
+                        std::cin.clear();   // 清除错误状态
+                        std::cin.ignore(); // 丢弃当前行的输入
+                        continue;
+                    } else {
+                        Unit* l = board->find_unit(link);
+                        if (!l) {
+                            std::cout << "Link is not found. Choose another one.\n";
+                            continue;
+                        } else {
+                            std::string operate = "Use Combat Lock on " + l->getName();
+                            bool useNegate = check_negate(other, operate);
+                            lockedAbility func{};
+                            if (func.useAbility(owner, other, link, board, useNegate)) {
+                                std::cout << "Used successfully.\n";
+                                if (useNegate) {
+                                    other->deleteAbility(8);
+                                }
+                                owner->deleteAbility(7);
+                                decide = true;
+                                return;
+                            } else {
+                                std::cout << "Failed useing, try again.\n";
+                                continue;
+                            }
+                        }
+                    }
                 }
             }
         }
