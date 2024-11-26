@@ -44,7 +44,9 @@
         if (negate) {
             std::cout << "your opponent has used negate" << std::endl; 
             return true;
-        } else if (row < 0 || row > 8 || col < 0 || col > 8 || getUnit(row, col)) {
+        } else if (row < 0 || row > 8 || col < 0 || col > 8 || 
+                   getUnit(row, col) || (row == 0 && (col == 3 || col == 4)) ||
+                   (row == 7 && (col == 3 || col == 4))) {
             return false;
         } else {
             if (player->isplayer1turn()) Wall * firewall = new Wall {row, col, 0, 'w', false, false, false, false};
