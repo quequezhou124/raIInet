@@ -92,6 +92,17 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
         }
         col++;
     }
+    if (startRow == 0) {
+        Serverports* serverports1 = new Serverports {0, 3, 0, 'S', false, false, false, false} ;
+        Serverports* serverports2 = new Serverports {0, 4, 0, 'S', false, false, false, false} ;
+        board->units.push_back(serverports1);
+        board->units.push_back(serverports2);
+    } else if (startRow == 7) {
+        Serverports* serverports1 = new Serverports {7, 3, 0, 'S', false, false, false, false} ; 
+        Serverports* serverports2 = new Serverports {7, 4, 0, 'S', false, false, false, false} ;
+        board->units.push_back(serverports1);
+        board->units.push_back(serverports2);
+    }
     std::cout << playerName << " has finished setting their links.\n";
 }
 
