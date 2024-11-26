@@ -327,16 +327,16 @@ int main() {
         
         subject.notifyObservers();
         moveit(player1, "Player1", subject.getBoard(), player1, player2);
-        for (auto& unit : subject.getBoard()->units) {
-        }
         win = check_win(player1, player2);
         
         if (win) break;
+        player1->changeturn(false);
 
         // Player2 move
         subject.notifyObservers();
         moveit(player2, "Player2", subject.getBoard(), player1, player2);
         win = check_win(player1, player2);
+        player1->changeturn(true);
         
     }
 

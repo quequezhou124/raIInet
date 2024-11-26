@@ -12,7 +12,7 @@ class Serverports: public Unit {
     void setStrength(int strength, int row, int col) override;
     bool setrow(int row) override;
     bool setcol(int col) override;
-    std::string getType () {return "S";}
+    std::string getType () override {return "S";}
     ~Serverports() = default;
 };
 

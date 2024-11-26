@@ -21,11 +21,11 @@ public:
         }
     // print the canvas
     void notify() override {
-        std::cout << "Player 1: " << endl;
-        std::cout << "Downloaded: " << curplayer->getdownloadD() <<"D, "<< curplayer->getdownloadV() << "V" <<endl;
-        std::cout << "Abilities: " << curplayer->getabilityNum() << endl;
-        
+        std::cout << curplayer->isplayer1turn() << std::endl;
         if (curplayer->isplayer1turn()) {
+            std::cout << "Player 1: " << endl;
+            std::cout << "Downloaded: " << curplayer->getdownloadD() <<"D, "<< curplayer->getdownloadV() << "V" <<endl;
+            std::cout << "Abilities: " << curplayer->getabilityNum() << endl;
             std::cout << "a: " << subject->getBoard()->find_unit('a')->getType() << subject->getBoard()->find_unit('a')->getStrength() << " ";
             std::cout << "b: " << subject->getBoard()->find_unit('b')->getType() << subject->getBoard()->find_unit('b')->getStrength() << " ";
             std::cout << "c: " << subject->getBoard()->find_unit('c')->getType() << subject->getBoard()->find_unit('c')->getStrength() << " ";
@@ -35,6 +35,10 @@ public:
             std::cout << "g: " << subject->getBoard()->find_unit('g')->getType() << subject->getBoard()->find_unit('g')->getStrength() << " ";
             std::cout << "h: " << subject->getBoard()->find_unit('h')->getType() << subject->getBoard()->find_unit('h')->getStrength() << " " << endl;
         } else {
+            std::cout << endl;
+            std::cout << "Player 1: " << endl;
+            std::cout << "Downloaded: " << otherplayer->getdownloadD() <<"D, "<< otherplayer->getdownloadV() << "V" <<endl;
+            std::cout << "Abilities: " << otherplayer->getabilityNum() << endl;
             std::cout << "a: ? b: ? c: ? d: ?" << endl;
             std::cout << "e: ? f: ? g: ? h: ?" << endl;
         }
@@ -52,13 +56,13 @@ public:
         for (int i = 0; i < 8; ++i) {
             std::cout << '=';
         }
-        std::cout << endl;
-        std::cout << "Player 2: " << endl;
-        std::cout << "Downloaded: " << otherplayer->getdownloadD() <<"D, "<< otherplayer->getdownloadV() << "V" <<endl;
-        std::cout << "Abilities: " << otherplayer->getabilityNum() << endl;
         
 
         if (!curplayer->isplayer1turn()) {
+            std::cout << endl;
+            std::cout << "Player 2: " << endl;
+            std::cout << "Downloaded: " << curplayer->getdownloadD() <<"D, "<< curplayer->getdownloadV() << "V" <<endl;
+            std::cout << "Abilities: " << curplayer->getabilityNum() << endl;
             std::cout << "A: " << subject->getBoard()->find_unit('A')->getType() << subject->getBoard()->find_unit('A')->getStrength() << " ";
             std::cout << "B: " << subject->getBoard()->find_unit('B')->getType() << subject->getBoard()->find_unit('B')->getStrength() << " ";
             std::cout << "C: " << subject->getBoard()->find_unit('C')->getType() << subject->getBoard()->find_unit('C')->getStrength() << " ";
@@ -68,9 +72,13 @@ public:
             std::cout << "G: " << subject->getBoard()->find_unit('H')->getType() << subject->getBoard()->find_unit('G')->getStrength() << " ";
             std::cout << "H: " << subject->getBoard()->find_unit('H')->getType() << subject->getBoard()->find_unit('H')->getStrength() << " " << endl;
         } else {
+            std::cout << endl;
+            std::cout << "Player 2: " << endl;
+            std::cout << "Downloaded: " << otherplayer->getdownloadD() <<"D, "<< otherplayer->getdownloadV() << "V" <<endl;
+            std::cout << "Abilities: " << otherplayer->getabilityNum() << endl;
             std::cout << "A: ? B: ? C: ? D: ?" << endl;
             std::cout << "E: ? F: ? G: ? H: ?" << endl;
-        }
+        }  
     }
     // destructor
     ~TextObserver() {
