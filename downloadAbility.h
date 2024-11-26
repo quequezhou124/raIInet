@@ -6,7 +6,11 @@
 
 class enhanceAbility{
   public:
-    bool useAbility(Player *player,Player *other, char linkname, Board *board) {
+    bool useAbility(Player *player,Player *other, char linkname, Board *board, bool negate) {
+      if (negate) {
+          std::cout << "your opponent has used negate" << endl;
+          return false;
+      }
       if (board->find_unit(linkname)) {
         if ((std::find(other->links.begin(), other->links.end(), board->find_unit(linkname))!=other->links.end()) && (std::find(other->links.begin(), other->links.end(), board->find_unit(linkname))==other->links.end())) {
             if (board->find_unit(linkname)->getDownloaded()) {

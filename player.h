@@ -33,6 +33,7 @@ class Player {
     bool addAbility(int i);
     bool move(Board * borad, Unit * unit, const std::string& dir);
     void printAbility();
+    bool deleteAbility(int k);
     bool useAbility(int id);
     bool useAbility(int id, char link);
     bool useAbility(int id, int row, int col);

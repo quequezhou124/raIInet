@@ -22,6 +22,29 @@ void Player::setState(State newState) {
     state = newState;
 }
 
+bool Player::deleteAbility(int k) {
+    bool found = false;
+    for(int i = 0; i < 4; i++) {
+        if (abilityBag[i] == k && found == false) {
+            found = true;
+            abilityBag[i] == abilityBag[i+1];
+        } else if (found == true) {
+            abilityBag[i] == abilityBag[i+1];
+        }
+    }
+    if (found) {
+        return true;
+    } else {
+        if (abilityBag[4]==k) {
+            abilityBag[4] = 0;
+            return true;
+        } else {
+            std::cout << "You don't have that ability card haha!" << endl;
+            return false;
+        }
+    }
+}
+
 int Player::getdownloadD() const {
     return downloadD;
 }
