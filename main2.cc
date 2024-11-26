@@ -388,18 +388,18 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                     }
                 }
                 if (a == 2) {
-                    std:cout << "If you want to use Fire Wall, please reply the location you want to use, like (Row, Col). (Left and up is smaller.)\n";
+                    std:cout << "If you want to use Fire Wall, please reply the location you want to use. (Left and up is smaller.)\n";
                     int row,col;
                     bool r = false;
                     bool c = false;
                     std::cout << "Please reply the rol, number 0-7.\n";
                     while (!r) {
-                        if (!(std::cin >> r)){
+                        if (!(std::cin >> row)){
                             std::cout << "Invalid input, please enter a number.\n";
                             std::cin.clear();   // 清除错误状态
                             std::cin.ignore(); // 丢弃当前行的输入
                             continue;
-                        } else if ((r < 0) || (r > 7)) {
+                        } else if ((row < 0) || (row > 7)) {
                             std::cout << "Invalid number, it should between 0-7. Try again.\n";
                             continue;
                         } else {
@@ -408,18 +408,32 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                         }
                     }
                     while (!c) {
-                        if (!(std::cin >> c)){
+                        if (!(std::cin >> col)){
                             std::cout << "Invalid input, please enter a number.\n";
                             std::cin.clear();   // 清除错误状态
                             std::cin.ignore(); // 丢弃当前行的输入
                             continue;
-                        } else if ((c < 0) || (c > 7)) {
+                        } else if ((col < 0) || (col > 7)) {
                             std::cout << "Invalid number, it should between 0-7. Try again.\n";
                             continue;
                         } else {
                             std::cout << "Get col.\n";
                             c = true;
                         }
+                    }
+                    std::string operate = "Set Firewall on (" + std::to_string(row) + "," + std::to_string(col) + ")";
+                    bool useNegate = check_negate(other, operate);
+                    if (board->setFirewall(owner, row, col, useNegate)) {
+                        std::cout << "Used successfully.\n";
+                        if (useNegate) {
+                            other->deleteAbility(8);
+                        }
+                        owner->deleteAbility(2);
+                        decide = true;
+                        return;
+                    } else {
+                        std::cout << "Failed useing, try again.\n";
+                        continue;
                     }
                 }
                 if (a == 3) {
