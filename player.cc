@@ -69,11 +69,12 @@ bool Player::move(Board * board, Unit * unit, const std::string& dir) {
         Unit * newunit = board->getUnit(newrow, newcol);
         if (( newunit != nullptr
         && std::find(links.begin(), links.end(), newunit) != links.end())
-        || (!player1 && newrow == 0 && newcol == 3)
-        || (!player1 && newrow == 0 && newcol == 4)
-        || (player1 && newrow == 7 && newcol == 3)
-        || (player1 && newrow == 7 && newcol == 4)) {return false;}
-        if (player1 == false) {
+        || (player1 && newrow == 0 && newcol == 3)
+        || (player1 && newrow == 0 && newcol == 4)
+        || (!player1 && newrow == 7 && newcol == 3)
+        || (!player1 && newrow == 7 && newcol == 4)) {return false;}
+        if (player1 == true) {
+            std::cout << "player1 turn 11111"<< endl;
             if(newrow >= 8) {
                 unit->setDownloaded(true);
                 if (unit->getType()== "V") {
@@ -84,6 +85,7 @@ bool Player::move(Board * board, Unit * unit, const std::string& dir) {
                 return true;
             }
         } else {
+            std::cout << "player2 turn 2222"<< endl;
             if(newrow < 0) {
                 unit->setDownloaded(true);
                 if (unit->getType()== "V") {

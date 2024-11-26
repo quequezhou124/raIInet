@@ -352,12 +352,13 @@ int main() {
         
         if (win) break;
         player1->changeturn(false);
-
+        player2->changeturn(false);
         // Player2 move
         subject.notifyObservers();
         moveit(player2, "Player2", subject.getBoard(), player1, player2);
         win = check_win(player1, player2);
         player1->changeturn(true);
+        player2->changeturn(true);
         
     }
 

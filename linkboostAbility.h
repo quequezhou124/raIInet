@@ -4,7 +4,7 @@
 #include "player.h"
 #include <vector>
 
-class enhanceAbility{
+class linkboostAbility{
   public:
     bool useAbility(Player *player, char linkname, Board *board) {
       if (board->find_unit(linkname)) {
