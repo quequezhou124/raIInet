@@ -21,7 +21,6 @@ public:
         }
     // print the canvas
     void notify() override {
-        std::cout << curplayer->isplayer1turn() << std::endl;
         if (curplayer->isplayer1turn()) {
             std::cout << "Player 1: " << endl;
             std::cout << "Downloaded: " << curplayer->getdownloadD() <<"D, "<< curplayer->getdownloadV() << "V" <<endl;

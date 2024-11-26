@@ -28,7 +28,6 @@ class Unit {
     virtual bool setcol(int col) = 0;
     virtual ~Unit() = default;
     bool getDownloaded() const {return downloaded;}
-    virtual std::string getType () = 0;
     void setDownloaded(bool newd) {downloaded = newd;}
 };
 
