@@ -78,3 +78,35 @@ bool Player::move(Board * board, Unit * unit, const std::string& dir) {
     }
 }
 
+bool Player::addAbility(int i){
+    for(int i = 0; i < 5; i++) {
+        if (abilityBag[i] == 0) {
+            abilityBag[i] = i;
+            return true;
+        } else {
+            continue;
+        }
+    }
+    std::cout<< "you have already set 5 abilities!";
+    return false;
+}
+
+void Player::printAbility() {
+    for(int i = 0; i < 5; i++) {
+        if (abilityBag[i] == 0) {
+            return;
+        } else {
+             std::cout<< abilityBag[i]<< " ";
+        }
+    }
+    std::cout << endl;
+}
+
+bool Player::findAbility(int k){
+    for(int i = 0; i < 5; i++) {
+        if (abilityBag[i] == k) {
+            return true;
+        }
+    }
+    return false;
+}

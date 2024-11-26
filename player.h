@@ -21,14 +21,18 @@ class Player {
     int downloadD;
     int downloadV;
     int abilityNum;
+    int abilityBag[5] = {0};
+
    public:
     std::vector<Link*> links;
     //constructor
     Player(std::vector<Link*> links, bool player1 = true, State state = State::Undecided, int downloadD = 0, int downloadV = 0, int abilityNum = 0);
     Player();
     // methods
+    bool findAbility(int k);
+    bool addAbility(int i);
     bool move(Board * borad, Unit * unit, const std::string& dir);
-    bool useAbility();
+    void printAbility();
     bool useAbility(int id);
     bool useAbility(int id, char link);
     bool useAbility(int id, int row, int col);
