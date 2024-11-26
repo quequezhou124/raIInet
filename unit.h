@@ -17,6 +17,10 @@ class Unit {
     char getName() const { return name; }
     int getRow() const { return row; }
     int getCol() const { return col; }
+    void opendoublespeed() {
+      doublespeed=true;
+      return;
+    }
     virtual int getStrength() = 0;
     virtual std::string getType () = 0;
     virtual void setStrength(int strength, int row, int col) = 0;
@@ -24,6 +28,7 @@ class Unit {
     virtual bool setcol(int col) = 0;
     virtual ~Unit() = default;
     bool getDownloaded() const {return downloaded;}
+    virtual std::string getType () = 0;
     void setDownloaded(bool newd) {downloaded = newd;}
 };
 
