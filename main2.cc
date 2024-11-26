@@ -10,6 +10,7 @@
 #include "data.h"
 #include "virus.h"
 #include "serverports.h"
+#include "linkboostAbility.h"
 
 void print_rule() {
     std::cout << "RAIInet is a two-player strategy game played on an 8×8 grid.\n"
@@ -281,6 +282,29 @@ void setability(Player * player) {
     player->setabilityNum(5);
 }
 
+bool check_negate(Player * other, std::string operate) {
+    if (!(other->findAbility(8))) {
+        std::cout << "Your opponent doesn't have the ability to Negate.\n";
+        return false;
+    } else {
+        std::cout << "Your opponent have the ability to Negate.\nPlease let your opponent decide whether to use it.\n\n\n\n\n";
+        std::cout << "The other player is going to:\n" << operate << "\nDo you want to use negate? Please reply Y/N.";
+        bool decide = false;
+        while (!decide) {
+            string ans;
+            std::cin >> ans;
+            if (ans == "Y") {
+                return true;
+            } else if (ans == "N") {
+                return false;
+            } else {
+                std::cout << "Please reply Y or N.\n";
+                continue;
+            }
+        }
+    }
+}
+
 void UseAbility(Board* board, Player* owner, Player* other) {
     if (owner->getabilityNum() < 1) {
         std::cout << "You have used all your abilities.\n";
@@ -288,8 +312,8 @@ void UseAbility(Board* board, Player* owner, Player* other) {
     }
     std::cout << "Do you want to use your ability? Reply Y or N.\n"
     << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Conbat Lock 8.Negate\n"
-    << "The following is what abilities you have:"
-    << owner->printAbility();
+    << "The following is what abilities you have:";
+    owner->printAbility();
     std::string s;
     bool decide = false;
     int a;
@@ -317,7 +341,7 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                 } else if (a == 8) {
                     std::cout << "You can not use it right now, please choose another one.\n";
                     continue;
-                } else if (!(owner->findAbility())) {
+                } else if (!(owner->findAbility(a))) {
                     std::cout << "You do not have the ability, please choose another one.\n";
                     continue;
                 } else {
@@ -338,12 +362,43 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                     } else {
                         Unit* l = board->find_unit(link);
                         if (!l) {
-                            std::cout << 
+                            std::cout << "Link is not found. Choose another one.\n";
+                            continue;
+                        } else {
+                            std::string operate = "Use Link Boost on " + l->getName();
+                            bool useNegate = check_negate(other, operate);
+                            linkboostAbility func{};
+                            if (func.useAbility(owner, link, board, useNegate)) {
+                                std::cout << "Used successfully.\n";
+                                if (useNegate) {
+                                    other->deleteAbility(8);
+                                }
+                                owner->deleteAbility(1);
+                                decide = true;
+                                return;
+                            } else {
+                                std::cout << "Failed useing, try again.\n";
+                                continue;
+                            }
                         }
                     }
                 }
                 if (a == 2) {
                     std:cout << "If you want to use Fire Wall, please reply the location you want to use, like (Row, Col). (Left and up is smaller.)\n";
+                    int row,col;
+                    bool r = false;
+                    bool c = false;
+                    std::cout << "Please reply the rol, number 0-7.\n";
+                    while (!r) {
+                        if (!(std::cin >> r)){
+                            std::cout << "Invalid input, please enter a number.\n";
+                            std::cin.clear();   // 清除错误状态
+                            std::cin.ignore(); // 丢弃当前行的输入
+                            continue;
+                        } else if ((r < 0) || (r > 7)) {
+                            
+                        }
+                    }
                 }
                 if (a == 3) {
                     std:cout << "If you want to use Download, please reply the link you want to download, like a, A.\n";
