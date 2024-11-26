@@ -7,6 +7,12 @@ class Wall: public Unit {
   public:
     std::string getType () override { return "W"; }
     Wall (int row, int col, int strength, char name, bool displayed, bool doublespeed, bool locked, bool downloaded);
+    int getStrength() override;
+    void setStrength(int strength, int row, int col) override;
+    bool setrow(int row) override;
+    bool setcol(int col) override;
+    std::string getType () override {return "S";}
+    ~Wall() = default;
 };
 
 #endif

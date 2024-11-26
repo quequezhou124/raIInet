@@ -22,6 +22,8 @@ class Board {
 
     char unitAt(int row, int col);
 
+    bool setFirewall (Player *player, int row, int col, bool negate);
+
     ~Board() = default;
 };
 

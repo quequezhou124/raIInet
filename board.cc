@@ -1,6 +1,7 @@
 #include "player.h"
 #include "board.h"
 #include "serverports.h"
+#include "wall.h"
 
     Unit* Board::find_unit(char name) {
         for (auto& unit : units) {
@@ -36,5 +37,18 @@
             return unit->getName();
         } else {
             return '.';  // Or any other character for empty cells
+        }
+    }
+
+    bool Board::setFirewall (Player *player, int row, int col, bool negate) {
+        if (negate) {
+            std::cout << "your opponent has used negate" << std::endl; 
+            return true;
+        } else if (row < 0 || row > 8 || col < 0 || col > 8 || getUnit(row, col)) {
+            return false;
+        } else {
+            if (player->isplayer1turn()) Wall * firewall = new Wall {row, col, 0, 'w', false, false, false, false};
+            else Wall * firewall = new Wall {row, col, 0, 'm', false, false, false, false};
+            return true;
         }
     }
