@@ -489,7 +489,7 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                             std::string operate = "Use Polarize on " + l->getName();
                             bool useNegate = check_negate(other, operate);
                             polarizeAbility func{};
-                            if (func.useAbility(owner, other, link, board, useNegate)) {
+                            if (func.useAbility(link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
                                 if (useNegate) {
                                     other->deleteAbility(8);
