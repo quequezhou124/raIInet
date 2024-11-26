@@ -33,6 +33,7 @@ class Unit {
     bool getDownloaded() const {return downloaded;}
     void setDownloaded(bool newd) {downloaded = newd;}
     void setLocked(bool newd) {locked = newd;}
+    void setDisplayed(bool newd) {locked = newd;}
 };
 
 #endif
