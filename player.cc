@@ -69,10 +69,11 @@ bool Player::move(Board * board, Unit * unit, const std::string& dir) {
         Unit * newunit = board->getUnit(newrow, newcol);
         if (( newunit != nullptr
         && std::find(links.begin(), links.end(), newunit) != links.end())
-        || dynamic_cast<Serverports*>(newunit)) {return false;}
+        || (dynamic_cast<Serverports*>(newunit) && player1 && newrow == 8)
+        || (dynamic_cast<Serverports*>(newunit) && !player1 && newrow == 0)) {return false;}
         return link->setrow(newrow) && link->setcol(newcol);
 
-    } else{
+    } else {
         return false;
     }
 }
