@@ -343,7 +343,7 @@ void UseAbility(Board* board, Player* owner, Player* other) {
     }
     std::cout 
     << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Combat Lock 8.Negate\n"
-    << "The following is what abilities you have:"; owner->printAbility();
+    << "The following is what abilities you have 111111111111:"; owner->printAbility();
     std::cout<< "Do you want to use your ability? Reply Y or N.\n";
     std::string s;
     bool decide = false;
@@ -396,7 +396,7 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                 } else if (n == 0) {
                     std::cout 
                     << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Combat Lock 8.Negate\n"
-                    << "The following is what abilities you have:"; owner->printAbility();
+                    << "The following is what abilities you have 222222222222:"; owner->printAbility();
                     std::cout<< "Do you want to use your ability? Reply Y or N.\n";
                     break;
                 } else if (a == 1) {
@@ -502,11 +502,10 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                             bool useNegate = check_negate(other, operate);
                             downloadAbility func{};
                             if (func.useAbility(owner, other, link, board, useNegate)) {
-                                std::cout << "Used successfully.\n";
                                 if (useNegate) {
                                     other->deleteAbility(8);
                                 }
-                                owner->deleteAbility(3);
+                                if (owner->deleteAbility(3)) std::cout << "Successfully used.\n"; 
                                 decide = true;
                                 return;
                             } else {
@@ -657,7 +656,7 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                 continue;
                 std::cout 
                 << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Combat Lock 8.Negate\n"
-                << "The following is what abilities you have:"; owner->printAbility();
+                << "The following is what abilities you have 333333333333:"; owner->printAbility();
                 std::cout<< "Do you want to use your ability? Reply Y or N.\n";
             }
         }
