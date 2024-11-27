@@ -12,7 +12,7 @@ class lockedAbility{
           return true;
       }
       if (board->find_unit(linkname)) {
-        if ((std::find(other->links.begin(), other->links.end(), board->find_unit(linkname))!=other->links.end()) && (std::find(player->links.begin(), player->links.end(), board->find_unit(linkname))==player->links.end())) {
+        if ((std::find(other->links.begin(), other->links.end(), board->find_unit(linkname))==other->links.end()) && (std::find(player->links.begin(), player->links.end(), board->find_unit(linkname))!=player->links.end())) {
             if (board->find_unit(linkname)->getLocked()) {
                 std::cout << "this link has already be locked!"<< endl;
                 return false;
