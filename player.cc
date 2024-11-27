@@ -26,6 +26,7 @@ bool Player::deleteAbility(int k) {
     bool found = false;
     for(int i = 0; i < 4; i++) {
         if (abilityBag[i] == k && found == false) {
+            abilityNum--;
             found = true;
             abilityBag[i] == abilityBag[i+1];
         } else if (found == true) {
@@ -33,6 +34,7 @@ bool Player::deleteAbility(int k) {
         }
     }
     if (found) {
+        abilityNum--;
         return true;
     } else {
         if (abilityBag[4]==k) {
@@ -43,6 +45,7 @@ bool Player::deleteAbility(int k) {
             return false;
         }
     }
+    
 }
 
 int Player::getdownloadD() const {
