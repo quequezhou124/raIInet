@@ -2,6 +2,7 @@
 #include "link.h"
 #include "serverports.h"
 #include <utility>
+#include <algorithm>
 
 //constructor
 Player::Player(std::vector<Link*> links, bool player1, State state, int downloadD, int downloadV, int abilityNum)

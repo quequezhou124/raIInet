@@ -361,7 +361,7 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                 } else if (a == -1) {
                     continue;
                 } else if (a == 1) {
-                    std:cout << "If you want to use Link Boost, please reply the link you want to boost, like a, A.\n";
+                    std::cout << "If you want to use Link Boost, please reply the link you want to boost, like a, A.\n";
                     char link;
                     if (!(std::cin >> link)){
                         std::cout << "Invalid input, please enter a link, like a, A.\n";
@@ -393,7 +393,7 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                     }
                 }
                 if (a == 2) {
-                    std:cout << "If you want to use Fire Wall, please reply the location you want to use. (Left and up is smaller.)\n";
+                    std::cout << "If you want to use Fire Wall, please reply the location you want to use. (Left and up is smaller.)\n";
                     int row,col;
                     bool r = false;
                     bool c = false;
@@ -428,7 +428,7 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                     }
                     std::string operate = "Set Firewall on (" + std::to_string(row) + "," + std::to_string(col) + ")";
                     bool useNegate = check_negate(other, operate);
-                    if (board->setFirewall(owner, row, col, useNegate)) {
+                    if (board->setFirewall(board, owner, row, col, useNegate)) {
                         std::cout << "Used successfully.\n";
                         if (useNegate) {
                             other->deleteAbility(8);
@@ -442,7 +442,7 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                     }
                 }
                 if (a == 3) {
-                    std:cout << "If you want to use Download, please reply the link you want to download, like a, A.\n";
+                    std::cout << "If you want to use Download, please reply the link you want to download, like a, A.\n";
                     char link;
                     if (!(std::cin >> link)){
                         std::cout << "Invalid input, please enter a link, like a, A.\n";
@@ -474,7 +474,7 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                     }
                 }
                 if (a == 4) {
-                    std:cout << "If you want to use Polarize, please reply the link, like a, A.\n";
+                    std::cout << "If you want to use Polarize, please reply the link, like a, A.\n";
                     char link;
                     if (!(std::cin >> link)){
                         std::cout << "Invalid input, please enter a link, like a, A.\n";
@@ -506,7 +506,7 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                     }
                 }
                 if (a == 5) {
-                    std:cout << "If you want to use Scan, please reply the link you want to scan, like a, A.\n";
+                    std::cout << "If you want to use Scan, please reply the link you want to scan, like a, A.\n";
                     char link;
                     if (!(std::cin >> link)){
                         std::cout << "Invalid input, please enter a link, like a, A.\n";
@@ -538,7 +538,7 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                     }
                 }
                 if (a == 6) {
-                    std:cout << "If you want to use Enhance, please reply the link you want to enhance, like a, A.\n";
+                    std::cout << "If you want to use Enhance, please reply the link you want to enhance, like a, A.\n";
                     char link;
                     if (!(std::cin >> link)){
                         std::cout << "Invalid input, please enter a link, like a, A.\n";
@@ -570,7 +570,7 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                     }
                 }
                 if (a == 7) {
-                    std:cout << "If you want to use CombatLock, please reply the link you want to look, like a, A.\n";
+                    std::cout << "If you want to use CombatLock, please reply the link you want to look, like a, A.\n";
                     char link;
                     if (!(std::cin >> link)){
                         std::cout << "Invalid input, please enter a link, like a, A.\n";
