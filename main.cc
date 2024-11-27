@@ -63,7 +63,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
         std::cin >> set;
 
         int strength = 0;
-        if (set[0] == 'v' && set[1] >= '1' && set[1] <= '4') {
+        if (set.length() == 2 && [0] == 'v' && set[1] >= '1' && set[1] <= '4') {
             strength = set[1] - '1';
             if (!vSet[strength]) {
                 vSet[strength] = true;
@@ -79,7 +79,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
             } else {
                 std::cout << "You have already set " << set << ".\n";
             }
-        } else if (set[0] == 'd' && set[1] >= '1' && set[1] <= '4') {
+        } else if (set.length() == 2 && set[0] == 'd' && set[1] >= '1' && set[1] <= '4') {
             strength = set[1] - '1';
             if (!dSet[strength]) {
                 dSet[strength] = true;
@@ -173,6 +173,21 @@ void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* o
     }
 }
 
+bool check_f (Board* board, Unit* l1, Player* owner, Player* other) {
+    Wall f = board->getFirewall(l1->getRow(), l1->getCol());
+    if (f) {
+        if (dynamic_cast<Virus*>(l1)) {
+            int n = owner->getdownloadV();
+            n++;
+            owner->setdownloadV(n);
+            l1->setDownloaded(true);
+            std::cout << "Your virus move to others' firewall, so you have download it.\n";
+            return true;
+        }
+    }
+    return false;
+}
+
 void check_battle_s(Board* board, Unit* l1, Player* player1, Player* player2) {
     Player* owner;
     Player* other;
@@ -182,6 +197,9 @@ void check_battle_s(Board* board, Unit* l1, Player* player1, Player* player2) {
     } else {
         owner = player2;
         other = player1;
+    }
+    if (check_f (Board* board, Unit* l1, Player* owner, Player* other)) {
+        return;
     }
     Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1, owner);
     if (!l2) {
