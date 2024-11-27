@@ -12,7 +12,7 @@ class downloadAbility{
           return true;
       }
       if (board->find_unit(linkname)) {
-        if ((std::find(other->links.begin(), other->links.end(), board->find_unit(linkname))!=other->links.end()) && (std::find(other->links.begin(), other->links.end(), board->find_unit(linkname))==other->links.end())) {
+        if ((std::find(other->links.begin(), other->links.end(), board->find_unit(linkname))!=other->links.end()) && (std::find(player->links.begin(), player->links.end(), board->find_unit(linkname))==player->links.end())) {
             if (board->find_unit(linkname)->getDownloaded()) {
                 std::cout << "this link has already be downloaded!"<< endl;
                 return false;

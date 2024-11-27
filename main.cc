@@ -118,21 +118,21 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
 void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
     if (l1->getStrength() >= l2->getStrength()) {
         if (dynamic_cast<Data*>(l2)) {
-            p1->setdownloadD(p1->getdownloadD() + 1);
+            p2->setdownloadD(p2->getdownloadD() + 1);
             std::cout << "You download a data.\n";
             l2->setDownloaded(true);
         } else if (dynamic_cast<Virus*>(l2)) {
-            p1->setdownloadV(p1->getdownloadV()+1);
+            p2->setdownloadV(p2->getdownloadV()+1);
             std::cout << "You download a virus.\n";
             l2->setDownloaded(true);
         }
     } else {
         if (dynamic_cast<Data*>(l1)) {
-            p2->setdownloadD(p2->getdownloadD() + 1);
+            p1->setdownloadD(p1->getdownloadD() + 1);
             std::cout << "Your data is downloaded by opponent.\n";
             l1->setDownloaded(true);
         } else if (dynamic_cast<Virus*>(l1)) {
-            p2->setdownloadV(p2->getdownloadV() + 1);
+            p1->setdownloadV(p1->getdownloadV() + 1);
             std::cout << "Your virus is downloaded by opponent.\n";
             l1->setDownloaded(true);
         } 
@@ -270,9 +270,9 @@ bool check_win(Player* player1, Player* player2) {
 
 void setability(Player * player) {
     std::cout << "Please select your abilities. You can pick 5 abilities, up to two for each. "
-              << "Below are the optional abilities (please respond with the number, separated by a carriage return):\n"
+              << "Below are the optional abilities (please respond with the number, separated by a carriage return).\n"
               << "1. Link Boost: Allows a link to move one additional square per turn, enabling it to jump over obstacles.\n"
-              << "2. Firewall: \n"
+              << "2. Firewall: is played targeting any empty square on the board other than the server ports. When passing through this square, opponent links are revealed and, if they are viruses, immediately downloaded by their owner. A square with a firewall with it is usually printed to the display with an “m” for a firewall by player 1 and a “w” for a firewall by player 2. If a link is placed on a firewall, print the link rather than the firewall. Links owned by the player who placed firewall are unaffected by this ability. If an opponent attempts to battle a player’s link which is stationed on the player’s firewall: the firewall effect applies prior to the battle taking place.\n"
               << "3. Download: Instantly downloads an opponent's targeted link without requiring it to be revealed.\n"
               << "4. Polarize: Converts a targeted data link to a virus or a virus to data, maintaining the same strength.\n"
               << "5. Scan: Reveals the type and strength of any targeted link on the field, excluding the player's own links.\n"
