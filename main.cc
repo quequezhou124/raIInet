@@ -5,6 +5,7 @@
 #include "subject.h"
 #include "player.h"
 #include "textObserver.h"
+#include "graphicObserver.h"
 #include "unit.h"
 #include "link.h"
 #include "data.h"
@@ -16,6 +17,8 @@
 #include "scanAbility.h"
 #include "enhanceAbility.h"
 #include "lockedAbility.h"
+#include <X11/Xlib.h>
+#include "window.h"
 
 void print_rule() {
     std::cout << "RAIInet is a two-player strategy game played on an 8×8 grid.\n"
@@ -684,8 +687,8 @@ int main() {
     Subject subject{board};
     Player* player1 = new Player();
     Player* player2 = new Player();
-    TextObserver* observer = new TextObserver(&subject, player1, player2);
-
+    TextObserver* textobserver = new TextObserver(&subject, player1, player2);
+    GraphicObserver* graphicobserver = new GraphicObserver(&subject, player1, player2);
     // Player 1 setup (a-h)
     print_blank();
     setupPlayer(board, player1, 0, "Player 1", 'a');
@@ -728,7 +731,8 @@ int main() {
         delete unit;
     }
     delete board;
-    delete observer;  // Detach and delete observer
+    delete textobserver;  // Detach and delete observer
+    delete graphicobserver; 
     delete player1;
     delete player2;
 }
