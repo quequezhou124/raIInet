@@ -17,8 +17,6 @@
 #include "scanAbility.h"
 #include "enhanceAbility.h"
 #include "lockedAbility.h"
-#include <X11/Xlib.h>
-#include "window.h"
 #include "wall.h"
 
 void print_rule() {
@@ -758,7 +756,7 @@ int main() {
         // Player1 move
         check_player(1);
         subject.notifyObservers();
-        UseAbility(subject.getBoard(), player1, player2);
+        UseAbility(subject.getBoard(), player1, player2, 1);
         subject.notifyObservers();
         moveit(player1, "Player1", subject.getBoard(), player1, player2);
         win = check_win(player1, player2);
@@ -769,7 +767,7 @@ int main() {
         // Player2 move
         check_player(2);
         subject.notifyObservers();
-        UseAbility(subject.getBoard(), player2, player1);
+        UseAbility(subject.getBoard(), player2, player1, 2);
         subject.notifyObservers();
         moveit(player2, "Player2", subject.getBoard(), player1, player2);
         win = check_win(player1, player2);
