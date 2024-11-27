@@ -273,9 +273,9 @@ void setability(Player * player) {
               << "3. Download: Instantly downloads an opponent's targeted link without requiring it to be revealed.\n"
               << "4. Polarize: Converts a targeted data link to a virus or a virus to data, maintaining the same strength.\n"
               << "5. Scan: Reveals the type and strength of any targeted link on the field, excluding the player's own links.\n"
-              << "6. Negate: Cancels the opponent's current ability usage.\n"
+              << "6. Enhance: Cancels the opponent's current ability usage.\n"
               << "7. Combat Lock: Prevents a specific link from being downloaded by any method other than combat.\n"
-              << "8. Enhance: Increases the strength of a specific link by 1.\n";
+              << "8. Negate: Increases the strength of a specific link by 1.\n";
     bool abilityset[8][2]= {{false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}};
     int a;
     int n = 0;
