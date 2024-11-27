@@ -739,11 +739,13 @@ int main() {
     TextObserver* textobserver = new TextObserver(&subject, player1, player2);
     GraphicObserver* graphicobserver = new GraphicObserver(&subject, player1, player2);
     // Player 1 setup (a-h)
+    check_player(1);
     print_blank();
     setupPlayer(board, player1, 0, "Player 1", 'a');
     setability(player1);
 
     // Player 2 setup (A-H)
+    check_player(2);
     print_blank();
     setupPlayer(board, player2, 7, "Player 2", 'A');
     setability(player2);
