@@ -78,14 +78,16 @@ bool Player::move(Board * board, Unit * unit, const std::string& dir) {
     if (auto link = dynamic_cast<Link*>(unit)){
         int newrow = link->getRow();
         int newcol = link->getCol();
+        int speed = 1;
+        if (unit->getDoublespeed()) speed = 2;
         if (dir == "u") {
-            newrow--;
+            newrow -= speed;
         } else if (dir == "d") {
-            newrow++;
+            newrow += speed;
         } else if (dir == "l") {
-            newcol--;
+            newcol -= speed;
         } else if (dir == "r") {
-            newcol++;
+            newcol += speed;
         } else {
             return false;
         }
