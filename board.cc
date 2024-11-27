@@ -41,12 +41,13 @@
     }
 
     bool Board::setFirewall (Board *borad, Player *player, int row, int col, bool negate) {
+        Unit * aunit = getUnit(row, col);
         if (negate) {
             std::cout << "your opponent has used negate" << std::endl; 
             return true;
         } else if (row < 0 || row > 8 || col < 0 || col > 8 || 
-                   getUnit(row, col) || (row == 0 && (col == 3 || col == 4)) ||
-                   (row == 7 && (col == 3 || col == 4))) {
+                  (aunit != nullptr && aunit->getType() != "W") || (row == 0 && (col == 3 || col == 4)) ||
+                  (row == 7 && (col == 3 || col == 4))) {
             return false;
         } else {
             if (player->isplayer1turn()) {
@@ -61,4 +62,11 @@
 
             return true;
         }
+    }
+
+    Unit* Board::getFirewall (int row, int col, Player* player) {
+        for (auto &unit : units) {
+            if (unit->getType() == "W") return unit;
+        }
+        return nullptr;
     }
