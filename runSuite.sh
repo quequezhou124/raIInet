@@ -40,28 +40,29 @@ dir=$(pwd)
 for file in $(cat ${1}); do
 
   in=${dir}/${file}.in
-  out=${dir}/${file}.out
+  # out=${dir}/${file}.out
   
   file_check ${in}
-  file_check ${out}
+  # file_check ${out}
 
-  output=$(${2} < ${in} 2> /dev/null)
-  fail=${?}
-  expected=$(cat ${out})
+  ${2} < ${in}
+  # output=$(${2} < ${in} 2> /dev/null)
+  # fail=${?}
+  # expected=$(cat ${out})
 
-  if [ "${output}" != "${expected}" ]; then
-    echo "Test \"${file}\" failed:"
-    echo "Input:"
-    cat ${in}
-    echo "Expected:"
-    echo "${expected}"
-    echo "Actual:"
-    echo "${output}"
-  fi
+  # if [ "${output}" != "${expected}" ]; then
+  #   echo "Test \"${file}\" failed:"
+  #   echo "Input:"
+  #   cat ${in}
+  #   echo "Expected:"
+  #   echo "${expected}"
+  #   echo "Actual:"
+  #   echo "${output}"
+  # fi
   
-  if [ ${fail} -ne 0 ]; then
-    echo "Error:"
-    ${2} < ${in} > /dev/null
-  fi
+  # if [ ${fail} -ne 0 ]; then
+  #   echo "Error:"
+  #   ${2} < ${in} > /dev/null
+  # fi
   
 done

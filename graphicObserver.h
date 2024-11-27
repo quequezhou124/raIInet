@@ -6,6 +6,7 @@
 #include "player.h"
 #include "link.h"
 #include "window.h"
+#include <format>
 
 class GraphicObserver : public Observer {
     Subject *subject;
@@ -34,13 +35,19 @@ public:
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 char c = subject->getState(i, j);
-                int color = Xwindow::Black; // Default color for unknown
+                auto type = subject->getBoard()->find_unit(c) != nullptr ? subject->getBoard()->find_unit(c)->getType() : "";
+                auto color = Xwindow::Black; // Default color for unknown
 
                 if (curplayer->isplayer1turn()) {
                     if (c >= 'a' && c <= 'z') {
-                        if (subject->getBoard()->find_unit(c)->getType() == "D") {
+                        if (type == "D")
+                        {
+                            window.drawString(j * 100 + 10, i * 100 + 10, std::format("Data {}: {},{}", c, i, j));
                             color = Xwindow::Green; // Data
-                        } else if (subject->getBoard()->find_unit(c)->getType() == "V") {
+                        }
+                        else if (type == "V")
+                        {
+                            window.drawString(j * 100 + 10, i * 100 + 10, std::format("Virus {}: {},{}", c, i, j));
                             color = Xwindow::Red; // Virus
                         }
                     } else if (c >= 'A' && c <= 'Z') {
@@ -48,9 +55,14 @@ public:
                     }
                 } else {
                     if (c >= 'A' && c <= 'Z') {
-                        if (subject->getBoard()->find_unit(c)->getType() == "D") {
+                        if (type == "D")
+                        {
+                            window.drawString(j * 100 + 10, i * 100 + 10, std::format("Data {}: {},{}", c, i, j));
                             color = Xwindow::Green; // Data
-                        } else if (subject->getBoard()->find_unit(c)->getType() == "V") {
+                        }
+                        else if (type == "V")
+                        {
+                            window.drawString(j * 100 + 10, i * 100 + 10, std::format("Virus {}: {},{}", c, i, j));
                             color = Xwindow::Red; // Virus
                         }
                     } else if (c >= 'a' && c <= 'z') {
@@ -60,6 +72,8 @@ public:
 
                 // Fill the rectangle representing the link
                 window.fillRectangle(j * 100 + 10, i * 100 + 10, 80, 80, color);
+                // window.drawString(j * 100 + 10, i * 100 + 10, "hello");
+                // window.drawLine(j * 100 + 10, i * 100 + 10, 10, 10, Xwindow::Blue);
             }
         }
 

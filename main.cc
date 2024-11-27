@@ -18,6 +18,8 @@
 #include "enhanceAbility.h"
 #include "lockedAbility.h"
 #include "wall.h"
+#include <thread>
+#include <chrono>
 
 void print_rule() {
     std::cout << "RAIInet is a two-player strategy game played on an 8×8 grid.\n"
@@ -57,6 +59,7 @@ void check_player(int n) {
             check = true;
         } else {
             std::cout << "Please let Player " << n << " reply Y.\n";
+            sleep(2);
             continue;
         }
     }
@@ -242,6 +245,7 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
             std::cin >> movelink;
             if (movelink.length() != 1 || !isalpha(movelink[0])) {
                 std::cout << "Invalid link format. Use a single character (e.g., a, A).\n";
+                sleep(2);
                 continue;
             }
 
@@ -259,6 +263,7 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
             // 检查链接是否属于玩家
             if (std::find(player->links.begin(), player->links.end(), movel) == player->links.end()) {
                 std::cout << "The link does not belong to you. Choose another one.\n";
+                sleep(2);
                 continue;
             }
 
@@ -271,6 +276,7 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
 
             if ((dir.length() != 1) || ((dir != "u") && (dir != "d") && (dir != "l") && (dir != "r"))) {
                 std::cout << "Invalid direction. Choose another one.\n";
+                sleep(2);
                 continue;
             }
 
@@ -365,6 +371,7 @@ bool check_negate(Player * other, std::string operate, int oth) {
                 return false;
             } else {
                 std::cout << "Please reply Y or N.\n";
+                sleep(2);
                 continue;
             }
         }
@@ -395,6 +402,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
             return;
         } else if (s != "Y") {
             std::cout << "Invalid input. Please reply Y/N.\n";
+            sleep(2);
             continue;
         } else {
             std::cout << "Please reply the number of the ability you want to use.\nReply 0 if you do not want to use any ability.\n";
@@ -403,6 +411,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
             while (!find) {
                 if (!(std::cin >> a)){
                     std::cout << "Invalid input, please enter a number between 1 and 8.\n";
+                    sleep(2);
                     std::cin.clear();   // 清除错误状态
                     std::cin.ignore(); // 丢弃当前行的输入
                     continue;
@@ -428,6 +437,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                 << "If you want to continue, reply 2.\n";
                 if (!(std::cin >> n)){
                     std::cout << "Invalid input, please enter a number.\n";
+                    sleep(2);
                     std::cin.clear();   // 清除错误状态
                     std::cin.ignore(); // 丢弃当前行的输入
                     continue;
@@ -484,6 +494,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                     while (!r) {
                         if (!(std::cin >> row)){
                             std::cout << "Invalid input, please enter a number.\n";
+                            sleep(2);
                             std::cin.clear();   // 清除错误状态
                             std::cin.ignore(); // 丢弃当前行的输入
                             continue;
@@ -498,6 +509,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                     while (!c) {
                         if (!(std::cin >> col)){
                             std::cout << "Invalid input, please enter a number.\n";
+                            sleep(2);
                             std::cin.clear();   // 清除错误状态
                             std::cin.ignore(); // 丢弃当前行的输入
                             continue;
@@ -530,6 +542,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                     char link;
                     if (!(std::cin >> link)){
                         std::cout << "Invalid input, please enter a link, like a, A.\n";
+                        sleep(2);
                         std::cin.clear();   // 清除错误状态
                         std::cin.ignore(); // 丢弃当前行的输入
                         continue;
@@ -564,6 +577,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                     char link;
                     if (!(std::cin >> link)){
                         std::cout << "Invalid input, please enter a link, like a, A.\n";
+                        sleep(2);
                         std::cin.clear();   // 清除错误状态
                         std::cin.ignore(); // 丢弃当前行的输入
                         continue;
@@ -599,6 +613,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                     char link;
                     if (!(std::cin >> link)){
                         std::cout << "Invalid input, please enter a link, like a, A.\n";
+                        sleep(2);
                         std::cin.clear();   // 清除错误状态
                         std::cin.ignore(); // 丢弃当前行的输入
                         continue;
@@ -634,6 +649,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                     char link;
                     if (!(std::cin >> link)){
                         std::cout << "Invalid input, please enter a link, like a, A.\n";
+                        sleep(2);
                         std::cin.clear();   // 清除错误状态
                         std::cin.ignore(); // 丢弃当前行的输入
                         continue;
@@ -669,6 +685,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                     char link;
                     if (!(std::cin >> link)){
                         std::cout << "Invalid input, please enter a link, like a, A.\n";
+                        sleep(2);
                         std::cin.clear();   // 清除错误状态
                         std::cin.ignore(); // 丢弃当前行的输入
                         continue;
@@ -709,6 +726,10 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
             }
         }
     }
+}
+
+void sleep(int n) {
+    std::this_thread::sleep_for(std::chrono::seconds(n));
 }
 
 int main() {
