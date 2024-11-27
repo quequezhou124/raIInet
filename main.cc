@@ -48,6 +48,22 @@ void print_blank() {
               << "========\n";
 }
 
+void check_player(int n) {
+    bool check = false;
+    std::string s;
+    std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n";
+    std::cout << "It should be Player " << n << ". Are you player " << n << "? Please reply Y if you are.\n";
+    while (!check) {
+        std::cin >> s;
+        if (s == "Y") {
+            check = true;
+        } else {
+            std::cout << "Please let Player " << n << " reply Y.\n";
+            continue;
+        }
+    }
+}
+
 void setupPlayer(Board* board, Player* player, int startRow, const std::string& playerName, char startChar) {
     std::cout << playerName << ", please set your links (" << startChar
               << "-" << static_cast<char>(startChar + 7)
@@ -295,9 +311,9 @@ void setability(Player * player) {
               << "3. Download: Instantly downloads an opponent's targeted link without requiring it to be revealed.\n"
               << "4. Polarize: Converts a targeted data link to a virus or a virus to data, maintaining the same strength.\n"
               << "5. Scan: Reveals the type and strength of any targeted link on the field, excluding the player's own links.\n"
-              << "6. Enhance: Cancels the opponent's current ability usage.\n"
+              << "6. Enhance:Increases the strength of a specific link by 1.\n"
               << "7. Combat Lock: Prevents a specific link from being downloaded by any method other than combat.\n"
-              << "8. Negate: Increases the strength of a specific link by 1.\n";
+              << "8. Negate: Cancels the opponent's current ability usage.\n";
     bool abilityset[8][2]= {{false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}};
     int a;
     int n = 0;
@@ -332,18 +348,20 @@ void setability(Player * player) {
     player->setabilityNum(5);
 }
 
-bool check_negate(Player * other, std::string operate) {
+bool check_negate(Player * other, std::string operate, int oth) {
     if (!(other->findAbility(8))) {
         std::cout << "Your opponent doesn't have the ability to Negate.\n";
         return false;
     } else {
         std::cout << "Your opponent have the ability to Negate.\nPlease let your opponent decide whether to use it.\n\n\n\n\n";
+        check_player(oth);
         std::cout << "The other player is going to:\n" << operate << "\nDo you want to use negate? Please reply Y/N.";
         bool decide = false;
         while (!decide) {
             string ans;
             std::cin >> ans;
             if (ans == "Y") {
+                std::cout << "Negate used successfully.\n";
                 return true;
             } else if (ans == "N") {
                 return false;
@@ -355,14 +373,20 @@ bool check_negate(Player * other, std::string operate) {
     }
 }
 
-void UseAbility(Board* board, Player* owner, Player* other) {
+void UseAbility(Board* board, Player* owner, Player* other, int cur) {
+    int oth;
+    if (cur == 1) {
+        oth = 2;
+    } else {
+        oth = 1;
+    }
     if (owner->getabilityNum() < 1) {
         std::cout << "You have used all your abilities.\n";
         return;
     }
     std::cout 
     << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Combat Lock 8.Negate\n"
-    << "The following is what abilities you have 111111111111:"; owner->printAbility();
+    << "The following is what abilities you have: "; owner->printAbility();
     std::cout<< "Do you want to use your ability? Reply Y or N.\n";
     std::string s;
     bool decide = false;
@@ -415,7 +439,7 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                 } else if (n == 0) {
                     std::cout 
                     << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Combat Lock 8.Negate\n"
-                    << "The following is what abilities you have 222222222222:"; owner->printAbility();
+                    << "The following is what abilities you have: "; owner->printAbility();
                     std::cout<< "Do you want to use your ability? Reply Y or N.\n";
                     break;
                 } else if (a == 1) {
@@ -435,7 +459,8 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                             char name = l->getName();
                             std::string str(1, name);
                             std::string operate = "Use Link Boost on " + str;
-                            bool useNegate = check_negate(other, operate);
+                            bool useNegate = check_negate(other, operate, oth);
+                            check_player(cur);
                             linkboostAbility func{};
                             if (func.useAbility(owner, link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
@@ -487,7 +512,8 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                         }
                     }
                     std::string operate = "Set Firewall on (" + std::to_string(row) + "," + std::to_string(col) + ")";
-                    bool useNegate = check_negate(other, operate);
+                    bool useNegate = check_negate(other, operate, oth);
+                    check_player(cur);
                     if (board->setFirewall(board, owner, row, col, useNegate)) {
                         std::cout << "Used successfully.\n";
                         if (useNegate) {
@@ -518,7 +544,8 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                             char name = l->getName();
                             std::string str(1, name);
                             std::string operate = "Use Download on " + str;
-                            bool useNegate = check_negate(other, operate);
+                            bool useNegate = check_negate(other, operate, oth);
+                            check_player(cur);
                             downloadAbility func{};
                             if (func.useAbility(owner, other, link, board, useNegate)) {
                                 if (useNegate) {
@@ -551,7 +578,8 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                             char name = l->getName();
                             std::string str(1, name);
                             std::string operate = "Use Polarize on " + str;
-                            bool useNegate = check_negate(other, operate);
+                            bool useNegate = check_negate(other, operate, oth);
+                            check_player(cur);
                             polarizeAbility func{};
                             if (func.useAbility(link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
@@ -585,7 +613,8 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                             char name = l->getName();
                             std::string str(1, name);
                             std::string operate = "Use Scan on " + str;
-                            bool useNegate = check_negate(other, operate);
+                            bool useNegate = check_negate(other, operate, oth);
+                            check_player(cur);
                             scanAbility func{};
                             if (func.useAbility(owner, other, link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
@@ -619,7 +648,8 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                             char name = l->getName();
                             std::string str(1, name);
                             std::string operate = "Use Enhance on " + str;
-                            bool useNegate = check_negate(other, operate);
+                            bool useNegate = check_negate(other, operate, oth);
+                            check_player(cur);
                             enhanceAbility func{};
                             if (func.useAbility(owner, link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
@@ -653,7 +683,8 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                             char name = l->getName();
                             std::string str(1, name);
                             std::string operate = "Use CombatLock on " + str;
-                            bool useNegate = check_negate(other, operate);
+                            bool useNegate = check_negate(other, operate, oth);
+                            check_player(cur);
                             lockedAbility func{};
                             if (func.useAbility(owner, other, link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
@@ -675,7 +706,7 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                 continue;
                 std::cout 
                 << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Combat Lock 8.Negate\n"
-                << "The following is what abilities you have 333333333333:"; owner->printAbility();
+                << "The following is what abilities you have: "; owner->printAbility();
                 std::cout<< "Do you want to use your ability? Reply Y or N.\n";
             }
         }
@@ -723,7 +754,7 @@ int main() {
     bool win = false;
     while (!win) {
         // Player1 move
-        
+        check_player(1);
         subject.notifyObservers();
         UseAbility(subject.getBoard(), player1, player2);
         subject.notifyObservers();
@@ -734,6 +765,7 @@ int main() {
         player1->changeturn(false);
         player2->changeturn(false);
         // Player2 move
+        check_player(2);
         subject.notifyObservers();
         UseAbility(subject.getBoard(), player2, player1);
         subject.notifyObservers();
