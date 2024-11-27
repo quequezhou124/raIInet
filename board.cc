@@ -66,7 +66,7 @@
 
     Unit* Board::getFirewall (int row, int col) {
         for (auto &unit : units) {
-            if (unit->getType() == "W") return unit;
+            if (unit->getRow() == row, unit->getCol() == col, unit->getType() == "W") return unit;
         }
         return nullptr;
     }
