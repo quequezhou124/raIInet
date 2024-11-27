@@ -26,7 +26,6 @@ bool Player::deleteAbility(int k) {
     bool found = false;
     for(int i = 0; i < 4; i++) {
         if (abilityBag[i] == k && found == false) {
-            abilityNum--;
             found = true;
             abilityBag[i] == abilityBag[i+1];
         } else if (found == true) {
@@ -39,13 +38,14 @@ bool Player::deleteAbility(int k) {
     } else {
         if (abilityBag[4]==k) {
             abilityBag[4] = 0;
+            abilityNum--;
             return true;
         } else {
             std::cout << "You don't have that ability card haha!" << endl;
             return false;
         }
     }
-    
+
 }
 
 int Player::getdownloadD() const {
@@ -100,7 +100,8 @@ bool Player::move(Board * board, Unit * unit, const std::string& dir) {
         || (player1 && newrow == 0 && newcol == 3)
         || (player1 && newrow == 0 && newcol == 4)
         || (!player1 && newrow == 7 && newcol == 3)
-        || (!player1 && newrow == 7 && newcol == 4)) {return false;}
+        || (!player1 && newrow == 7 && newcol == 4)
+        || unit->getLocked()) {return false;}
         if (player1 == true) {
             if(newrow >= 8) {
                 unit->setDownloaded(true);

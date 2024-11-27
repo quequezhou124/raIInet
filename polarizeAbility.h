@@ -12,7 +12,7 @@ class polarizeAbility{
     bool useAbility(char linkname, Board *board, bool negate) {
         if (negate) {
             std::cout << "your opponent has used negate" << endl;
-            return false;
+            return true;
         }
         Unit *cur = board->find_unit(linkname);
         int row = cur->getRow();

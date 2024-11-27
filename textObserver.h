@@ -38,8 +38,22 @@ public:
             std::cout << "Player 1: " << endl;
             std::cout << "Downloaded: " << curplayer->getdownloadD() <<"D, "<< curplayer->getdownloadV() << "V" <<endl;
             std::cout << "Abilities: " << curplayer->getabilityNum() << endl;
-            std::cout << "a: ? b: ? c: ? d: ?" << endl;
-            std::cout << "e: ? f: ? g: ? h: ?" << endl;
+            for (char cur = 'a'; cur < 'a' + 4; cur = cur + 1) {
+                if (subject->getBoard()->find_unit(cur)->getDisplayed()) {
+                    std::cout << cur << ": " << subject->getBoard()->find_unit(cur)->getType() << subject->getBoard()->find_unit(cur)->getStrength() << " ";
+                } else {
+                    std::cout << cur << ": ? ";
+                }
+            }
+            std::cout << std::endl;
+            for (char cur = 'e'; cur < 'e' + 4; cur = cur + 1) {
+                if (subject->getBoard()->find_unit(cur)->getDisplayed()) {
+                    std::cout << cur << ": " << subject->getBoard()->find_unit(cur)->getType() << subject->getBoard()->find_unit(cur)->getStrength() << " ";
+                } else {
+                    std::cout << cur << ": ? ";
+                }
+            }
+            std::cout << std::endl;
         }
         
         for (int i = 0; i < 8; ++i) {
@@ -75,8 +89,22 @@ public:
             std::cout << "Player 2: " << endl;
             std::cout << "Downloaded: " << otherplayer->getdownloadD() <<"D, "<< otherplayer->getdownloadV() << "V" <<endl;
             std::cout << "Abilities: " << otherplayer->getabilityNum() << endl;
-            std::cout << "A: ? B: ? C: ? D: ?" << endl;
-            std::cout << "E: ? F: ? G: ? H: ?" << endl;
+            for (char cur = 'A'; cur < 'A' + 4; cur = cur + 1) {
+                if (subject->getBoard()->find_unit(cur)->getDisplayed()) {
+                    std::cout << cur << ": " << subject->getBoard()->find_unit(cur)->getType() << subject->getBoard()->find_unit(cur)->getStrength() << " ";
+                } else {
+                    std::cout << cur << ": ? ";
+                }
+            }
+            std::cout << std::endl;
+            for (char cur = 'E'; cur < 'E' + 4; cur = cur + 1) {
+                if (subject->getBoard()->find_unit(cur)->getDisplayed()) {
+                    std::cout << cur << ": " << subject->getBoard()->find_unit(cur)->getType() << subject->getBoard()->find_unit(cur)->getStrength() << " ";
+                } else {
+                    std::cout << cur << ": ? ";
+                }
+            }
+            std::cout << std::endl;
         }  
     }
     // destructor
