@@ -391,6 +391,10 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                 if (n == 1) {
                     return;
                 } else if (n == 0) {
+                    std::cout 
+                    << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Conbat Lock 8.Negate\n"
+                    << "The following is what abilities you have:"; owner->printAbility();
+                    std::cout<< "Do you want to use your ability? Reply Y or N.\n";
                     break;
                 } else if (a == 1) {
                     std::cout << "If you want to use Link Boost, please reply the link you want to boost, like a, A.\n";
@@ -406,7 +410,9 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                             std::cout << "Link is not found. Choose another one.\n";
                             continue;
                         } else {
-                            std::string operate = "Use Link Boost on " + l->getName();
+                            char name = l->getName();
+                            std::string str(1, name);
+                            std::string operate = "Use Link Boost on " + str;
                             bool useNegate = check_negate(other, operate);
                             linkboostAbility func{};
                             if (func.useAbility(owner, link, board, useNegate)) {
@@ -487,7 +493,9 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                             std::cout << "Link is not found. Choose another one.\n";
                             continue;
                         } else {
-                            std::string operate = "Use Download on " + l->getName();
+                            char name = l->getName();
+                            std::string str(1, name);
+                            std::string operate = "Use Link Boost on " + str;
                             bool useNegate = check_negate(other, operate);
                             downloadAbility func{};
                             if (func.useAbility(owner, other, link, board, useNegate)) {
@@ -519,7 +527,9 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                             std::cout << "Link is not found. Choose another one.\n";
                             continue;
                         } else {
-                            std::string operate = "Use Polarize on " + l->getName();
+                            char name = l->getName();
+                            std::string str(1, name);
+                            std::string operate = "Use Link Boost on " + str;
                             bool useNegate = check_negate(other, operate);
                             polarizeAbility func{};
                             if (func.useAbility(link, board, useNegate)) {
@@ -551,7 +561,9 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                             std::cout << "Link is not found. Choose another one.\n";
                             continue;
                         } else {
-                            std::string operate = "Use Scan on " + l->getName();
+                            char name = l->getName();
+                            std::string str(1, name);
+                            std::string operate = "Use Link Boost on " + str;
                             bool useNegate = check_negate(other, operate);
                             scanAbility func{};
                             if (func.useAbility(owner, other, link, board, useNegate)) {
@@ -583,7 +595,9 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                             std::cout << "Link is not found. Choose another one.\n";
                             continue;
                         } else {
-                            std::string operate = "Use Ehance on " + l->getName();
+                            char name = l->getName();
+                            std::string str(1, name);
+                            std::string operate = "Use Link Boost on " + str;
                             bool useNegate = check_negate(other, operate);
                             enhanceAbility func{};
                             if (func.useAbility(owner, link, board, useNegate)) {
@@ -615,7 +629,9 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                             std::cout << "Link is not found. Choose another one.\n";
                             continue;
                         } else {
-                            std::string operate = "Use Combat Lock on " + l->getName();
+                            char name = l->getName();
+                            std::string str(1, name);
+                            std::string operate = "Use Link Boost on " + str;
                             bool useNegate = check_negate(other, operate);
                             lockedAbility func{};
                             if (func.useAbility(owner, other, link, board, useNegate)) {
