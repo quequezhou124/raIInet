@@ -322,7 +322,7 @@ void setability(Player * player) {
             std::cin.ignore(); // 丢弃当前行的输入
             continue;
         }
-        if (a > 8 || a < 0) {
+        if (a > 8 || a <= 0) {
             std::cout << "Invalid number, choose another one.\n";
             continue;
         } else {
