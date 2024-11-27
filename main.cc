@@ -338,10 +338,10 @@ void UseAbility(Board* board, Player* owner, Player* other) {
         std::cout << "You have used all your abilities.\n";
         return;
     }
-    std::cout << "Do you want to use your ability? Reply Y or N.\n"
+    std::cout 
     << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Conbat Lock 8.Negate\n"
-    << "The following is what abilities you have:";
-    owner->printAbility();
+    << "The following is what abilities you have:"; owner->printAbility();
+    std::cout<< "Do you want to use your ability? Reply Y or N.\n";
     std::string s;
     bool decide = false;
     int a;
@@ -636,6 +636,10 @@ void UseAbility(Board* board, Player* owner, Player* other) {
             }
             if (n == 0) {
                 continue;
+                std::cout 
+                << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Conbat Lock 8.Negate\n"
+                << "The following is what abilities you have:"; owner->printAbility();
+                std::cout<< "Do you want to use your ability? Reply Y or N.\n";
             }
         }
     }
