@@ -19,6 +19,7 @@
 #include "lockedAbility.h"
 #include <X11/Xlib.h>
 #include "window.h"
+#include "wall.h"
 
 void print_rule() {
     std::cout << "RAIInet is a two-player strategy game played on an 8×8 grid.\n"
@@ -63,7 +64,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
         std::cin >> set;
 
         int strength = 0;
-        if (set.length() == 2 && [0] == 'v' && set[1] >= '1' && set[1] <= '4') {
+        if (set.length() == 2 && set[0] == 'v' && set[1] >= '1' && set[1] <= '4') {
             strength = set[1] - '1';
             if (!vSet[strength]) {
                 vSet[strength] = true;
@@ -140,8 +141,8 @@ void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
 } 
 
 void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* owner) {
-    if ((player2 == owner && l1->getRow() == 7 && l1->getCol() == 3) 
-        ||(player2 == owner && l1->getRow() == 7 && l1->getCol() == 4)) {
+    if ((player2 == owner && l1->getRow() == 7 && l1->getCol() == 3 && !l1->getLocked()) 
+        ||(player2 == owner && l1->getRow() == 7 && l1->getCol() == 4 && !l1->getLocked())) {
         if (dynamic_cast<Data*>(l1)) {
             int n = player2->getdownloadD();
             n++;
@@ -155,8 +156,8 @@ void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* o
             l1->setDownloaded(true);
             std::cout << "Player2 has downloaded your Virus.\n";
         }
-    } else if ((player1 == owner && l1->getRow() == 0 && l1->getCol() == 3) 
-        ||(player1 == owner && l1->getRow() == 0 && l1->getCol() == 4)) {
+    } else if ((player1 == owner && l1->getRow() == 0 && l1->getCol() == 3 && !l1->getLocked()) 
+        ||(player1 == owner && l1->getRow() == 0 && l1->getCol() == 4) && !l1->getLocked()) {
         if (dynamic_cast<Data*>(l1)) {
             int n = player1->getdownloadD();
             n++;
@@ -174,7 +175,7 @@ void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* o
 }
 
 bool check_f (Board* board, Unit* l1, Player* owner, Player* other) {
-    Wall f = board->getFirewall(l1->getRow(), l1->getCol());
+    Unit *f = board->getFirewall(l1->getRow(), l1->getCol());
     if (f) {
         if (dynamic_cast<Virus*>(l1)) {
             int n = owner->getdownloadV();
@@ -198,7 +199,7 @@ void check_battle_s(Board* board, Unit* l1, Player* player1, Player* player2) {
         owner = player2;
         other = player1;
     }
-    if (check_f (Board* board, Unit* l1, Player* owner, Player* other)) {
+    if (check_f (board, l1, owner, other)) {
         return;
     }
     Unit* l2 = board->getAnotherUnit(l1->getRow(), l1->getCol(), l1, owner);

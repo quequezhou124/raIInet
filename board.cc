@@ -64,7 +64,7 @@
         }
     }
 
-    Unit* Board::getFirewall (int row, int col, Player* player) {
+    Unit* Board::getFirewall (int row, int col) {
         for (auto &unit : units) {
             if (unit->getType() == "W") return unit;
         }

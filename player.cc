@@ -101,10 +101,10 @@ bool Player::move(Board * board, Unit * unit, const std::string& dir) {
         || (player1 && newrow == 0 && newcol == 3)
         || (player1 && newrow == 0 && newcol == 4)
         || (!player1 && newrow == 7 && newcol == 3)
-        || (!player1 && newrow == 7 && newcol == 4)
-        || unit->getLocked()) {return false;}
+        || (!player1 && newrow == 7 && newcol == 4)) {return false;}
         if (player1 == true) {
             if(newrow >= 8) {
+                if (unit->getLocked()) return false;
                 unit->setDownloaded(true);
                 if (unit->getType()== "V") {
                     downloadV++;
@@ -115,6 +115,7 @@ bool Player::move(Board * board, Unit * unit, const std::string& dir) {
             }
         } else {
             if(newrow < 0) {
+                if (unit->getLocked()) return false;
                 unit->setDownloaded(true);
                 if (unit->getType()== "V") {
                     downloadV++;
