@@ -376,13 +376,22 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                     find = true;
                 }
             }
+
+            int n = 2;
             while (!use) {
-                std::cout << "If you want to use another ability, reply -1.\n"
-                << "If you want to stop using any ability, reply -2.\n";
-                if (a == -2) {
-                    return;
-                } else if (a == -1) {
+                std::cout << "If you want to use another ability, reply 0.\n"
+                << "If you want to stop using any ability, reply 1.\n"
+                << "If you want to continue, reply 2.\n";
+                if (!(std::cin >> n)){
+                    std::cout << "Invalid input, please enter a number.\n";
+                    std::cin.clear();   // 清除错误状态
+                    std::cin.ignore(); // 丢弃当前行的输入
                     continue;
+                }
+                if (n == 1) {
+                    return;
+                } else if (n == 0) {
+                    break;
                 } else if (a == 1) {
                     std::cout << "If you want to use Link Boost, please reply the link you want to boost, like a, A.\n";
                     char link;
@@ -451,7 +460,7 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                     }
                     std::string operate = "Set Firewall on (" + std::to_string(row) + "," + std::to_string(col) + ")";
                     bool useNegate = check_negate(other, operate);
-                    if (board->setFirewall(owner, row, col, useNegate)) {
+                    if (board->setFirewall(board, owner, row, col, useNegate)) {
                         std::cout << "Used successfully.\n";
                         if (useNegate) {
                             other->deleteAbility(8);
@@ -624,6 +633,9 @@ void UseAbility(Board* board, Player* owner, Player* other) {
                         }
                     }
                 }
+            }
+            if (n == 0) {
+                continue;
             }
         }
     }

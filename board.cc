@@ -40,7 +40,7 @@
         }
     }
 
-    bool Board::setFirewall (Player *player, int row, int col, bool negate) {
+    bool Board::setFirewall (Board *borad, Player *player, int row, int col, bool negate) {
         if (negate) {
             std::cout << "your opponent has used negate" << std::endl; 
             return true;
@@ -49,8 +49,16 @@
                    (row == 7 && (col == 3 || col == 4))) {
             return false;
         } else {
-            if (player->isplayer1turn()) Wall * firewall = new Wall {row, col, 0, 'w', false, false, false, false};
-            else Wall * firewall = new Wall {row, col, 0, 'm', false, false, false, false};
+            if (player->isplayer1turn()) {
+                Wall * firewall = new Wall {row, col, 0, 'w', false, false, false, false};
+                borad->units.push_back(firewall);
+            }
+
+            else {
+                Wall * firewall = new Wall {row, col, 0, 'm', false, false, false, false};
+                borad->units.push_back(firewall);
+            }
+
             return true;
         }
     }
