@@ -1,0 +1,8 @@
+{
+    "$schema": "https://raw.githubusercontent.com/devcontainers/spec/refs/heads/main/schemas/devContainer.base.schema.json",
+    "name": "C++",
+    "image": "go2sheep/devcontainer:cpp-gpp14",
+    "runArgs": [
+        "--platform=linux/amd64"
+    ]
+}
