@@ -3,7 +3,9 @@
 #   make clean: remove all object files and executables
 #   make main: compile the main executable
 #   make main2: compile the main2 executable
-#   etc.
+#   make suite1: run the tests/suite1.txt with main
+#   make suite1 TEST_EXEC=main2: run the tests/suite2.txt with main2
+#   make debug: print available executables and test suites
 
 CXX = g++
 CXXFLAGS = -std=c++20 -Wall -Wextra -g -O2
@@ -23,19 +25,42 @@ OBJECTS = $(SOURCES:.cc=.o)
 # Define the final executable targets (e.g., main, main_2, main_test, etc.)
 EXEC = $(basename $(EXEC_SOURCES))
 
+# Dependency files
+DEPS = $(SOURCES:.cc=.d)
+DEPS += $(EXEC_SOURCES:.cc=.d)
+
+.PHONY: all clean
 # Default target: all executables
-all: $(EXEC)
+all: clean $(EXEC)
 
 # Rule for linking the executables
-$(EXEC): %: %.o $(OBJECTS)
+$(EXEC): %: $(OBJECTS) %.o
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Rule for compiling .cc to .o files
 %.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+# Rule for generating dependency files
+%.d: %.cc
+	$(CXX) -MM $(CXXFLAGS) $< > $@
+
+# Include dependency files
+-include $(DEPS)
+
 # Clean rule to remove object files and all executables
 clean:
-	rm -f $(OBJECTS) $(EXEC_OBJECTS) $(EXEC)
+	rm -f $(OBJECTS) $(EXEC_OBJECTS) $(EXEC) $(DEPS)
 
-.PHONY: all clean
+TEST_EXEC = main
+TEST_SUITES = $(basename $(notdir $(wildcard tests/*.txt)))
+
+.PHONY: $(TEST_SUITES)
+
+$(TEST_SUITES):
+	@echo "Running test suite: $@"
+	./runSuite.sh tests/$@.txt ./$(TEST_EXEC)
+
+debug:
+	@echo "Available executables: $(EXEC)"
+	@echo "Available test suites: $(TEST_SUITES)"
