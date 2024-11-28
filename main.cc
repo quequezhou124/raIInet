@@ -48,6 +48,11 @@ void print_blank() {
               << "========\n";
 }
 
+
+void sleep(int n) {
+    std::this_thread::sleep_for(std::chrono::seconds(n));
+}
+
 void check_player(int n) {
     bool check = false;
     std::string s;
@@ -726,10 +731,6 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
             }
         }
     }
-}
-
-void sleep(int n) {
-    std::this_thread::sleep_for(std::chrono::seconds(n));
 }
 
 int main() {
