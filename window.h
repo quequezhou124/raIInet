@@ -14,7 +14,7 @@ class Xwindow {
  public:
   Xwindow(int width=500, int height=500); 
   ~Xwindow();  
-  enum {White=0, Black, Red, Green, Blue, Yellow, Pink}; 
+  enum {White=0, Black, Red, Green, Blue, Yellow, Pink, Orange, Gray}; 
 
   int getWidth() const;
   int getHeight() const;
