@@ -21,6 +21,10 @@
 #include <thread>
 #include <chrono>
 
+void sleep(int n) {
+    std::this_thread::sleep_for(std::chrono::seconds(n));
+}
+
 void print_rule() {
     std::cout << "RAIInet is a two-player strategy game played on an 8×8 grid.\n"
               << "Each player controls 8 hidden links (4 data and 4 viruses) with strengths from 1 to 4.\n"
@@ -48,11 +52,6 @@ void print_blank() {
               << "ABCSSFGH\n"
               << "========\n";
     sleep(2);
-}
-
-
-void sleep(int n) {
-    std::this_thread::sleep_for(std::chrono::seconds(n));
 }
 
 void check_player(int n) {
