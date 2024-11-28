@@ -423,7 +423,7 @@ bool check_negate(Player * owner, Subject* subject, Player * other, std::string 
     }
 }
 
-void UseAbility(Board* board, Player* owner, Player* other, int cur) {
+void UseAbility(Board* board, Player* owner, Player* other, int cur, Subject subject) {
     int oth;
     if (cur == 1) {
         oth = 2;
@@ -840,7 +840,7 @@ int main() {
         check_player(1);
         subject.notifyObservers();
         sleep(1);
-        UseAbility(subject.getBoard(), player1, player2, 1);
+        UseAbility(subject.getBoard(), player1, player2, 1, subject);
         subject.notifyObservers();
         sleep(1);
         moveit(player1, "Player1", subject.getBoard(), player1, player2);
@@ -854,7 +854,7 @@ int main() {
         check_player(2);
         subject.notifyObservers();
         sleep(1);
-        UseAbility(subject.getBoard(), player2, player1, 2);
+        UseAbility(subject.getBoard(), player2, player1, 2, subject);
         subject.notifyObservers();
         sleep(1);
         moveit(player2, "Player2", subject.getBoard(), player1, player2);
