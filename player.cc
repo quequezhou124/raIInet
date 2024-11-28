@@ -149,7 +149,6 @@ bool Player::addAbility(int k){
 }
 
 void Player::printAbility() {
-    std::cout << abilityBag[4] << std::endl;
     for(int i = 0; i < 5; i++) {
         if (abilityBag[i] == 0) {
             std::cout << endl;
