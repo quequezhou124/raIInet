@@ -47,27 +47,29 @@
             std::cout << "your opponent has used negate" << std::endl; 
             return true;
         } else if (row < 0 || row > 8 || col < 0 || col > 8 || 
-                   getUnit(row, col) || (row == 0 && (col == 3 || col == 4)) ||
+                   (getUnit(row, col) && getUnit(row, col)->getType() != "W") || (row == 0 && (col == 3 || col == 4)) ||
                    (row == 7 && (col == 3 || col == 4))) {
             return false;
         } else {
             if (player->isplayer1turn()) {
                 Wall * firewall = new Wall {row, col, 0, 'w', false, false, false, false};
                 borad->units.push_back(firewall);
+                player->walls.push_back(firewall);
             }
 
             else {
                 Wall * firewall = new Wall {row, col, 0, 'm', false, false, false, false};
                 borad->units.push_back(firewall);
+                player->walls.push_back(firewall);
             }
 
             return true;
         }
     }
 
-    Unit* Board::getFirewall(int row, int col) {
+    Unit* Board::getFirewall(int row, int col, Player *player) {
         for (auto& unit : units) {
-            if (unit->getRow() == row && unit->getCol() == col && unit->getType() == "W") {
+            if (unit->getRow() == row && unit->getCol() == col && unit->getType() == "W" && std::find(player->walls.begin(), player->walls.end(), unit) != player->walls.end()) {
                 return unit;
             }
         }

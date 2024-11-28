@@ -209,7 +209,7 @@ void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* o
 }
 
 bool check_f (Board* board, Unit* l1, Player* owner, Player* other) {
-    Unit *f = board->getFirewall(l1->getRow(), l1->getCol());
+    Unit *f = board->getFirewall(l1->getRow(), l1->getCol(), other);
     if (f) {
         if (dynamic_cast<Virus*>(l1)) {
             int n = owner->getdownloadV();

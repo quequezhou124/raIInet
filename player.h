@@ -2,6 +2,7 @@
 #define PLAYER_H
 #include "link.h"
 #include "board.h"
+#include "wall.h"
 #include <vector>
 #include <string>
 
@@ -25,6 +26,7 @@ class Player {
 
    public:
     std::vector<Link*> links;
+    std::vector<Wall*> walls;
     //constructor
     Player(std::vector<Link*> links, bool player1 = true, State state = State::Undecided, int downloadD = 0, int downloadV = 0, int abilityNum = 0);
     Player();

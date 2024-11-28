@@ -62,9 +62,9 @@ public:
         std::cout << endl;
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
-                if (subject->getBoard()->getFirewall(i, j) && subject->getBoard()->getFirewall(i, j)->getName() == 'w' && curplayer->isplayer1turn()) {
+                if (subject->getBoard()->getFirewall(i, j, curplayer) && subject->getBoard()->getFirewall(i, j, curplayer)->getName() == 'w' && curplayer->isplayer1turn()) {
                     std::cout << 'w';
-                } else if (subject->getBoard()->getFirewall(i, j) && subject->getBoard()->getFirewall(i, j)->getName() == 'm' && !curplayer->isplayer1turn()) {
+                } else if (subject->getBoard()->getFirewall(i, j, otherplayer) && subject->getBoard()->getFirewall(i, j, otherplayer)->getName() == 'm' && !curplayer->isplayer1turn()) {
                     std::cout << 'm';
                 } else {
                     std::cout << subject->getState(i, j);
