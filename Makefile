@@ -29,6 +29,8 @@ EXEC = $(basename $(EXEC_SOURCES))
 DEPS = $(SOURCES:.cc=.d)
 DEPS += $(EXEC_SOURCES:.cc=.d)
 
+RELEASE_BIN = rallnet
+
 .PHONY: all clean
 # Default target: all executables
 all: clean $(EXEC)
@@ -44,6 +46,10 @@ $(EXEC): %: $(OBJECTS) %.o
 # Rule for generating dependency files
 %.d: %.cc
 	$(CXX) -MM $(CXXFLAGS) $< > $@
+
+release: main.cc $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -O2 -o $(RELEASE_BIN) main.cc $(OBJECTS) $(LDFLAGS)
+	@echo "Release binary created: $(RELEASE_BIN)"
 
 # Include dependency files
 -include $(DEPS)
