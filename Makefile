@@ -56,7 +56,7 @@ release: main.cc $(OBJECTS)
 
 # Clean rule to remove object files and all executables
 clean:
-	rm -f $(OBJECTS) $(EXEC_OBJECTS) $(EXEC) $(DEPS)
+	rm -f $(OBJECTS) $(EXEC_OBJECTS) $(EXEC) $(DEPS) $(RELEASE_BIN)
 
 TEST_EXEC = main
 TEST_SUITES = $(basename $(notdir $(wildcard tests/*.txt)))
