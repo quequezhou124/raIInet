@@ -104,6 +104,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                 n++;
             } else {
                 std::cout << "You have already set " << set << ".\n";
+                continue;
             }
         } else if (set.length() == 2 && set[0] == 'd' && set[1] >= '1' && set[1] <= '4') {
             strength = set[1] - '1';
@@ -120,6 +121,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
                 n++;
             } else {
                 std::cout << "You have already set " << set << ".\n";
+                continue;
             }
         } else {
             std::cout << "Invalid input. Please use format v1, d2, etc.\n";
