@@ -39,7 +39,7 @@ Xwindow::Xwindow(int width, int height) : width{width}, height{height} {
     // Set up colours
     XColor xcolour;
     Colormap cmap;
-    char color_vals[5][10] = {"white", "black", "red", "green", "blue"};
+    char color_vals[7][10] = {"white", "black", "red", "green", "blue", "yellow", "pink"};
 
     cmap = DefaultColormap(d, DefaultScreen(d));
     for (int i = 0; i < 5; ++i) {
@@ -71,8 +71,8 @@ void Xwindow::drawLine(int x1, int y1, int x2, int y2, int colour) {
 }
 
 // Draws a string
-void Xwindow::drawString(int x, int y, string msg) {
-    XSetForeground(d, gc, colours[Black]);
+void Xwindow::drawString(int x, int y, std::string msg, int colour) {
+    XSetForeground(d, gc, colours[colour]);
     XDrawString(d, w, gc, x, y, msg.c_str(), msg.length());
     XFlush(d);
 }
@@ -83,4 +83,12 @@ int Xwindow::getWidth() const {
 
 int Xwindow::getHeight() const {
     return height;
+}
+
+void Xwindow::drawRectangle(int x, int y, int width, int height, int thickness, int colour) {
+    XSetForeground(d, gc, colours[colour]);
+    for (int i = 0; i < thickness; ++i) {
+        XDrawRectangle(d, w, gc, x + i, y + i, width - 2 * i, height - 2 * i);
+    }
+    XFlush(d);
 }

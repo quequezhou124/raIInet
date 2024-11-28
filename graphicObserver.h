@@ -22,69 +22,55 @@ public:
     }
 
     void notify() override {
-        // Clear the window
+        const int cellSize = 100;
+        const int borderWidth = 3;
+
+        // Clear the entire grid to white
         window.fillRectangle(0, 0, 800, 800, Xwindow::White);
 
-        // Draw the grid
+        // Draw grid lines
         for (int i = 0; i <= 8; ++i) {
-            window.drawLine(i * 100, 0, i * 100, 800); // Vertical lines
-            window.drawLine(0, i * 100, 800, i * 100); // Horizontal lines
+            window.drawLine(i * cellSize, 0, i * cellSize, 800, Xwindow::Black);
+            window.drawLine(0, i * cellSize, 800, i * cellSize, Xwindow::Black);
         }
 
-        // Draw the board content
+        // Draw the board
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
-                char c = subject->getState(i, j);
-                auto type = subject->getBoard()->find_unit(c) != nullptr ? subject->getBoard()->find_unit(c)->getType() : "";
-                auto color = Xwindow::Black; // Default color for unknown
+                int x = j * cellSize;
+                int y = i * cellSize;
 
-                if (curplayer->isplayer1turn()) {
-                    if (c >= 'a' && c <= 'z') {
-                        if (type == "D")
-                        {
-                            window.drawString(j * 100 + 10, i * 100 + 10, std::format("Data {}: {},{}", c, i, j));
-                            color = Xwindow::Green; // Data
-                        }
-                        else if (type == "V")
-                        {
-                            window.drawString(j * 100 + 10, i * 100 + 10, std::format("Virus {}: {},{}", c, i, j));
-                            color = Xwindow::Red; // Virus
-                        }
-                    } else if (c >= 'A' && c <= 'Z') {
-                        color = Xwindow::Black; // Opponent's links remain unknown
+                char state = subject->getState(i, j);
+                bool isPlayer1Turn = curplayer->isplayer1turn();
+
+                if (subject->getBoard()->getFirewall(i, j, curplayer)) {
+                    window.fillRectangle(x, y, cellSize, cellSize, Xwindow::White); 
+                    window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Yellow); 
+                } else if (subject->getBoard()->getFirewall(i, j, otherplayer)) {
+                    window.fillRectangle(x, y, cellSize, cellSize, Xwindow::White);
+                } else if (state == 'S') {
+                    window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Blue);
+                } else if (state >= 'a' && state <= 'z') {
+                    if (isPlayer1Turn || state == 'S') { 
+                        window.fillRectangle(x, y, cellSize, cellSize, state <= 'd' ? Xwindow::Green : Xwindow::Red);
+                        window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
+                    } else {
+                        window.fillRectangle(x, y, cellSize, cellSize, Xwindow::White);
+                    }
+                } else if (state >= 'A' && state <= 'Z') {
+                    if (!isPlayer1Turn || state == 'S') {
+                        window.fillRectangle(x, y, cellSize, cellSize, state <= 'D' ? Xwindow::Pink : Xwindow::Black);
+                        window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
+                    } else {
+                        window.fillRectangle(x, y, cellSize, cellSize, Xwindow::White);
                     }
                 } else {
-                    if (c >= 'A' && c <= 'Z') {
-                        if (type == "D")
-                        {
-                            window.drawString(j * 100 + 10, i * 100 + 10, std::format("Data {}: {},{}", c, i, j));
-                            color = Xwindow::Green; // Data
-                        }
-                        else if (type == "V")
-                        {
-                            window.drawString(j * 100 + 10, i * 100 + 10, std::format("Virus {}: {},{}", c, i, j));
-                            color = Xwindow::Red; // Virus
-                        }
-                    } else if (c >= 'a' && c <= 'z') {
-                        color = Xwindow::Black; // Opponent's links remain unknown
-                    }
+                    window.fillRectangle(x, y, cellSize, cellSize, Xwindow::White);
                 }
-
-                // Fill the rectangle representing the link
-                window.fillRectangle(j * 100 + 10, i * 100 + 10, 80, 80, color);
-                // window.drawString(j * 100 + 10, i * 100 + 10, "hello");
-                // window.drawLine(j * 100 + 10, i * 100 + 10, 10, 10, Xwindow::Blue);
             }
         }
-
-        // Draw player info
-        window.drawString(10, 810, "Player 1 Downloads: " + 
-                          std::to_string(curplayer->getdownloadD()) + "D, " + 
-                          std::to_string(curplayer->getdownloadV()) + "V");
-        window.drawString(410, 810, "Player 2 Downloads: " + 
-                          std::to_string(otherplayer->getdownloadD()) + "D, " + 
-                          std::to_string(otherplayer->getdownloadV()) + "V");
     }
+
 
     ~GraphicObserver() {
         subject->detach(this);
