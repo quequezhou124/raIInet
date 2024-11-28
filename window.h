@@ -28,6 +28,23 @@ class Xwindow {
       Gold,
       ColorCount // Total number of colors defined
   };
+  const std::string colorNames[ColorCount] = {
+      "White",
+      "Black",
+      "Red",
+      "Green",
+      "Blue",
+      "Yellow",
+      "Cyan",
+      "Magenta",
+      "Orange",
+      "Purple",
+      "Pink",
+      "Gray",
+      "LightBlue",
+      "DarkGreen",
+      "Navy",
+      "Gold"};
 
   int getWidth() const;
   int getHeight() const;
@@ -49,7 +66,14 @@ private:
   unsigned long colours[ColorCount];
   void setupColors();
   void drawColors();
-
+  std::string colorToString(int color)
+  {
+    if (color >= 0 && color < ColorCount)
+    {
+      return colorNames[color];
+    }
+    return "UNKNOWN";
+  }
 };
 
 #endif

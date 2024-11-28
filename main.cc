@@ -22,7 +22,11 @@
 #include <chrono>
 
 void sleep(int n) {
+#ifdef NO_SLEEP
+    std::cout << "NO_SLEEP is defined." << std::endl;
+#else
     std::this_thread::sleep_for(std::chrono::seconds(n));
+#endif
 }
 
 void print_rule() {

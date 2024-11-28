@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include "window.h"
 #include <cstdlib>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -89,6 +91,20 @@ void Xwindow::drawColors()
 
         // Draw a filled rectangle
         XFillRectangle(d, w, gc, x, y, boxSize, boxSize);
+
+        // Get the string to draw
+        std::string colorName = colorToString(i);
+
+        // Calculate text width
+        XFontStruct *fontInfo = XQueryFont(d, XGContextFromGC(gc));
+        int textWidth = XTextWidth(fontInfo, colorName.c_str(), colorName.length());
+
+        // Calculate the position to center the text
+        int textX = x + (boxSize - textWidth) / 2;        // Center the text horizontally
+        int textY = y + (boxSize + fontInfo->ascent) / 2; // Center the text vertically
+
+        // Draw the string in the center of the box
+        drawString(textX, textY, colorName, std::abs(ColorCount - i -1 ));
     }
     XFlush(d);
 }

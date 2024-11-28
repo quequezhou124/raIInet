@@ -30,7 +30,7 @@ DEPS = $(SOURCES:.cc=.d)
 DEPS += $(EXEC_SOURCES:.cc=.d)
 
 RELEASE_BIN = raiinet
-RELEASE_DISPLAY_ENV_VAR = ":0"
+RELEASE_DEFINES = -DNO_SLEEP=1
 
 .PHONY: all clean
 # Default target: all executables
@@ -48,10 +48,10 @@ $(EXEC): %: $(OBJECTS) %.o
 %.d: %.cc
 	$(CXX) -MM $(CXXFLAGS) $< > $@
 
-release: main.cc $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -O2 -DDISPLAY="$(RELEASE_DISPLAY_ENV_VAR)" -o $(RELEASE_BIN) main.cc $(OBJECTS) $(LDFLAGS)
+release: clean main.cc $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -O2 $(RELEASE_DEFINES) -o $(RELEASE_BIN) main.cc $(OBJECTS) $(LDFLAGS)
 	@echo "Release binary created: $(RELEASE_BIN)"
-	@echo "Injected environment variable: DISPLAY=$(RELEASE_DISPLAY_ENV_VAR)"
+	@echo "Defines $(RELEASE_DEFINES)"
 
 # Include dependency files
 -include $(DEPS)
