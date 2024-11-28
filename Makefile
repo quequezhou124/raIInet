@@ -8,8 +8,8 @@
 #   make debug: print available executables and test suites
 
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -Wextra -g -O2
-LDFLAGS = -lX11
+CXXFLAGS = -std=c++20 -Wall -Wextra -g -O2 $(shell pkg-config --cflags x11) -I/opt/X11/include
+LDFLAGS = $(shell pkg-config --libs x11) -I/opt/X11/include -L/opt/X11/lib -lX11
 
 # Define the prefix for the main executable (e.g., main)
 EXEC_PREFIX = main
