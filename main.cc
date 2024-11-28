@@ -743,9 +743,11 @@ int main() {
         std::cin >> command;
         if (command == "Y") {
             print_rule();
+            sleep(2);
             rule = false;
         } else if (command != "N") {
             std::cout << "Please reply Y or N.\n";
+            sleep(2);
             continue;
         } else {
             rule = false;
