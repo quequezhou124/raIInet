@@ -29,7 +29,7 @@ EXEC = $(basename $(EXEC_SOURCES))
 DEPS = $(SOURCES:.cc=.d)
 DEPS += $(EXEC_SOURCES:.cc=.d)
 
-RELEASE_BIN = rallnet
+RELEASE_BIN = raiinet
 RELEASE_DISPLAY_ENV_VAR = ":0"
 
 .PHONY: all clean
