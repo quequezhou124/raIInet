@@ -358,6 +358,7 @@ void setability(Player * player) {
 }
 
 bool check_negate(Player * other, std::string operate, int oth) {
+    sleep(2);
     if (!(other->findAbility(8))) {
         std::cout << "Your opponent doesn't have the ability to Negate.\n";
         return false;
