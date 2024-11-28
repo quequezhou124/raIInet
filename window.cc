@@ -14,8 +14,10 @@ Xwindow::Xwindow(int width, int height) : width{width}, height{height} {
     const char* envVar = "DISPLAY";
     const char* value = std::getenv(envVar);
     if (value == nullptr) {
-        std::cerr << "Error: DISPLAY environment variable for X11 not set. Exiting..." << std::endl;
+        std::cerr << "Error: X11 DISPLAY environment variable not set. Exiting..." << std::endl;
         exit(1);
+    } else {
+        std::cout << "X11 DISPLAY environment variable: " << value << std::endl;
     }
     d = XOpenDisplay(nullptr);
     if (d == nullptr) {

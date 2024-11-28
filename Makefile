@@ -30,6 +30,7 @@ DEPS = $(SOURCES:.cc=.d)
 DEPS += $(EXEC_SOURCES:.cc=.d)
 
 RELEASE_BIN = rallnet
+RELEASE_DISPLAY_ENV_VAR = ":0"
 
 .PHONY: all clean
 # Default target: all executables
@@ -48,8 +49,9 @@ $(EXEC): %: $(OBJECTS) %.o
 	$(CXX) -MM $(CXXFLAGS) $< > $@
 
 release: main.cc $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -O2 -o $(RELEASE_BIN) main.cc $(OBJECTS) $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) -O2 -DDISPLAY="$(RELEASE_DISPLAY_ENV_VAR)" -o $(RELEASE_BIN) main.cc $(OBJECTS) $(LDFLAGS)
 	@echo "Release binary created: $(RELEASE_BIN)"
+	@echo "Injected environment variable: DISPLAY=$(RELEASE_DISPLAY_ENV_VAR)"
 
 # Include dependency files
 -include $(DEPS)
