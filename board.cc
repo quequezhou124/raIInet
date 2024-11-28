@@ -2,6 +2,7 @@
 #include "board.h"
 #include "serverports.h"
 #include "wall.h"
+#include <algorithm>
 
     Unit* Board::find_unit(char name) {
         for (auto& unit : units) {
@@ -32,6 +33,7 @@
 
     char Board::unitAt(int row, int col) {
         Unit* unit = getUnit(row, col);
+        if (unit && unit->getType() == "W") return '.';
         if (unit && unit->getType() == "S") return 'S';
         if (unit && !unit->getDownloaded()) {
             return unit->getName();

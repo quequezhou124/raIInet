@@ -62,7 +62,13 @@ public:
         std::cout << endl;
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
-                std::cout << subject->getState(i, j);
+                if (subject->getState(i, j) == 'w' && curplayer) {
+                    std::cout << 'w';
+                } else if (subject->getState(i, j) == 'm' && !curplayer) {
+                    std::cout << 'm';
+                } else {
+                    std::cout << subject->getState(i, j);
+                }
             }
             std::cout << endl;
         }

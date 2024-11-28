@@ -91,6 +91,10 @@
         "format": "cpp",
         "numbers": "cpp",
         "span": "cpp",
-        "text_encoding": "cpp"
+        "text_encoding": "cpp",
+        "__hash_table": "cpp",
+        "__node_handle": "cpp",
+        "queue": "cpp",
+        "stack": "cpp"
     }
 }
