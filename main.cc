@@ -33,6 +33,7 @@ void print_rule() {
               << "Each player has 5 ability cards, which can only be used once per game.\n"
               << "The game ends when either player downloads 4 data (winning) or 4 viruses (losing).\n"
               << "Hidden information and clever use of abilities are key to success.\n";
+    sleep(2);
 }
 
 void print_blank() {
@@ -46,6 +47,7 @@ void print_blank() {
               << "...DE...\n"
               << "ABCSSFGH\n"
               << "========\n";
+    sleep(2);
 }
 
 
@@ -56,7 +58,8 @@ void sleep(int n) {
 void check_player(int n) {
     bool check = false;
     std::string s;
-    std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n";
+    sleep(2);
+    std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
     std::cout << "It should be Player " << n << ". Are you player " << n << "? Please reply Y if you are.\n";
     while (!check) {
         std::cin >> s;
@@ -81,6 +84,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
     bool dSet[4] = {false, false, false, false};
 
     while (n <= startChar + 7) {
+        sleep(2);
         std::cout << "Set " << n << std::endl;
         std::string set;
         std::cin >> set;
@@ -136,6 +140,7 @@ void setupPlayer(Board* board, Player* player, int startRow, const std::string& 
         board->units.push_back(serverports2);
     }
     std::cout << playerName << " has finished setting their links.\n";
+    sleep(2);
 }
 
 void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
@@ -143,20 +148,24 @@ void battle (Unit *l1, Unit *l2, Player *p1,Player *p2, Board *board) {
         if (dynamic_cast<Data*>(l2)) {
             p2->setdownloadD(p2->getdownloadD() + 1);
             std::cout << "You download a data.\n";
+            sleep(2);
             l2->setDownloaded(true);
         } else if (dynamic_cast<Virus*>(l2)) {
             p2->setdownloadV(p2->getdownloadV()+1);
             std::cout << "You download a virus.\n";
+            sleep(2);
             l2->setDownloaded(true);
         }
     } else {
         if (dynamic_cast<Data*>(l1)) {
             p1->setdownloadD(p1->getdownloadD() + 1);
             std::cout << "Your data is downloaded by opponent.\n";
+            sleep(2);
             l1->setDownloaded(true);
         } else if (dynamic_cast<Virus*>(l1)) {
             p1->setdownloadV(p1->getdownloadV() + 1);
             std::cout << "Your virus is downloaded by opponent.\n";
+            sleep(2);
             l1->setDownloaded(true);
         } 
     }
@@ -171,12 +180,14 @@ void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* o
             player2->setdownloadD(n);
             l1->setDownloaded(true);
             std::cout << "Player2 has downloaded your Data.\n";
+            sleep(2);
         } else if (dynamic_cast<Virus*>(l1)) {
             int n = player2->getdownloadV();
             n++;
             player2->setdownloadV(n);
             l1->setDownloaded(true);
             std::cout << "Player2 has downloaded your Virus.\n";
+            sleep(2);
         }
     } else if ((player1 == owner && l1->getRow() == 0 && l1->getCol() == 3 && !l1->getLocked()) 
         ||(player1 == owner && l1->getRow() == 0 && l1->getCol() == 4) && !l1->getLocked()) {
@@ -186,12 +197,14 @@ void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* o
             player1->setdownloadD(n);
             l1->setDownloaded(true);
             std::cout << "Player1 has downloaded your Data.\n";
+            sleep(2);
         } else if (dynamic_cast<Virus*>(l1)) {
             int n = player1->getdownloadV();
             n++;
             player1->setdownloadV(n);
             l1->setDownloaded(true);
             std::cout << "Player1 has downloaded your Virus.\n";
+            sleep(2);
         }
     }
 }
@@ -205,6 +218,7 @@ bool check_f (Board* board, Unit* l1, Player* owner, Player* other) {
             owner->setdownloadV(n);
             l1->setDownloaded(true);
             std::cout << "Your virus move to others' firewall, so you have download it.\n";
+            sleep(2);
             return true;
         }
     }
@@ -274,7 +288,8 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
 
             getlink = true;
         }
-
+        std::cout << "Get link.\n";
+        sleep(2);
         std::cout << "Please choose the direction you move. Use format u, d, l, r.\n";
         while (!getdir) {
             std::cin >> dir;
@@ -290,6 +305,7 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
 
         if (player->move(board, movel, dir)) {
             std::cout << "Successful move.\n";
+            sleep(2);
             check_battle_s(board, movel, player1, player2);
             moving = false;
         } else {
@@ -304,9 +320,11 @@ void moveit(Player* player, const std::string& playername, Board* board, Player*
 bool check_win(Player* player1, Player* player2) {
     if ((player1->getdownloadD() == 4) || (player2->getdownloadV() == 4)) {
         std::cout << "Player1 wins.\n";
+        sleep(2);
         return true;
     } else if ((player1->getdownloadV() == 4) || (player2->getdownloadD() == 4)) {
         std::cout << "Player2 wins.\n";
+        sleep(2);
         return true;
     }
     return false;
@@ -323,6 +341,7 @@ void setability(Player * player) {
               << "6. Enhance:Increases the strength of a specific link by 1.\n"
               << "7. Combat Lock: Prevents a specific link from being downloaded by any method other than combat.\n"
               << "8. Negate: Cancels the opponent's current ability usage.\n";
+    sleep(2);
     bool abilityset[8][2]= {{false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}, {false, false}};
     int a;
     int n = 0;
@@ -361,9 +380,12 @@ bool check_negate(Player * other, std::string operate, int oth) {
     sleep(2);
     if (!(other->findAbility(8))) {
         std::cout << "Your opponent doesn't have the ability to Negate.\n";
+        sleep(2);
         return false;
     } else {
-        std::cout << "Your opponent have the ability to Negate.\nPlease let your opponent decide whether to use it.\n\n\n\n\n";
+        std::cout << "Your opponent have the ability to Negate.\nPlease let your opponent decide whether to use it.";
+        sleep(2);
+        std::cout << "\n\n\n\n\n\n\n\n\n\n";
         check_player(oth);
         std::cout << "The other player is going to:\n" << operate << "\nDo you want to use negate? Please reply Y/N.";
         bool decide = false;
@@ -372,6 +394,7 @@ bool check_negate(Player * other, std::string operate, int oth) {
             std::cin >> ans;
             if (ans == "Y") {
                 std::cout << "Negate used successfully.\n";
+                sleep(2);
                 return true;
             } else if (ans == "N") {
                 return false;
@@ -393,11 +416,12 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
     }
     if (owner->getabilityNum() < 1) {
         std::cout << "You have used all your abilities.\n";
+        sleep(2);
         return;
     }
-    std::cout 
-    << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Combat Lock 8.Negate\n"
-    << "The following is what abilities you have: "; owner->printAbility();
+    std::cout << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Combat Lock 8.Negate\n";
+    sleep(2);
+    std::cout << "The following is what abilities you have: "; owner->printAbility();
     std::cout<< "Do you want to use your ability? Reply Y or N.\n";
     std::string s;
     bool decide = false;
@@ -435,7 +459,8 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                     find = true;
                 }
             }
-
+            std::cout << "Get ability number.\n";
+            sleep(2);
             int n = 2;
             while (!use) {
                 std::cout << "If you want to use another ability, reply 0.\n"
@@ -451,9 +476,9 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                 if (n == 1) {
                     return;
                 } else if (n == 0) {
-                    std::cout 
-                    << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Combat Lock 8.Negate\n"
-                    << "The following is what abilities you have: "; owner->printAbility();
+                    std::cout << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Combat Lock 8.Negate\n";
+                    sleep(2);
+                    std::cout << "The following is what abilities you have: "; owner->printAbility();
                     std::cout<< "Do you want to use your ability? Reply Y or N.\n";
                     break;
                 } else if (a == 1) {
@@ -478,6 +503,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                             linkboostAbility func{};
                             if (func.useAbility(owner, link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
+                                sleep(2);
                                 if (useNegate) {
                                     other->deleteAbility(8);
                                 }
@@ -512,6 +538,8 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                             r = true;
                         }
                     }
+                    sleep(2);
+                    std::cout << "Please reply the col, number 0-7.\n";
                     while (!c) {
                         if (!(std::cin >> col)){
                             std::cout << "Invalid input, please enter a number.\n";
@@ -532,6 +560,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                     check_player(cur);
                     if (board->setFirewall(board, owner, row, col, useNegate)) {
                         std::cout << "Used successfully.\n";
+                        sleep(2);
                         if (useNegate) {
                             other->deleteAbility(8);
                         }
@@ -548,7 +577,6 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                     char link;
                     if (!(std::cin >> link)){
                         std::cout << "Invalid input, please enter a link, like a, A.\n";
-                        sleep(2);
                         std::cin.clear();   // 清除错误状态
                         std::cin.ignore(); // 丢弃当前行的输入
                         continue;
@@ -569,6 +597,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                                     other->deleteAbility(8);
                                 }
                                 if (owner->deleteAbility(3)) std::cout << "Successfully used.\n"; 
+                                sleep(2);
                                 decide = true;
                                 return;
                             } else {
@@ -601,6 +630,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                             polarizeAbility func{};
                             if (func.useAbility(link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
+                                sleep(2);
                                 if (useNegate) {
                                     other->deleteAbility(8);
                                 }
@@ -637,6 +667,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                             scanAbility func{};
                             if (func.useAbility(owner, other, link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
+                                sleep(2);
                                 if (useNegate) {
                                     other->deleteAbility(8);
                                 }
@@ -673,6 +704,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                             enhanceAbility func{};
                             if (func.useAbility(owner, link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
+                                sleep(2);
                                 if (useNegate) {
                                     other->deleteAbility(8);
                                 }
@@ -709,6 +741,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
                             lockedAbility func{};
                             if (func.useAbility(owner, other, link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
+                                sleep(2);
                                 if (useNegate) {
                                     other->deleteAbility(8);
                                 }
@@ -725,9 +758,9 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
             }
             if (n == 0) {
                 continue;
-                std::cout 
-                << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Combat Lock 8.Negate\n"
-                << "The following is what abilities you have: "; owner->printAbility();
+                std::cout << "1.Link Boost 2.Firewall 3.Download 4.Polarize 5.Scan 6.Enhance 7.Combat Lock 8.Negate\n";
+                sleep(2);
+                std::cout << "The following is what abilities you have: "; owner->printAbility();
                 std::cout<< "Do you want to use your ability? Reply Y or N.\n";
             }
         }
@@ -736,6 +769,7 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur) {
 
 int main() {
     std::cout << "Welcome to the game: RAIInet\n";
+    sleep(2);
     std::cout << "Do you need the rulebook for RAIInet? Reply Y or N.\n";
     std::string command;
 
@@ -752,6 +786,7 @@ int main() {
             continue;
         } else {
             rule = false;
+            sleep(2);
         }
     }
     // Initial setup
@@ -762,15 +797,21 @@ int main() {
     TextObserver* textobserver = new TextObserver(&subject, player1, player2);
     GraphicObserver* graphicobserver = new GraphicObserver(&subject, player1, player2);
     // Player 1 setup (a-h)
+    sleep(2);
     check_player(1);
     print_blank();
+    sleep(2);
     setupPlayer(board, player1, 0, "Player 1", 'a');
+    sleep(2);
     setability(player1);
 
     // Player 2 setup (A-H)
+    sleep(2);
     check_player(2);
     print_blank();
+    sleep(2);
     setupPlayer(board, player2, 7, "Player 2", 'A');
+    sleep(2);
     setability(player2);
 
     // Set new decorated board
@@ -779,10 +820,13 @@ int main() {
     bool win = false;
     while (!win) {
         // Player1 move
+        sleep(2);
         check_player(1);
         subject.notifyObservers();
+        sleep(2);
         UseAbility(subject.getBoard(), player1, player2, 1);
         subject.notifyObservers();
+        sleep(2);
         moveit(player1, "Player1", subject.getBoard(), player1, player2);
         win = check_win(player1, player2);
         
@@ -790,10 +834,13 @@ int main() {
         player1->changeturn(false);
         player2->changeturn(false);
         // Player2 move
+        sleep(2);
         check_player(2);
         subject.notifyObservers();
+        sleep(2);
         UseAbility(subject.getBoard(), player2, player1, 2);
         subject.notifyObservers();
+        sleep(2);
         moveit(player2, "Player2", subject.getBoard(), player1, player2);
         win = check_win(player1, player2);
         player1->changeturn(true);
