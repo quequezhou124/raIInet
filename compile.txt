@@ -1,4 +1,10 @@
 git pull
+git add .
+git commit -m "main.cc"
+git push
+
+
+git pull
 rm *o
 g++ -std=c++20 -c main.cc -o main.o -I/opt/X11/include
 g++ -std=c++20 -c data.cc -o data.o
