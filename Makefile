@@ -33,8 +33,8 @@ RELEASE_BIN = raiinet
 RELEASE_DEFINES = -DNO_SLEEP=1
 
 .PHONY: all clean
-# Default target: all executables
-all: clean $(EXEC)
+# Default target: release
+all: release
 
 # Rule for linking the executables
 $(EXEC): %: $(OBJECTS) %.o
