@@ -50,8 +50,6 @@ $(EXEC): %: $(OBJECTS) %.o
 
 release: clean main.cc $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -O2 $(RELEASE_DEFINES) -o $(RELEASE_BIN) main.cc $(OBJECTS) $(LDFLAGS)
-	@echo "Release binary created: $(RELEASE_BIN)"
-	@echo "Defines $(RELEASE_DEFINES)"
 
 # Include dependency files
 -include $(DEPS)
@@ -66,9 +64,4 @@ TEST_SUITES = $(basename $(notdir $(wildcard tests/*.txt)))
 .PHONY: $(TEST_SUITES)
 
 $(TEST_SUITES):
-	@echo "Running test suite: $@"
 	./runSuite.sh tests/$@.txt ./$(TEST_EXEC)
-
-debug:
-	@echo "Available executables: $(EXEC)"
-	@echo "Available test suites: $(TEST_SUITES)"
