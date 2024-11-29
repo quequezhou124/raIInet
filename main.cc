@@ -213,7 +213,7 @@ void check_s(Board* board, Unit* l1, Player* player1, Player* player2, Player* o
 }
 
 bool check_f (Board* board, Unit* l1, Player* owner, Player* other) {
-    Unit *f = board->getFirewall(l1->getRow(), l1->getCol(), other);
+    Unit *f = board->getFirewall(l1->getRow(), l1->getCol(), owner);
     if (f) {
         if (dynamic_cast<Virus*>(l1)) {
             int n = owner->getdownloadV();
@@ -223,6 +223,8 @@ bool check_f (Board* board, Unit* l1, Player* owner, Player* other) {
             std::cout << "Your virus move to others' firewall, so you have download it.\n";
             sleep(1);
             return true;
+        } else {
+            l1->setDisplayed(true);
         }
     }
     return false;
@@ -389,21 +391,27 @@ bool check_negate(Player * owner, Subject* subject, Player * other, std::string 
         std::cout << "Your opponent have the ability to Negate.\nPlease let your opponent decide whether to use it.";
         sleep(1);
         std::cout << "\n\n\n\n\n\n\n\n\n\n";
+        owner->changeturn(0);
+        other->changeturn(0);
+        subject->notifyObservers();
         check_player(oth);
+        owner->changeturn(oth);
+        other->changeturn(oth);
+        subject->notifyObservers();
         if (oth == 1) {
-            other->changeturn(true);
-            owner->changeturn(true);
+            other->changeturn(1);
+            owner->changeturn(1);
         } else {
-            other->changeturn(false);
-            owner->changeturn(false);
+            other->changeturn(2);
+            owner->changeturn(2);
         }
         subject->notifyObservers();
         if (oth == 2) {
-            other->changeturn(true);
-            owner->changeturn(true);
+            other->changeturn(1);
+            owner->changeturn(1);
         } else {
-            other->changeturn(false);
-            owner->changeturn(false);
+            other->changeturn(2);
+            owner->changeturn(2);
         }
         std::cout << "The other player is going to:\n" << operate << "\nDo you want to use negate? Please reply Y/N.";
         bool decide = false;
@@ -517,8 +525,14 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur, Subject *su
                             std::string str(1, name);
                             std::string operate = "Use Link Boost on " + str;
                             bool useNegate = check_negate(owner, subject, other, operate, oth);
+                            owner->changeturn(0);
+                            other->changeturn(0);
+                            subject->notifyObservers();
                             check_player(cur);
+                            owner->changeturn(cur);
+                            other->changeturn(cur);
                             linkboostAbility func{};
+                            subject->notifyObservers();
                             if (func.useAbility(owner, link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
                                 sleep(1);
@@ -575,7 +589,13 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur, Subject *su
                     }
                     std::string operate = "Set Firewall on (" + std::to_string(row) + "," + std::to_string(col) + ")";
                     bool useNegate = check_negate(owner, subject, other, operate, oth);
+                    owner->changeturn(0);
+                    other->changeturn(0);
+                    subject->notifyObservers();
                     check_player(cur);
+                    owner->changeturn(cur);
+                    other->changeturn(cur);
+                    subject->notifyObservers();
                     if (board->setFirewall(board, owner, row, col, useNegate)) {
                         std::cout << "Used successfully.\n";
                         sleep(1);
@@ -608,8 +628,14 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur, Subject *su
                             std::string str(1, name);
                             std::string operate = "Use Download on " + str;
                             bool useNegate = check_negate(owner, subject, other, operate, oth);
+                            owner->changeturn(0);
+                            other->changeturn(0);
+                            subject->notifyObservers();
                             check_player(cur);
-                            downloadAbility func{};
+                            owner->changeturn(cur);
+                            other->changeturn(cur);
+                            subject->notifyObservers();
+                                    downloadAbility func{};
                             if (func.useAbility(owner, other, link, board, useNegate)) {
                                 if (useNegate) {
                                     other->deleteAbility(8);
@@ -644,7 +670,13 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur, Subject *su
                             std::string str(1, name);
                             std::string operate = "Use Polarize on " + str;
                             bool useNegate = check_negate(owner, subject, other, operate, oth);
+                            owner->changeturn(0);
+                            other->changeturn(0);
+                            subject->notifyObservers();
                             check_player(cur);
+                            owner->changeturn(cur);
+                            other->changeturn(cur);
+                            subject->notifyObservers();
                             polarizeAbility func{};
                             if (func.useAbility(link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
@@ -681,7 +713,13 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur, Subject *su
                             std::string str(1, name);
                             std::string operate = "Use Scan on " + str;
                             bool useNegate = check_negate(owner, subject, other, operate, oth);
+                            owner->changeturn(0);
+                            other->changeturn(0);
+                            subject->notifyObservers();
                             check_player(cur);
+                            owner->changeturn(cur);
+                            other->changeturn(cur);
+                            subject->notifyObservers();
                             scanAbility func{};
                             if (func.useAbility(owner, other, link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
@@ -718,7 +756,13 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur, Subject *su
                             std::string str(1, name);
                             std::string operate = "Use Enhance on " + str;
                             bool useNegate = check_negate(owner, subject, other, operate, oth);
+                            owner->changeturn(0);
+                            other->changeturn(0);
+                            subject->notifyObservers();
                             check_player(cur);
+                            owner->changeturn(cur);
+                            other->changeturn(cur);
+                            subject->notifyObservers();
                             enhanceAbility func{};
                             if (func.useAbility(owner, link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
@@ -755,7 +799,13 @@ void UseAbility(Board* board, Player* owner, Player* other, int cur, Subject *su
                             std::string str(1, name);
                             std::string operate = "Use CombatLock on " + str;
                             bool useNegate = check_negate(owner, subject, other, operate, oth);
+                            owner->changeturn(0);
+                            other->changeturn(0);
+                            subject->notifyObservers();
                             check_player(cur);
+                            owner->changeturn(cur);
+                            other->changeturn(cur);
+                            subject->notifyObservers();
                             lockedAbility func{};
                             if (func.useAbility(owner, other, link, board, useNegate)) {
                                 std::cout << "Used successfully.\n";
@@ -838,31 +888,41 @@ int main() {
     bool win = false;
     while (!win) {
         // Player1 move
+        player1->changeturn(0);
+        player2->changeturn(0);
+        subject.notifyObservers();
         sleep(1);
         check_player(1);
+        player1->changeturn(1);
+        player2->changeturn(1);
         subject.notifyObservers();
         sleep(1);
         UseAbility(subject.getBoard(), player1, player2, 1, &subject);
+        player1->changeturn(1);
+        player2->changeturn(1);
         subject.notifyObservers();
         sleep(1);
         moveit(player1, "Player1", subject.getBoard(), player1, player2);
         win = check_win(player1, player2);
         
         if (win) break;
-        player1->changeturn(false);
-        player2->changeturn(false);
+        player1->changeturn(0);
+        player2->changeturn(0);
+        subject.notifyObservers();
         // Player2 move
         sleep(1);
         check_player(2);
+        player1->changeturn(2);
+        player2->changeturn(2);
         subject.notifyObservers();
         sleep(1);
         UseAbility(subject.getBoard(), player2, player1, 2, &subject);
+        player1->changeturn(2);
+        player2->changeturn(2);
         subject.notifyObservers();
         sleep(1);
         moveit(player2, "Player2", subject.getBoard(), player1, player2);
         win = check_win(player1, player2);
-        player1->changeturn(true);
-        player2->changeturn(true);
         
     }
 

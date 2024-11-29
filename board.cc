@@ -51,7 +51,7 @@
                    (row == 7 && (col == 3 || col == 4))) {
             return false;
         } else {
-            if (player->isplayer1turn()) {
+            if (player->isplayer1turn() == 1) {
                 Wall * firewall = new Wall {row, col, 0, 'w', false, false, false, false};
                 borad->units.push_back(firewall);
                 player->walls.push_back(firewall);
@@ -75,4 +75,3 @@
         }
         return nullptr; // Return nullptr if not found
     }
-    

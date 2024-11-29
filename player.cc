@@ -5,7 +5,7 @@
 #include <algorithm>
 
 //constructor
-Player::Player(std::vector<Link*> links, bool player1, State state, int downloadD, int downloadV, int abilityNum)
+Player::Player(std::vector<Link*> links, int player1, State state, int downloadD, int downloadV, int abilityNum)
     : links{links},
       player1{player1},
       state{state},
@@ -14,7 +14,7 @@ Player::Player(std::vector<Link*> links, bool player1, State state, int download
       abilityNum{abilityNum} {}
 
 Player::Player():
-    links{}, player1{true}, state{State::Undecided}, downloadD{0}, downloadV{0}, abilityNum{0} {}
+    links{}, player1{0}, state{State::Undecided}, downloadD{0}, downloadV{0}, abilityNum{0} {}
 
 State Player::getState() const {
     return state;
@@ -71,11 +71,11 @@ void Player::setabilityNum(int newabilityNum){
     abilityNum = newabilityNum;
 }
 
-bool Player::isplayer1turn() const {
+int Player::isplayer1turn() const {
     return player1;
 }
 
-void Player::changeturn(bool isplayer1){
+void Player::changeturn(int isplayer1){
     player1 = isplayer1;
 }
 
@@ -99,15 +99,15 @@ bool Player::move(Board * board, Unit * unit, const std::string& dir) {
         Unit * newunit = board->getUnit(newrow, newcol);
         if (( newunit != nullptr
         && std::find(links.begin(), links.end(), newunit) != links.end())
-        || (player1 && newrow == 0 && newcol == 3)
-        || (player1 && newrow == 0 && newcol == 4)
-        || (!player1 && newrow == 7 && newcol == 3)
-        || (!player1 && newrow == 7 && newcol == 4)
-        || (unit->getLocked() && ((!player1 && newrow == 0 && newcol == 3)
-        || (!player1 && newrow == 0 && newcol == 4)))
-        || (unit->getLocked() && ((player1 && newrow == 7 && newcol == 3)
-        || (player1 && newrow == 7 && newcol == 4)))) {return false;}
-        if (player1 == true) {
+        || ((player1 == 1) && newrow == 0 && newcol == 3)
+        || ((player1 == 1) && newrow == 0 && newcol == 4)
+        || ((player1 == 2) && newrow == 7 && newcol == 3)
+        || ((player1 == 2) && newrow == 7 && newcol == 4)
+        || (unit->getLocked() && (((player1 == 2) && newrow == 0 && newcol == 3)
+        || ((player1 == 2) && newrow == 0 && newcol == 4)))
+        || (unit->getLocked() && (((player1 == 1) && newrow == 7 && newcol == 3)
+        || ((player1 == 1) && newrow == 7 && newcol == 4)))) {return false;}
+        if (player1 == 1) {
             if(newrow >= 8) {
                 if (unit->getLocked()) return false;
                 unit->setDownloaded(true);

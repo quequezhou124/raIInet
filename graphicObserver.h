@@ -6,7 +6,6 @@
 #include "player.h"
 #include "link.h"
 #include "window.h"
-#include <format>
 
 class GraphicObserver : public Observer {
     Subject *subject;
@@ -42,45 +41,59 @@ public:
                 char c = subject->getState(i, j);
 
                 char state = subject->getState(i, j);
-                bool isPlayer1Turn = curplayer->isplayer1turn();
-                if (subject->getBoard()->getFirewall(i, j, curplayer) && subject->getBoard()->getFirewall(i, j, curplayer)->getName() == 'w' && curplayer->isplayer1turn()) {
-                    window.fillRectangle(x, y, cellSize, cellSize, Xwindow::White); 
-                    window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Orange); 
-                } else if (subject->getBoard()->getFirewall(i, j, otherplayer) && subject->getBoard()->getFirewall(i, j, otherplayer)->getName() == 'm' && !curplayer->isplayer1turn()) {
-                    window.fillRectangle(x, y, cellSize, cellSize, Xwindow::White);
-                    window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Orange);
+                int isPlayer1Turn = curplayer->isplayer1turn();
+                if (subject->getBoard()->getFirewall(i, j, curplayer) && subject->getBoard()->getFirewall(i, j, curplayer)->getName() == 'w' && (curplayer->isplayer1turn() == 1)) {
+                    window.drawRectangle(x, y, cellSize, cellSize, borderWidth + 5, Xwindow::Orange); 
+                } else if (subject->getBoard()->getFirewall(i, j, otherplayer) && subject->getBoard()->getFirewall(i, j, otherplayer)->getName() == 'm' && (curplayer->isplayer1turn() == 2)) {
+                    window.drawRectangle(x, y, cellSize, cellSize, borderWidth + 5, Xwindow::Orange);
                 } else if (state == 'S') {
                     window.fillRectangle(x, y, cellSize, cellSize, Xwindow::LightBlue);
-                    window.drawString(j * 100 + 5, i * 100 + 40, std::format("Sever Pot: ({},{})", i, j));
+                    std::string s = "S: ( , )";
+                    s[4] = '0' + i;
+                    s[6] = '0' + j;
+                    window.drawString(j * 100 + 5, i * 100 + 40, s, Xwindow::Black);
                     window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Black);
                 } else if (state >= 'a' && state <= 'z') {
-                    if(curplayer->isplayer1turn()){
+                    if((curplayer->isplayer1turn() == 1)){
                         if (subject->getBoard()->getUnit(i, j)->getType() == "D"&&subject->getBoard()->getUnit(i, j)->getDownloaded()==false) {
                             window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Green);
                             window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
-                            window.drawString(j * 100 + 5, i * 100 + 40, std::format("Data {}: ({},{})", c, i, j));
+                            std::string s = "Data: ( , )";
+                            s[7] = '0' + i;
+                            s[9] = '0' + j;
+                            window.drawString(j * 100 + 5, i * 100 + 40, s);
                             window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Black);
                         } else if (subject->getBoard()->getUnit(i, j)->getType() == "V"&&subject->getBoard()->getUnit(i, j)->getDownloaded()==false) {
                             window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Red);
-                            window.drawString(j * 100 + 5, i * 100 + 40, std::format("Virus {}: ({},{})", c, i, j));
+                            std::string s = "Virus: ( , )";
+                            s[8] = '0' + i;
+                            s[10] = '0' + j;
+                            window.drawString(j * 100 + 5, i * 100 + 40, s);
                             window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
                             window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Black);
                         }
                     } else {
                         window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Gray);
-                        window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::White);
+                        window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
+                        window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Black);
                     }
                 } else if (state >= 'A' && state <= 'Z') {
-                    if(!curplayer->isplayer1turn()){
+                    if((curplayer->isplayer1turn() == 2)){
                         if (subject->getBoard()->getUnit(i, j)->getType() == "D" &&subject->getBoard()->getUnit(i, j)->getDownloaded()==false) {
                                 window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Green);
-                                window.drawString(j * 100 + 5, i * 100 + 40, std::format("Data {}: ({},{})", c, i, j));
+                                std::string s = "Data: ( , )";
+                                s[7] = '0' + i;
+                                s[9] = '0' + j;
+                                window.drawString(j * 100 + 5, i * 100 + 40, s);
                                 window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
                                 window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Black);
                         } else if (subject->getBoard()->getUnit(i, j)->getType() == "V"&&subject->getBoard()->getUnit(i, j)->getDownloaded()==false) {
                                 window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Red);
                                 window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
-                                window.drawString(j * 100 + 5, i * 100 + 40, std::format("Virus {}: ({},{})", c, i, j));
+                                std::string s = "Virus: ( , )";
+                                s[8] = '0' + i;
+                                s[10] = '0' + j;
+                                window.drawString(j * 100 + 5, i * 100 + 40, s);
                                 window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Black);
                         }
                     } else {

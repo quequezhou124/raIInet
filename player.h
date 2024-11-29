@@ -17,7 +17,7 @@ enum class State {
 
 
 class Player {
-    bool player1;
+    int player1;
     State state;
     int downloadD;
     int downloadV;
@@ -28,7 +28,7 @@ class Player {
     std::vector<Link*> links;
     std::vector<Wall*> walls;
     //constructor
-    Player(std::vector<Link*> links, bool player1 = true, State state = State::Undecided, int downloadD = 0, int downloadV = 0, int abilityNum = 0);
+    Player(std::vector<Link*> links, int player1 = 0, State state = State::Undecided, int downloadD = 0, int downloadV = 0, int abilityNum = 0);
     Player();
     // methods
     bool findAbility(int k);
@@ -44,8 +44,8 @@ class Player {
     void setdownloadV(int newdownloadV);
     int getabilityNum() const;
     void setabilityNum(int newabilityNum);
-    bool isplayer1turn() const;
-    void changeturn(bool isplayer1);
+    int isplayer1turn() const;
+    void changeturn(int isplayer1);
 };
 
 #endif

@@ -21,7 +21,7 @@ public:
         }
     // print the canvas
     void notify() override {
-        if (curplayer->isplayer1turn()) {
+        if (curplayer->isplayer1turn() == 1) {
             std::cout << "Player 1: " << endl;
             std::cout << "Downloaded: " << curplayer->getdownloadD() <<"D, "<< curplayer->getdownloadV() << "V" <<endl;
             std::cout << "Abilities: " << curplayer->getabilityNum() << endl;
@@ -62,9 +62,11 @@ public:
         std::cout << endl;
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
-                if (subject->getBoard()->getFirewall(i, j, curplayer) && subject->getBoard()->getFirewall(i, j, curplayer)->getName() == 'w' && curplayer->isplayer1turn()) {
+                if (subject->getState(i, j) != '.') {
+                    std::cout << subject->getState(i, j);
+                } else if (subject->getBoard()->getFirewall(i, j, curplayer) && subject->getBoard()->getFirewall(i, j, curplayer)->getName() == 'w' && (curplayer->isplayer1turn() == 1)) {
                     std::cout << 'w';
-                } else if (subject->getBoard()->getFirewall(i, j, otherplayer) && subject->getBoard()->getFirewall(i, j, otherplayer)->getName() == 'm' && !curplayer->isplayer1turn()) {
+                } else if (subject->getBoard()->getFirewall(i, j, otherplayer) && subject->getBoard()->getFirewall(i, j, otherplayer)->getName() == 'm' && (curplayer->isplayer1turn() == 2)) {
                     std::cout << 'm';
                 } else {
                     std::cout << subject->getState(i, j);
@@ -77,7 +79,7 @@ public:
         }
         
 
-        if (!curplayer->isplayer1turn()) {
+        if (curplayer->isplayer1turn() == 2) {
             std::cout << endl;
             std::cout << "Player 2: " << endl;
             std::cout << "Downloaded: " << otherplayer->getdownloadD() <<"D, "<< otherplayer->getdownloadV() << "V" <<endl;
@@ -88,7 +90,7 @@ public:
             std::cout << "D: " << subject->getBoard()->find_unit('D')->getType() << subject->getBoard()->find_unit('D')->getStrength() << " " << endl;
             std::cout << "E: " << subject->getBoard()->find_unit('E')->getType() << subject->getBoard()->find_unit('E')->getStrength() << " ";
             std::cout << "F: " << subject->getBoard()->find_unit('F')->getType() << subject->getBoard()->find_unit('F')->getStrength()<< " ";
-            std::cout << "G: " << subject->getBoard()->find_unit('H')->getType() << subject->getBoard()->find_unit('G')->getStrength() << " ";
+            std::cout << "G: " << subject->getBoard()->find_unit('G')->getType() << subject->getBoard()->find_unit('G')->getStrength() << " ";
             std::cout << "H: " << subject->getBoard()->find_unit('H')->getType() << subject->getBoard()->find_unit('H')->getStrength() << " " << endl;
         } else {
             std::cout << endl;

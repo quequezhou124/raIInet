@@ -39,7 +39,7 @@ Xwindow::Xwindow(int width, int height) : width{width}, height{height} {
     XFlush(d);
 
     setupColors();
-    drawColors(); // used to test colors
+    //drawColors(); // used to test colors
     // // Set up colours
     // XColor xcolour;
     // Colormap cmap;
