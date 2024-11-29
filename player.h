@@ -46,6 +46,7 @@ class Player {
     void setabilityNum(int newabilityNum);
     int isplayer1turn() const;
     void changeturn(int isplayer1);
+    ~Player();
 };
 
 #endif

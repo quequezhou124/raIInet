@@ -930,9 +930,6 @@ int main() {
     for (auto unit : subject.getBoard()->units) {
         delete unit;
     }
-    delete board;
     delete textobserver;  // Detach and delete observer
     delete graphicobserver; 
-    delete player1;
-    delete player2;
 }

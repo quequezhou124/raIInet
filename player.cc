@@ -168,3 +168,13 @@ bool Player::findAbility(int k){
     }
     return false;
 }
+
+Player:: ~Player() {
+    for (auto link: links) {
+        if (link) delete link;
+    }
+
+    for (auto wall: walls) {
+        if (wall) delete wall;
+    }
+}

@@ -24,7 +24,7 @@
 
     Unit* Board::getAnotherUnit(int row, int col, Unit* link, Player* player) {
         for (auto& unit : units) {
-            if (unit->getRow() == row && unit->getCol() == col && link != unit && !(std::find(player->links.begin(), player->links.end(), unit) == player->links.end())) {
+            if (unit->getRow() == row && unit->getCol() == col && link != unit && !(std::find(player->links.begin(), player->links.end(), unit) == player->links.end()) && !unit->getDownloaded()) {
                 return unit;
             }
         }
