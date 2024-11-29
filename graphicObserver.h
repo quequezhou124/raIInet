@@ -50,32 +50,40 @@ public:
                     window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Orange);
                 } else if (state == 'S') {
                     window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Blue);
+                    window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Black);
                 } else if (state >= 'a' && state <= 'z') {
                     if(curplayer->isplayer1turn()){
                         if (subject->getBoard()->getUnit(i, j)->getType() == "D"&&subject->getBoard()->getUnit(i, j)->getDownloaded()==false) {
                             window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Green);
                             window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
+                            window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Black);
                         } else if (subject->getBoard()->getUnit(i, j)->getType() == "V"&&subject->getBoard()->getUnit(i, j)->getDownloaded()==false) {
                             window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Red);
                             window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
+                            window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Black);
                         }
                     } else {
                         window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Black);
+                        window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Black);
                     }
                 } else if (state >= 'A' && state <= 'Z') {
                     if(!curplayer->isplayer1turn()){
                         if (subject->getBoard()->getUnit(i, j)->getType() == "D" &&subject->getBoard()->getUnit(i, j)->getDownloaded()==false) {
                                 window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Pink);
                                 window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
+                                window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Black);
                         } else if (subject->getBoard()->getUnit(i, j)->getType() == "V"&&subject->getBoard()->getUnit(i, j)->getDownloaded()==false) {
                                 window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Gray);
                                 window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
+                                window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Black);
                         }
                     } else {
                         window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Black);
+                        window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Black);
                     }
                 } else {
                     window.fillRectangle(x, y, cellSize, cellSize, Xwindow::White);
+                    window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Black); 
                 }
             }
         }
