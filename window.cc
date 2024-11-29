@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include "window.h"
 #include <cstdlib>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -36,17 +38,75 @@ Xwindow::Xwindow(int width, int height) : width{width}, height{height} {
     XFlush(d);
     XFlush(d);
 
-    // Set up colours
-    XColor xcolour;
-    Colormap cmap;
-    char color_vals[7][10] = {"white", "black", "red", "green", "blue", "yellow", "pink"};
+    setupColors();
+    drawColors(); // used to test colors
+    // // Set up colours
+    // XColor xcolour;
+    // Colormap cmap;
+    // char color_vals[9][10] = {"white", "black", "red", "green", "blue", "yellow", "pink", "orange", "gray"};
 
-    cmap = DefaultColormap(d, DefaultScreen(d));
-    for (int i = 0; i < 5; ++i) {
-        XParseColor(d, cmap, color_vals[i], &xcolour);
-        XAllocColor(d, cmap, &xcolour);
-        colours[i] = xcolour.pixel;
+    // cmap = DefaultColormap(d, DefaultScreen(d));
+    // for (int i = 0; i < 5; ++i) {
+    //     XParseColor(d, cmap, color_vals[i], &xcolour);
+    //     XAllocColor(d, cmap, &xcolour);
+    //     colours[i] = xcolour.pixel;
+    // }
+}
+
+void Xwindow::setupColors()
+{
+    const char *color_vals[ColorCount] = {
+        "white", "black", "red", "green", "blue",
+        "yellow", "cyan", "magenta", "orange", "purple",
+        "pink", "gray", "lightblue", "darkgreen", "navy", "gold"};
+
+    Colormap cmap = DefaultColormap(d, s);
+    XColor xcolour;
+
+    for (int i = 0; i < ColorCount; ++i)
+    {
+        if (XAllocNamedColor(d, cmap, color_vals[i], &xcolour, &xcolour) == 0)
+        {
+            std::cout << "Failed to allocate color: " << color_vals[i] << std::endl;
+            colours[i] = WhitePixel(d, s); // Default to white if allocation fails
+        }
+        else
+        {
+            colours[i] = xcolour.pixel; // Store allocated color pixel
+        }
     }
+}
+
+void Xwindow::drawColors()
+{
+    int boxSize = 100; // Size of each colored box
+    for (int i = 0; i < ColorCount; ++i)
+    {
+        // Calculate the position of each box
+        int x = (i % 5) * boxSize; // Adjust layout as needed
+        int y = (i / 5) * boxSize;
+
+        // Set the foreground color to the allocated color
+        XSetForeground(d, gc, colours[i]);
+
+        // Draw a filled rectangle
+        XFillRectangle(d, w, gc, x, y, boxSize, boxSize);
+
+        // Get the string to draw
+        std::string colorName = colorToString(i);
+
+        // Calculate text width
+        XFontStruct *fontInfo = XQueryFont(d, XGContextFromGC(gc));
+        int textWidth = XTextWidth(fontInfo, colorName.c_str(), colorName.length());
+
+        // Calculate the position to center the text
+        int textX = x + (boxSize - textWidth) / 2;        // Center the text horizontally
+        int textY = y + (boxSize + fontInfo->ascent) / 2; // Center the text vertically
+
+        // Draw the string in the center of the box
+        drawString(textX, textY, colorName, std::abs(ColorCount - i -1 ));
+    }
+    XFlush(d);
 }
 
 // Destructor for Xwindow

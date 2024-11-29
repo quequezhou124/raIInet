@@ -42,27 +42,37 @@ public:
 
                 char state = subject->getState(i, j);
                 bool isPlayer1Turn = curplayer->isplayer1turn();
-
-                if (subject->getBoard()->getFirewall(i, j, curplayer)) {
+                if (subject->getBoard()->getFirewall(i, j, curplayer) && subject->getBoard()->getFirewall(i, j, curplayer)->getName() == 'w' && curplayer->isplayer1turn()) {
                     window.fillRectangle(x, y, cellSize, cellSize, Xwindow::White); 
                     window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Yellow); 
-                } else if (subject->getBoard()->getFirewall(i, j, otherplayer)) {
+                } else if (subject->getBoard()->getFirewall(i, j, otherplayer) && subject->getBoard()->getFirewall(i, j, otherplayer)->getName() == 'm' && !curplayer->isplayer1turn()) {
                     window.fillRectangle(x, y, cellSize, cellSize, Xwindow::White);
+                    window.drawRectangle(x, y, cellSize, cellSize, borderWidth, Xwindow::Orange);
                 } else if (state == 'S') {
                     window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Blue);
                 } else if (state >= 'a' && state <= 'z') {
-                    if (isPlayer1Turn || state == 'S') { 
-                        window.fillRectangle(x, y, cellSize, cellSize, state <= 'd' ? Xwindow::Green : Xwindow::Red);
-                        window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
+                    if(curplayer->isplayer1turn()){
+                        if (subject->getBoard()->getUnit(i, j)->getType() == "D"&&subject->getBoard()->getUnit(i, j)->getDownloaded()==false) {
+                            window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Green);
+                            window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
+                        } else if (subject->getBoard()->getUnit(i, j)->getType() == "V"&&subject->getBoard()->getUnit(i, j)->getDownloaded()==false) {
+                            window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Red);
+                            window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
+                        }
                     } else {
-                        window.fillRectangle(x, y, cellSize, cellSize, Xwindow::White);
+                        window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Black);
                     }
                 } else if (state >= 'A' && state <= 'Z') {
-                    if (!isPlayer1Turn || state == 'S') {
-                        window.fillRectangle(x, y, cellSize, cellSize, state <= 'D' ? Xwindow::Pink : Xwindow::Black);
-                        window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
+                    if(!curplayer->isplayer1turn()){
+                        if (subject->getBoard()->getUnit(i, j)->getType() == "D" &&subject->getBoard()->getUnit(i, j)->getDownloaded()==false) {
+                                window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Pink);
+                                window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
+                        } else if (subject->getBoard()->getUnit(i, j)->getType() == "V"&&subject->getBoard()->getUnit(i, j)->getDownloaded()==false) {
+                                window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Gray);
+                                window.drawString(x + cellSize / 4, y + cellSize / 2, std::string(1, state), Xwindow::Black);
+                        }
                     } else {
-                        window.fillRectangle(x, y, cellSize, cellSize, Xwindow::White);
+                        window.fillRectangle(x, y, cellSize, cellSize, Xwindow::Black);
                     }
                 } else {
                     window.fillRectangle(x, y, cellSize, cellSize, Xwindow::White);

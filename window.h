@@ -5,16 +5,46 @@
 #include <string>
 
 class Xwindow {
-  Display *d;
-  Window w;
-  int s, width, height;
-  GC gc;
-  unsigned long colours[5];
-
  public:
   Xwindow(int width=500, int height=500); 
   ~Xwindow();  
-  enum {White=0, Black, Red, Green, Blue, Yellow, Pink}; 
+  // enum {White=0, Black, Red, Green, Blue, Yellow, Pink, Orange, Gray}; 
+  enum {
+      White = 0,
+      Black,
+      Red,
+      Green,
+      Blue,
+      Yellow,
+      Cyan,
+      Magenta,
+      Orange,
+      Purple,
+      Pink,
+      Gray,
+      LightBlue,
+      DarkGreen,
+      Navy,
+      Gold,
+      ColorCount // Total number of colors defined
+  };
+  const std::string colorNames[ColorCount] = {
+      "White",
+      "Black",
+      "Red",
+      "Green",
+      "Blue",
+      "Yellow",
+      "Cyan",
+      "Magenta",
+      "Orange",
+      "Purple",
+      "Pink",
+      "Gray",
+      "LightBlue",
+      "DarkGreen",
+      "Navy",
+      "Gold"};
 
   int getWidth() const;
   int getHeight() const;
@@ -28,7 +58,22 @@ class Xwindow {
   void drawLine(int x1, int y1, int x2, int y2, int colour = Black);
   void drawRectangle(int x, int y, int width, int height, int thickness, int colour = Black);
 
-
+private:
+  Display *d;
+  Window w;
+  int s, width, height;
+  GC gc;
+  unsigned long colours[ColorCount];
+  void setupColors();
+  void drawColors();
+  std::string colorToString(int color)
+  {
+    if (color >= 0 && color < ColorCount)
+    {
+      return colorNames[color];
+    }
+    return "UNKNOWN";
+  }
 };
 
 #endif
